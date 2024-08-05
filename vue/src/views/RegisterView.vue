@@ -10,6 +10,18 @@
         <input type="text" id="username" v-model="user.username" required autofocus />
       </div>
       <div class="form-input-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="John Smith" v-model="user.name" required/>
+      </div>
+      <div class="form-input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="example@example.com" v-model="user.email" required/>
+      </div>
+      <div class="form-input-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="tel" id="phone" placeholder="123-456-7890" v-model="user.phoneNumber" required/>
+      </div>
+      <div class="form-input-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required />
       </div>
@@ -32,6 +44,9 @@ export default {
       user: {
         username: '',
         password: '',
+        name: '',
+        email: '',
+        phoneNumber: '',
         confirmPassword: '',
         role: 'user',
       },
