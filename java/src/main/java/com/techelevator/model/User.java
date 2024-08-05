@@ -15,6 +15,7 @@ public class User {
    private String phoneNumber;
    @JsonIgnore
    private String password;
+   private String role;
 
    @JsonIgnore
    private boolean activated;
@@ -22,13 +23,14 @@ public class User {
 
    public User() { }
 
-   public User(int id, String username, String yourName, String email, String phoneNumber, String password, String authorities) {
+   public User(int id, String username, String yourName, String email, String phoneNumber,String role, String password, String authorities) {
       this.id = id;
       this.username = username;
       this.yourName = yourName;
       this.email = email;
       this.phoneNumber = phoneNumber;
       this.password = password;
+      this.role = role;
       if (authorities != null) this.setAuthorities(authorities);
       this.activated = true;
    }
@@ -43,6 +45,14 @@ public class User {
 
    public String getUsername() {
       return username;
+   }
+
+   public String getRole() {
+      return role;
+   }
+
+   public void setRole(String role) {
+      this.role = role;
    }
 
    public void setUsername(String username) {
@@ -117,6 +127,7 @@ public class User {
               Objects.equals(email, user.email) &&
               Objects.equals(phoneNumber, user.phoneNumber) &&
               Objects.equals(password, user.password) &&
+              Objects.equals(role, user.role) &&
               Objects.equals(authorities, user.authorities);
    }
 
@@ -133,9 +144,10 @@ public class User {
               ", yourName='" + yourName + '\'' +
               ", email='" + email + '\'' +
               ", phoneNumber='" + phoneNumber + '\'' +
+              ", role='" + role + '\'' +
               ", activated=" + activated +
               ", authorities=" + authorities +
               '}';
    }
-   
+
 }
