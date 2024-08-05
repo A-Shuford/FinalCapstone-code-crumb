@@ -45,7 +45,7 @@ public class Cart {
         subtotal.setScale(2);
 
         for (CartItem item : items) {
-            subtotal = subtotal.add(item.getProduct().getPrice().multiply(new BigDecimal(item.getQuantity())));
+            subtotal = subtotal.add(item.getCake().getPrice().multiply(new BigDecimal(item.getQuantity())));
         }
         return subtotal;
     }

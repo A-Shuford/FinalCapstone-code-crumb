@@ -1,5 +1,7 @@
 package com.techelevator.dao;
 
+
+import com.techelevator.model.CartItem;
 import com.techelevator.exception.DaoException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -22,7 +24,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public CartItem getCartItemById(int cartItemId) {
         CartItem cartItem = null;
-        String sql = "SELECT * FROM cart_item WHERE cart_item_id = ?";
+        String sql = "SELECT * FROM cart_item WHERE cart_itemid = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cartItemId);
             if (results.next()) {
@@ -36,11 +38,11 @@ public class JdbcCartItemDao implements CartItemDao {
     }
 
     @Override
-    public CartItem getCartItemByProductIdAndUserId(int productId, int userId) {
+    public CartItem getCartItemByCakeIdAndUserId(int cakeId, int userId) {
         CartItem cartItem = null;
-        String sql = "SELECT * FROM cart_item WHERE product_id = ? AND user_id = ?";
+        String sql = "SELECT * FROM cart_item WHERE cakeid = ? AND userid = ?";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, productId, userId);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cakeId, userId);
             if (results.next()) {
                 cartItem = mapRowToCartItem(results);
             }
@@ -54,7 +56,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public List<CartItem> getCartItemsByUserId(int userId) {
         List<CartItem> cartItems = new ArrayList<>();
-        String sql = "SELECT * FROM cart_item WHERE user_id = ? ORDER BY cart_item_id";
+        String sql = "SELECT * FROM cart_item WHERE userid = ? ORDER BY cart_itemid";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -71,9 +73,9 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public CartItem createCartItem(CartItem cartItem) {
         CartItem newCartItem = null;
-        String sql = "INSERT INTO cart_item(user_id, product_id, quantity) VALUES (?, ?, ?) RETURNING cart_item_id";
+        String sql = "INSERT INTO cart_item(userid, cakeid, quantity) VALUES (?, ?, ?) RETURNING cart_itemid";
         try {
-            int newId = jdbcTemplate.queryForObject(sql, int.class, cartItem.getUserId(), cartItem.getProductId(), cartItem.getQuantity());
+            int newId = jdbcTemplate.queryForObject(sql, int.class, cartItem.getUserId(), cartItem.getCakeId(), cartItem.getQuantity());
             newCartItem = getCartItemById(newId);
         }
         catch (CannotGetJdbcConnectionException e) {
@@ -90,7 +92,7 @@ public class JdbcCartItemDao implements CartItemDao {
     public CartItem updateCartItem(CartItem cartItem) {
         CartItem updatedCartItem = null;
         // The only thing that can be updated is Quantity
-        String sql = "UPDATE cart_item SET quantity = ? WHERE cart_item_id = ?";
+        String sql = "UPDATE cart_item SET quantity = ? WHERE cart_itemid = ?";
         try {
             int rowAffected = jdbcTemplate.update(sql, cartItem.getQuantity(), cartItem.getCartItemId());
             if (rowAffected == 0) {
@@ -110,7 +112,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public int deleteCartItemById(int cartItemId) {
         int numberOfRows = 0;
-        String sql = "DELETE FROM cart_item WHERE cart_item_id = ?";
+        String sql = "DELETE FROM cart_item WHERE cart_itemid = ?";
         try {
             numberOfRows = jdbcTemplate.update(sql, cartItemId);
         }
@@ -126,7 +128,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public int deleteCartItemsByUserId(int userId) {
         int numberOfRows = 0;
-        String sql = "DELETE FROM cart_item WHERE user_id = ?";
+        String sql = "DELETE FROM cart_item WHERE userid = ?";
         try {
             numberOfRows = jdbcTemplate.update(sql, userId);
         }
@@ -141,9 +143,11 @@ public class JdbcCartItemDao implements CartItemDao {
 
     private CartItem mapRowToCartItem(SqlRowSet rs) {
         CartItem item = new CartItem();
-        item.setCartItemId(rs.getInt("cart_item_id"));
-        item.setUserId(rs.getInt("user_id"));
-        item.setProductId(rs.getInt("product_id"));
+        item.setCartItemId(rs.getInt("cart_itemid"));
+        item.setUserId(rs.getInt("userid"));
+        item.setCakeId(rs.getInt("cakeid"));
+        item.setPickupDate(rs.getDate("pickupdate").toLocalDate());
+        item.setPickupTime(rs.getTime("pickuptime").toLocalTime());
         item.setQuantity(rs.getInt("quantity"));
         return item;
     }

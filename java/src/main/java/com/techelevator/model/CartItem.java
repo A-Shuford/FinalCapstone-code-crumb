@@ -1,23 +1,32 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 
 public class CartItem {
     private int cartItemId;
     private int userId;
     @Positive
-    private int cakeId;
-    private Cake cake;
+    private int cakeId; //foreign key in "cart/order"
+    private Cake cake; //references cake table in database
+
+    @NotEmpty
+    private LocalDate pickupDate;
+    @NotEmpty
+    private LocalTime pickupTime;
     @Positive
     private int quantity;
 
     public CartItem() {
     }
 
-    public CartItem(int cartItemId, int userId, int productId, int quantity) {
+    public CartItem(int cartItemId, int userId, int cakeId, int quantity) {
         this.cartItemId = cartItemId;
         this.userId = userId;
-        this.cakeId = productId;
+        this.cakeId = cakeId;
         this.quantity = quantity;
     }
 
@@ -37,12 +46,36 @@ public class CartItem {
         this.userId = userId;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getCakeId() {
+        return cakeId;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setCakeId(int cakeId) {
+        this.cakeId = cakeId;
+    }
+
+    public Cake getCake() {
+        return cake;
+    }
+
+    public void setCake(Cake cake) {
+        this.cake = cake;
+    }
+
+    public LocalDate getPickupDate() {
+        return pickupDate;
+    }
+
+    public void setPickupDate(LocalDate pickupDate) {
+        this.pickupDate = pickupDate;
+    }
+
+    public LocalTime getPickupTime() {
+        return pickupTime;
+    }
+
+    public void setPickupTime(LocalTime pickupTime) {
+        this.pickupTime = pickupTime;
     }
 
     public int getQuantity() {
@@ -53,11 +86,7 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct(Cake cake) {
+        this.cake = cake;
     }
 }

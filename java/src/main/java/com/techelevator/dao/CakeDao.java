@@ -1,18 +1,19 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Product;
+import com.techelevator.model.Cake;
 
 import java.util.List;
 
-public interface ProductDao {
+public interface CakeDao {
 
-    List<Product> getProducts();
+    List<Cake> getCakes();
 
-    Product getProductById(int productId);
+    Cake getCakeById(int cakeId);
 
-    List<Product> getProductsByUserId(int userId);
+    List<Cake> getCakesByUserId(int userId);
 
-    List<Product> getProductsByWishlistId(int wishlistId);
+    List<Cake> getCakesByStyle (String style);
 
-    List<Product> getProductsByOptionalSkuAndOrName(String productSku, String name, boolean useWildCard);
+    List<Cake> getCakesByType (String type);
+
 }

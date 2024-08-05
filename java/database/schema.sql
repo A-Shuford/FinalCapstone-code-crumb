@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, cakeStyle, cakeSize, cakeFlavor, cakeFilling, cakeFrosting, cake, cart;
+DROP TABLE IF EXISTS users, cakeStyle, cakeSize, cakeFlavor, cakeFilling, cakeFrosting, cake, cart_item;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -65,8 +65,8 @@ CREATE TABLE cake (
 	CONSTRAINT fk_cakeFrosting FOREIGN KEY (cakeFrosting) REFERENCES cakeFrosting(cakeFrostingId)
 );
 
-CREATE TABLE cart (
-	cartId SERIAL,
+CREATE TABLE cart_item (
+	cart_itemId SERIAL,
 	userId int,
 	cakeId int,
 	pickupDate Date NOT NULL, 

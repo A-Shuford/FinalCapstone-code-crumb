@@ -44,6 +44,10 @@ public class Cake {
         this.price = price;
     }
 
+    public Cake(){
+
+    }
+
     public int getCakeId() {
         return CakeId;
     }
