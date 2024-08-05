@@ -10,17 +10,24 @@ public class User {
 
    private int id;
    private String username;
+   private String yourName;
+   private String email;
+   private String phoneNumber;
    @JsonIgnore
    private String password;
+
    @JsonIgnore
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
 
    public User() { }
 
-   public User(int id, String username, String password, String authorities) {
+   public User(int id, String username, String yourName, String email, String phoneNumber, String password, String authorities) {
       this.id = id;
       this.username = username;
+      this.yourName = yourName;
+      this.email = email;
+      this.phoneNumber = phoneNumber;
       this.password = password;
       if (authorities != null) this.setAuthorities(authorities);
       this.activated = true;
@@ -40,6 +47,30 @@ public class User {
 
    public void setUsername(String username) {
       this.username = username;
+   }
+
+   public String getYourName() {
+      return yourName;
+   }
+
+   public void setYourName(String yourName) {
+      this.yourName = yourName;
+   }
+
+   public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
+   public String getPhoneNumber() {
+      return phoneNumber;
+   }
+
+   public void setPhoneNumber(String phoneNumber) {
+      this.phoneNumber = phoneNumber;
    }
 
    public String getPassword() {
@@ -82,13 +113,16 @@ public class User {
       return id == user.id &&
               activated == user.activated &&
               Objects.equals(username, user.username) &&
+              Objects.equals(yourName, user.yourName) &&
+              Objects.equals(email, user.email) &&
+              Objects.equals(phoneNumber, user.phoneNumber) &&
               Objects.equals(password, user.password) &&
               Objects.equals(authorities, user.authorities);
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(id, username, password, activated, authorities);
+      return Objects.hash(id, username, yourName, email, phoneNumber, password, activated, authorities);
    }
 
    @Override
@@ -96,8 +130,12 @@ public class User {
       return "User{" +
               "id=" + id +
               ", username='" + username + '\'' +
+              ", yourName='" + yourName + '\'' +
+              ", email='" + email + '\'' +
+              ", phoneNumber='" + phoneNumber + '\'' +
               ", activated=" + activated +
               ", authorities=" + authorities +
               '}';
    }
+   
 }
