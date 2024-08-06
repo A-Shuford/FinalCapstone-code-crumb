@@ -2,13 +2,13 @@
   <div id="capstone-app">
     <header>
     <img id="cakelogo" src = "/src/assets/CC Logo.png">
-    <div class = "pagetitle">
-      <h1>Code & Crumb</h1>
-      <p>"Serving one byte at the time!"</p>
-      <h2>QUESTIONS OR ORDER CALLS</h2>
-      <p>911</p>
-      <p>Philadelphia, PA EST 2004</p>
-    </div>
+    <div class="pagetitle">
+        <h1>Code & Crumb</h1>
+        <p>"Serving one byte at the time!"</p>
+        <h2>QUESTIONS OR ORDER</h2>
+        <h2>Call 911</h2>
+        <h2>Philadelphia, PA EST 2004</h2>
+      </div>
     <div id = "loginstatus">
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token">
           Logout /
@@ -59,8 +59,7 @@
     "header header header"
     "nav nav nav"
     "body body body"
-    "footer footer footer"
-    ;
+    "footer footer footer";    ;
 }
 
 header {
@@ -103,8 +102,8 @@ header #loginstatus img{
 }
 
 #cakelogo{
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
 }
 
 nav {
@@ -118,14 +117,14 @@ nav {
   border-bottom: 2px solid black;
 }
 nav #nav {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: flex-start;
+display: inline-block;
+justify-content: space-evenly;
+align-items: flex-start;
 }
 
 nav img {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
 }
 
 #capstone-app {
