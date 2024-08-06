@@ -86,7 +86,4 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public void setProduct(Cake cake) {
-        this.cake = cake;
-    }
 }
