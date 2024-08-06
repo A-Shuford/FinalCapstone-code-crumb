@@ -1,6 +1,6 @@
 package com.techelevator.model;
 
-import java.io.Serial;
+
 import java.math.BigDecimal;
 
 public class Cake {
