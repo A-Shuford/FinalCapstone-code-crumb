@@ -97,10 +97,6 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public void setProduct(Cake cake) {
-        this.cake = cake;
-    }
-
     public boolean isPending(){
         return CART_STATUS_PENDING.equals(this.cartItemStatus);
     }
