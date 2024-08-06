@@ -64,6 +64,14 @@ export default {
 .form-input-group {
   margin-bottom: 1rem;
 }
+button {
+  border-radius: 5px;
+}
+input {
+  border-radius: 5px;
+  padding: 0.25rem;
+  width: 100%;
+}
 label {
   margin-right: 0.5rem;
 }
