@@ -1,6 +1,6 @@
 <template>
     <div class="instock">
-        <h1>Avaliable itmes</h1>
+        <h1>Available Items</h1>
     </div>
 </template>
 

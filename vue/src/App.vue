@@ -2,13 +2,13 @@
   <div id="capstone-app">
     <header>
     <img id="cakelogo" src = "/src/assets/CC Logo.png">
-    <div class = "pagetitle">
-      <h1>Code & Crumb</h1>
-      <p>"Serving one byte at the time!"</p>
-      <h2>QUESTIONS OR ORDER CALLS</h2>
-      <p>911</p>
-      <p>Philadelphia, PA EST 2004</p>
-    </div>
+    <div class="pagetitle">
+        <h1><center>Code & Crumb</center></h1>
+        <p><center>"Serving one byte at the time!"</center></p>
+        <h2>QUESTIONS OR ORDER</h2>
+        <h2><center>Call 911</center></h2>
+        <h2><center>Philadelphia, PA EST 2004</center></h2>
+      </div>
     <div id = "loginstatus">
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token">
           Logout /
@@ -59,8 +59,7 @@
     "header header header"
     "nav nav nav"
     "body body body"
-    "footer footer footer"
-    ;
+    "footer footer footer";    ;
 }
 
 header {
@@ -76,7 +75,6 @@ header {
 header h1 {
   font-size: 2rem;
   margin: 10px 0;
-  font-style: italic;
 }
 
 header h2 {
@@ -103,11 +101,13 @@ header #loginstatus img{
 }
 
 #cakelogo{
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
 }
 
 nav {
+  font-size: x-large;
+  font-weight: bold;
   grid-area: nav;
   display: flex;
   justify-content: space-evenly;
@@ -117,15 +117,16 @@ nav {
   border-top: 1px solid black;
   border-bottom: 2px solid black;
 }
+
 nav #nav {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: flex-start;
+display: inline-block;
+justify-content: space-evenly;
+align-items: center;
 }
 
 nav img {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
 }
 
 #capstone-app {
@@ -140,9 +141,29 @@ body > img {
 body {
   grid-area: body;
   display: flex;
-  justify-content: space-evenly;
-  align-items:flex-start;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
   background-color: #FAEDCD;
+}
+
+.body-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.body-content h1 {
+  text-align: left;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+body > img {
+  width: 200px;
+  height: 335px;
+  align-self: flex-end;
 }
 
 
