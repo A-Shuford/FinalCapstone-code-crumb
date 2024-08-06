@@ -1,6 +1,7 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, cakeStyle, cakeSize, cakeFlavor, cakeFilling, cakeFrosting, cake, cart_item;
+DROP TABLE IF EXISTS users, cakeStyle, cakeSize, cakeFlavor, cakeFilling, cakeFrosting, cake,
+cart_item_status, cart_item;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -65,16 +66,28 @@ CREATE TABLE cake (
 	CONSTRAINT fk_cakeFrosting FOREIGN KEY (cakeFrosting) REFERENCES cakeFrosting(cakeFrostingId)
 );
 
+CREATE TABLE cart_item_status (
+	cart_item_status_id SERIAL,
+	status_name varchar(20),
+	
+	CONSTRAINT pk_cart_item_status_id PRIMARY KEY(cart_item_status_id)
+);
+
 CREATE TABLE cart_item (
 	cart_itemId SERIAL,
 	userId int,
 	cakeId int,
 	pickupDate Date NOT NULL, 
-	pickupTime TIME NOT NULL, 
+	pickupTime TIME NOT NULL,
+	statusId int,
 	
-	CONSTRAINT pk_cartId PRIMARY KEY(cartId),
+	CONSTRAINT pk_cart_itemId PRIMARY KEY(cart_itemId),
 	CONSTRAINT fk_userId FOREIGN KEY(userId) REFERENCES users(user_id),
 	CONSTRAINT fk_cakeId FOREIGN KEY (cakeId) REFERENCES cake(cakeId)
+	CONSTRAINT fk_statusId FOREIGN KEY(cart_item_status_id) REFERENCES cart_item_status(cart_item_status_id)
 );
 
 COMMIT TRANSACTION;
+
+
+

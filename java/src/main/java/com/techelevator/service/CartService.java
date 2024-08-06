@@ -52,6 +52,11 @@ public class CartService {
 
     }
 
+    public void clearCart(Principal principal){
+        int userId = getUserId(principal);
+        cartItemDao.deleteCartItemsByUserId(userId);
+    }
+
     private Cake findCake(List<Cake> cakes, int cakeId){
         for (Cake cake : cakes){
             if(cake.getCakeId() == cakeId){
@@ -69,4 +74,25 @@ public class CartService {
     private User getUser(Principal principal){
         return userDao.getUserByUsername(principal.getName());
     }
+
+    public CartItem addToCart(Principal principal, CartItem item){
+
+        int userId = getUserId(principal);
+        item.setUserId(userId);
+
+        CartItem existingItem = cartItemDao.getCartItemByCakeIdAndUserId(item.getCakeId(), userId);
+
+        if(existingItem == null){
+
+            return cartItemDao.createCartItem(item);
+        }else{
+            existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
+            return cartItemDao.updateCartItem(existingItem);
+        }
+    }
+
+    public void removeFromCart(Principal principal, int cartItemId){
+        cartItemDao.deleteCartItemById(cartItemId);
+    }
+
 }
