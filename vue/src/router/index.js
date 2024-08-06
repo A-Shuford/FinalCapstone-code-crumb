@@ -6,7 +6,11 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
-
+import InStockView from '../views/InStockView.vue';
+import CartItemView from '../views/CartItemView.vue';
+import CustomOrderView from '../views/CustomOrderView.vue';
+import ContactUsView from '../views/ContactUsView.vue';
+import ReviewsView from '../views/ReviewsView.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -21,7 +25,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -45,6 +49,46 @@ const routes = [
     name: "register",
     component: RegisterView,
     meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/instock",
+    name: "instock",
+    component: InStockView,
+    meta:{
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/cartitem",
+    name: "cartitem",
+    component: CartItemView,
+    meta:{
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/customorder",
+    name: "customorder",
+    component: CustomOrderView,
+    meta:{
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/contactus",
+    name: "contactus",
+    component: ContactUsView,
+    meta:{
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/reviews",
+    name: "reviews",
+    component: ReviewsView,
+    meta:{
       requiresAuth: false
     }
   }
