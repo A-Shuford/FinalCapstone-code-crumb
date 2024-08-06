@@ -11,7 +11,7 @@
     </div>
     <div id = "loginstatus">
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token">
-          Logout
+          Logout /
         </router-link>
         <router-link v-bind:to="{ name: 'login' }" v-else>Login /</router-link>
         <router-link v-bind:to="{name: 'cartitem'}"> 
@@ -38,10 +38,14 @@
     </div>
   </nav>
   <body>
-  </body>
     <router-view />
+    <img src = "/src/assets/CC Mascot.png">
+  </body>
+    
  
   </div>
+
+  <footer>&copy; 2022. All rights reserved.</footer>
 
 </template>
 
@@ -54,7 +58,9 @@
   grid-template-areas:
     "header header header"
     "nav nav nav"
-    "body footer footer";
+    "body body body"
+    "footer footer footer"
+    ;
 }
 
 header {
@@ -125,5 +131,20 @@ nav img {
 #capstone-app {
   background-color: #FAEDCD;
 }
+
+body > img {
+  width: 200px;
+  height: 335px;
+}
+
+body {
+  grid-area: body;
+  display: flex;
+  justify-content: space-evenly;
+  align-items:flex-start;
+  background-color: #FAEDCD;
+}
+
+
 
 </style>
