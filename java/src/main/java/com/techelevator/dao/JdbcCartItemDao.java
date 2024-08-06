@@ -24,7 +24,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public CartItem getCartItemById(int cartItemId) {
         CartItem cartItem = null;
-        String sql = "SELECT * FROM cart_item WHERE cart_itemid = ?";
+        String sql = "SELECT * FROM cart_item WHERE cart_item_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cartItemId);
             if (results.next()) {
@@ -40,7 +40,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public CartItem getCartItemByCakeIdAndUserId(int cakeId, int userId) {
         CartItem cartItem = null;
-        String sql = "SELECT * FROM cart_item WHERE cakeid = ? AND user_id = ?";
+        String sql = "SELECT * FROM cart_item WHERE cake_id = ? AND user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cakeId, userId);
             if (results.next()) {
@@ -56,7 +56,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public List<CartItem> getCartItemsByUserId(int userId) {
         List<CartItem> cartItems = new ArrayList<>();
-        String sql = "SELECT * FROM cart_item WHERE userid = ? ORDER BY cart_itemid";
+        String sql = "SELECT * FROM cart_item WHERE user_id = ? ORDER BY cart_item_id";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -73,7 +73,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public CartItem createCartItem(CartItem cartItem) {
         CartItem newCartItem = null;
-        String sql = "INSERT INTO cart_item(userid, cakeid, quantity) VALUES (?, ?, ?) RETURNING cart_itemid";
+        String sql = "INSERT INTO cart_item(user_id, cake_id, quantity) VALUES (?, ?, ?) RETURNING cart_item_id";
         try {
             int newId = jdbcTemplate.queryForObject(sql, int.class, cartItem.getUserId(), cartItem.getCakeId(), cartItem.getQuantity());
             newCartItem = getCartItemById(newId);
@@ -92,7 +92,7 @@ public class JdbcCartItemDao implements CartItemDao {
     public CartItem updateCartItem(CartItem cartItem) {
         CartItem updatedCartItem = null;
         // The only thing that can be updated is Quantity
-        String sql = "UPDATE cart_item SET quantity = ? WHERE cart_itemid = ?";
+        String sql = "UPDATE cart_item SET quantity = ? WHERE cart_item_id = ?";
         try {
             int rowAffected = jdbcTemplate.update(sql, cartItem.getQuantity(), cartItem.getCartItemId());
             if (rowAffected == 0) {
@@ -111,13 +111,13 @@ public class JdbcCartItemDao implements CartItemDao {
 
     @Override
     public int rejectCartItemByCakeId(int cakeId) {
-        String sql = "UPDATE from cart_item SET statusId = ? WHERE cakeId = ?;";
+        String sql = "UPDATE from cart_item SET status_id = ? WHERE cake_id = ?;";
         int numberOfRows;
         try {
             numberOfRows = jdbcTemplate.update(sql, //NEED STATUS ID FOR REJECTED #//
                     , cakeId);
             if (numberOfRows == 0) {
-                throw new DaoException("Zero rowsw affected, expected at least one.");
+                throw new DaoException("Zero rows affected, expected at least one.");
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -129,13 +129,13 @@ public class JdbcCartItemDao implements CartItemDao {
 
     @Override
     public int cancelCartItemByCakeId(int cakeId) {
-        String sql = "UPDATE from cart_item SET statusId = ? WHERE cakeid = ?;";
+        String sql = "UPDATE from cart_item SET status_id = ? WHERE cake_id = ?;";
         int numberOfRows;
         try {
             numberOfRows = jdbcTemplate.update(sql, //NEED STATUS ID FOR CANCELLED #//
                     , cakeId);
             if (numberOfRows == 0) {
-                throw new DaoException("Zero rowsw affected, expected at least one.");
+                throw new DaoException("Zero rows affected, expected at least one.");
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -147,7 +147,7 @@ public class JdbcCartItemDao implements CartItemDao {
 
     @Override
     public int rejectCartItemsByUserId(int userId) {
-        String sql = "UPDATE from cart_item SET statusId = ? WHERE userid = ?;";
+        String sql = "UPDATE from cart_item SET status_id = ? WHERE user_id = ?;";
         int numberOfRows;
         try {
             numberOfRows = jdbcTemplate.update(sql, //NEED STATUS ID FOR REJECTED #//
@@ -166,7 +166,7 @@ public class JdbcCartItemDao implements CartItemDao {
 
     @Override
     public int cancelCartItemsByUserId(int userId) {
-        String sql = "UPDATE from cart_item SET statusId = ? WHERE userid = ?;";
+        String sql = "UPDATE from cart_item SET status_id = ? WHERE user_id = ?;";
         int numberOfRows;
         try {
             numberOfRows = jdbcTemplate.update(sql, //NEED STATUS ID FOR CANCELLED #//
@@ -185,13 +185,13 @@ public class JdbcCartItemDao implements CartItemDao {
 
     private CartItem mapRowToCartItem(SqlRowSet rs) {
         CartItem item = new CartItem();
-        item.setCartItemId(rs.getInt("cart_itemid"));
-        item.setUserId(rs.getInt("userid"));
-        item.setCakeId(rs.getInt("cakeid"));
-        item.setPickupDate(rs.getDate("pickupdate").toLocalDate());
-        item.setPickupTime(rs.getTime("pickuptime").toLocalTime());
+        item.setCartItemId(rs.getInt("cart_item_id"));
+        item.setUserId(rs.getInt("user_id"));
+        item.setCakeId(rs.getInt("cake_id"));
+        item.setPickupDate(rs.getDate("pickup_date").toLocalDate());
+        item.setPickupTime(rs.getTime("pickupt_time").toLocalTime());
         item.setQuantity(rs.getInt("quantity"));
-        item.setCartItemStatus((rs.getInt("statusId")));
+        item.setCartItemStatus((rs.getInt("status_id")));
         return item;
     }
 
