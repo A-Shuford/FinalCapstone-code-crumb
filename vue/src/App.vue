@@ -3,11 +3,11 @@
     <header>
     <img id="cakelogo" src = "/src/assets/CC Logo.png">
     <div class="pagetitle">
-        <h1>Code & Crumb</h1>
-        <p>"Serving one byte at the time!"</p>
+        <h1><center>Code & Crumb</center></h1>
+        <p><center>"Serving one byte at the time!"</center></p>
         <h2>QUESTIONS OR ORDER</h2>
-        <h2>Call 911</h2>
-        <h2>Philadelphia, PA EST 2004</h2>
+        <h2><center>Call 911</center></h2>
+        <h2><center>Philadelphia, PA EST 2004</center></h2>
       </div>
     <div id = "loginstatus">
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token">
@@ -75,7 +75,6 @@ header {
 header h1 {
   font-size: 2rem;
   margin: 10px 0;
-  font-style: italic;
 }
 
 header h2 {
@@ -107,6 +106,8 @@ header #loginstatus img{
 }
 
 nav {
+  font-size: x-large;
+  font-weight: bold;
   grid-area: nav;
   display: flex;
   justify-content: space-evenly;
@@ -116,10 +117,11 @@ nav {
   border-top: 1px solid black;
   border-bottom: 2px solid black;
 }
+
 nav #nav {
 display: inline-block;
 justify-content: space-evenly;
-align-items: flex-start;
+align-items: center;
 }
 
 nav img {
@@ -139,9 +141,29 @@ body > img {
 body {
   grid-area: body;
   display: flex;
-  justify-content: space-evenly;
-  align-items:flex-start;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
   background-color: #FAEDCD;
+}
+
+.body-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.body-content h1 {
+  text-align: left;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+body > img {
+  width: 200px;
+  height: 335px;
+  align-self: flex-end;
 }
 
 

@@ -1,4 +1,4 @@
-/* Default styles */
+
 .hamburger-menu {
     display: none;
     flex-direction: column;
