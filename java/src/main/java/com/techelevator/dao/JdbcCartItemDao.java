@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcCartItemDao implements CartItemDao {
+public class JdbcCartItemDao {
 
-    private final JdbcTemplate jdbcTemplate;
+    /*private final JdbcTemplate jdbcTemplate;
 
     public JdbcCartItemDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -194,7 +194,7 @@ public class JdbcCartItemDao implements CartItemDao {
         item.setCartItemStatus((rs.getInt("status_id")));
         return item;
     }
-
+*/
 
 }
 
