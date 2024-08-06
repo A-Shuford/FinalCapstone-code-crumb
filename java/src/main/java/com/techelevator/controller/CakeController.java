@@ -21,7 +21,7 @@ public class CakeController {
     }
 
 
-
+/*
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Cake> getList(@RequestParam(required = false) String sku, @RequestParam(required = false) String name) {
         try {
@@ -35,7 +35,7 @@ public class CakeController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
     }
-
+*/
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Cake getById(@PathVariable int id) {
         try {
