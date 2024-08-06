@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Cake;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -104,10 +105,41 @@ public class JdbcCakeDao implements CakeDao {
     }
 
     @Override
-    public int updateAvailableCakeAmounts(int cakeId) {
-        return 0;
+    public Cake updateAvailableCakeAmountsById(Cake cake) {
+        Cake updatedCake = null;
+        String sql = "UPDATE cake SET amountAvailable = ?, WHERE cakeid = ?;";
+        try {
+            int numberOfRows = jdbcTemplate.update(sql, cake.getAmountAvailable(), cake.getCakeId());
+
+            if (numberOfRows == 0){
+                throw new DaoException("Zero rows affected, expected at least one.");
+            } else {
+                updatedCake = getCakeById(cake.getCakeId());
+            }
+        }  catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return updatedCake;
     }
 
+    @Override
+    public List<Cake> getCakesByName(String cakeName) {
+        List<Cake> cakes = new ArrayList<>();
+        String sql = "SELECT * FROM cake WHERE cakename = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cakeName);
+            while (results.next()) {
+                Cake cake = mapRowToCake(results);
+                cakes.add(cake);
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return cakes;
+    }
 
     private Cake mapRowToCake(SqlRowSet rs) {
         Cake cake = new Cake();

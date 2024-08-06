@@ -22,7 +22,7 @@ public class CartItem {
     private LocalTime pickupTime;
     @Positive
     private int quantity;
-    private String cartItemStatus;
+    private int cartItemStatus;
 
     public static final String CART_STATUS_PENDING = "Pending";
     public static final String CART_STATUS_REJECTED = "Rejected by bakery";
@@ -33,7 +33,7 @@ public class CartItem {
     public CartItem() {
     }
 
-    public CartItem(int cartItemId, int userId, int cakeId, int quantity, String cartItemStatus) {
+    public CartItem(int cartItemId, int userId, int cakeId, int quantity, int cartItemStatus) {
         this.cartItemId = cartItemId;
         this.userId = userId;
         this.cakeId = cakeId;
@@ -97,6 +97,14 @@ public class CartItem {
         this.quantity = quantity;
     }
 
+    public int getCartItemStatus() {
+        return cartItemStatus;
+    }
+
+    public void setCartItemStatus(int cartItemStatus) {
+        this.cartItemStatus = cartItemStatus;
+    }
+
     public boolean isPending(){
         return CART_STATUS_PENDING.equals(this.cartItemStatus);
     }
@@ -117,7 +125,7 @@ public class CartItem {
     public void confirmPickup(){
         if (isPending()){
             //only pending orders can be changed to pick-up
-            cartItemStatus = CART_STATUS_READY_PU;
+            cartItemStatus = Integer.parseInt(CART_STATUS_READY_PU);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change order status from " +
                     cartItemStatus+ " to " + CART_STATUS_READY_PU);
@@ -126,7 +134,7 @@ public class CartItem {
     public void reject(){
         if (isPending()){
             //only pending orders can be rejected by employee
-            cartItemStatus =CART_STATUS_REJECTED;
+            cartItemStatus = Integer.parseInt(CART_STATUS_REJECTED);
         }  else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change order status from " +
                     cartItemStatus+ " to " + CART_STATUS_REJECTED);
@@ -135,7 +143,7 @@ public class CartItem {
     public void cancel(){
         if (isPending()){
             //only pending orders can be cancelled by customer
-            cartItemStatus =CART_STATUS_CANCELLED;
+            cartItemStatus = Integer.parseInt(CART_STATUS_CANCELLED);
         }  else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change order status from " +
                     cartItemStatus+ " to " + CART_STATUS_CANCELLED);
@@ -144,7 +152,7 @@ public class CartItem {
     public void completeOrder(){
         if (isReadyPu()){
             //orders can only be completed if ready for pick-up
-            cartItemStatus = CART_STATUS_COMPLETED;
+            cartItemStatus = Integer.parseInt(CART_STATUS_COMPLETED);
         }  else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change order status from " +
                     cartItemStatus+ " to " + CART_STATUS_COMPLETED);
