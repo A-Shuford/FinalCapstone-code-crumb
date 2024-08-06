@@ -21,21 +21,21 @@ public class CakeController {
     }
 
 
-    /*
+
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Cake> getList(@RequestParam(required = false) String sku, @RequestParam(required = false) String name) {
         try {
             if (sku == null && name == null) {
                 return cakeDao.getCakes();
             } else {
-                return cakeDao.getCakesByOptionalSkuAndOrName(sku, name, true);
+                //return cakeDao.getCakesByName(name, true);
             }
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
     }
-*/
+
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Cake getById(@PathVariable int id) {
         try {
