@@ -22,7 +22,7 @@ public class JdbcCakeDao implements CakeDao {
     @Override
     public List<Cake> getCakes() {
         List<Cake> cakes = new ArrayList<>();
-        String sql = "SELECT * FROM cake ORDER BY cake_id";
+        String sql = "SELECT * FROM cake ORDER BY cakeid";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -39,7 +39,7 @@ public class JdbcCakeDao implements CakeDao {
     @Override
     public Cake getCakeById(int cakeId) {
         Cake cake = null;
-        String sql = "SELECT * FROM cake WHERE cake_id = ?";
+        String sql = "SELECT * FROM cake WHERE cakeid = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cakeId);
             if (results.next()) {
@@ -55,7 +55,7 @@ public class JdbcCakeDao implements CakeDao {
     @Override
     public List<Cake> getCakesByUserId(int userId) {
         List<Cake> cakes = new ArrayList<>();
-        String sql = "SELECT * FROM cake WHERE cake_id IN (SELECT cake_id FROM cart_item WHERE user_id = ?)";
+        String sql = "SELECT * FROM cake WHERE cakeid IN (SELECT cakeid FROM cart_item WHERE userid = ?)";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -71,18 +71,47 @@ public class JdbcCakeDao implements CakeDao {
 
     @Override
     public List<Cake> getCakesByStyle(String style) {
-        return null;
+        List<Cake> cakes = new ArrayList<>();
+        String sql = "Select * FROM cake WHERE cakestyle = ?";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql,style);
+            while(results.next()){
+                Cake cake = mapRowToCake(results);
+                cakes.add(cake);
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return cakes;
     }
 
     @Override
     public List<Cake> getCakesByType(String type) {
-        return null;
+        List<Cake> cakes = new ArrayList<>();
+        String sql = "Select * FROM cake WHERE caketype = ?";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql,type);
+            while(results.next()){
+                Cake cake = mapRowToCake(results);
+                cakes.add(cake);
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return cakes;
+    }
+
+    @Override
+    public int updateAvailableCakeAmounts(int cakeId) {
+        return 0;
     }
 
 
     private Cake mapRowToCake(SqlRowSet rs) {
         Cake cake = new Cake();
-        cake.setCakeId(rs.getInt("cake_id"));
+        cake.setCakeId(rs.getInt("cakeid"));
         cake.setCakeName(rs.getString("cakename"));
         cake.setCakeStyle(rs.getInt("cakestyle"));
         cake.setCakeSize(rs.getInt("cakesize"));

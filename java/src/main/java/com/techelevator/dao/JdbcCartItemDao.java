@@ -110,6 +110,26 @@ public class JdbcCartItemDao implements CartItemDao {
     }
 
     @Override
+    public String rejectCartItemById(int cartItemId) {
+        return null;
+    }
+
+    @Override
+    public String cancelCartItemById(int cartItemId) {
+        return null;
+    }
+
+    @Override
+    public String rejectCartItemsByUserId(int userId) {
+        return null;
+    }
+
+    @Override
+    public String cancelCartItemsByUserId(int userId) {
+        return null;
+    }
+
+    @Override
     public int deleteCartItemById(int cartItemId) {
         int numberOfRows = 0;
         String sql = "DELETE FROM cart_item WHERE cart_itemid = ?";
