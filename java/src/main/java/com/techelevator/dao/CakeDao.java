@@ -15,6 +15,8 @@ public interface CakeDao {
     List<Cake> getCakesByStyle (String style);
 
     List<Cake> getCakesByType (String type);
-    int updateAvailableCakeAmounts (int cakeId);
+    Cake updateAvailableCakeAmountsById (Cake cake);
+
+    List<Cake> getCakesByName (String cakeName);
 
 }

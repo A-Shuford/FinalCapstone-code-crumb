@@ -40,7 +40,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public CartItem getCartItemByCakeIdAndUserId(int cakeId, int userId) {
         CartItem cartItem = null;
-        String sql = "SELECT * FROM cart_item WHERE cakeid = ? AND userid = ?";
+        String sql = "SELECT * FROM cart_item WHERE cakeid = ? AND user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cakeId, userId);
             if (results.next()) {
@@ -110,56 +110,78 @@ public class JdbcCartItemDao implements CartItemDao {
     }
 
     @Override
-    public String rejectCartItemById(int cartItemId) {
-        return null;
-    }
-
-    @Override
-    public String cancelCartItemById(int cartItemId) {
-        return null;
-    }
-
-    @Override
-    public String rejectCartItemsByUserId(int userId) {
-        return null;
-    }
-
-    @Override
-    public String cancelCartItemsByUserId(int userId) {
-        return null;
-    }
-
-    @Override
-    public int deleteCartItemById(int cartItemId) {
-        int numberOfRows = 0;
-        String sql = "DELETE FROM cart_item WHERE cart_itemid = ?";
+    public int rejectCartItemByCakeId(int cakeId) {
+        String sql = "UPDATE from cart_item SET statusId = ? WHERE cakeId = ?;";
+        int numberOfRows;
         try {
-            numberOfRows = jdbcTemplate.update(sql, cartItemId);
-        }
-        catch (CannotGetJdbcConnectionException e) {
+            numberOfRows = jdbcTemplate.update(sql, //NEED STATUS ID FOR REJECTED #//
+                    , cakeId);
+            if (numberOfRows == 0) {
+                throw new DaoException("Zero rowsw affected, expected at least one.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
-        }
-        catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
         return numberOfRows;
     }
 
     @Override
-    public int deleteCartItemsByUserId(int userId) {
-        int numberOfRows = 0;
-        String sql = "DELETE FROM cart_item WHERE userid = ?";
+    public int cancelCartItemByCakeId(int cakeId) {
+        String sql = "UPDATE from cart_item SET statusId = ? WHERE cakeid = ?;";
+        int numberOfRows;
         try {
-            numberOfRows = jdbcTemplate.update(sql, userId);
-        }
-        catch (CannotGetJdbcConnectionException e) {
+            numberOfRows = jdbcTemplate.update(sql, //NEED STATUS ID FOR CANCELLED #//
+                    , cakeId);
+            if (numberOfRows == 0) {
+                throw new DaoException("Zero rowsw affected, expected at least one.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
-        }
-        catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
         return numberOfRows;
     }
+
+    @Override
+    public int rejectCartItemsByUserId(int userId) {
+        String sql = "UPDATE from cart_item SET statusId = ? WHERE userid = ?;";
+        int numberOfRows;
+        try {
+            numberOfRows = jdbcTemplate.update(sql, //NEED STATUS ID FOR REJECTED #//
+                    , userId);
+            if (numberOfRows == 0) {
+                throw new DaoException("Zero rows affected, expected at least one.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return numberOfRows;
+
+    }
+
+    @Override
+    public int cancelCartItemsByUserId(int userId) {
+        String sql = "UPDATE from cart_item SET statusId = ? WHERE userid = ?;";
+        int numberOfRows;
+        try {
+            numberOfRows = jdbcTemplate.update(sql, //NEED STATUS ID FOR CANCELLED #//
+                    , userId);
+            if (numberOfRows == 0) {
+                throw new DaoException("Zero rowsw affected, expected at least one.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return numberOfRows;
+    }
+
 
     private CartItem mapRowToCartItem(SqlRowSet rs) {
         CartItem item = new CartItem();
@@ -169,6 +191,7 @@ public class JdbcCartItemDao implements CartItemDao {
         item.setPickupDate(rs.getDate("pickupdate").toLocalDate());
         item.setPickupTime(rs.getTime("pickuptime").toLocalTime());
         item.setQuantity(rs.getInt("quantity"));
+        item.setCartItemStatus((rs.getInt("statusId")));
         return item;
     }
 
