@@ -10,9 +10,9 @@ public interface CartItemDao {
     List<CartItem> getCartItemsByUserId(int userId);
     CartItem createCartItem(CartItem item);
     CartItem updateCartItem(CartItem item);
-    String rejectCartItemById(int cartItemId);
-    String cancelCartItemById (int cartItemId);
-    String rejectCartItemsByUserId(int userId);
-    String cancelCartItemsByUserId(int userId);
+    int rejectCartItemById(int cartItemId);
+    int cancelCartItemById (int cartItemId);
+    int rejectCartItemsByUserId(int userId);
+    int cancelCartItemsByUserId(int userId);
 
 }

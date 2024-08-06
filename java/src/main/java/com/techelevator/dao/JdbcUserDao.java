@@ -27,7 +27,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User getUserById(int userId) {
         User user = null;
-        String sql = "SELECT user_id, username, yourname, email, phonenumber, password_hash, role FROM users WHERE user_id = ?";
+        String sql = "SELECT user_id, username, yourname, email, phone_number, password_hash, role FROM users WHERE user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             if (results.next()) {
@@ -59,7 +59,7 @@ public class JdbcUserDao implements UserDao {
     public User getUserByUsername(String username) {
         if (username == null) throw new IllegalArgumentException("Username cannot be null");
         User user = null;
-        String sql = "SELECT user_id, username, yourname, email, phonenumber, password_hash, role FROM users WHERE username = LOWER(TRIM(?));";
+        String sql = "SELECT user_id, username, yourname, email, phone_number, password_hash, role FROM users WHERE username = LOWER(TRIM(?));";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, username);
             if (rowSet.next()) {
@@ -75,7 +75,7 @@ public class JdbcUserDao implements UserDao {
     public User getUserByEmail(String email) {
         if (email == null) throw new IllegalArgumentException("Email cannot be null");
         User user = null;
-        String sql = "SELECT user_id, username, yourname, email, phonenumber, password_hash, role FROM users WHERE email = ?";
+        String sql = "SELECT user_id, username, yourname, email, phone_number, password_hash, role FROM users WHERE email = ?";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, email);
             if (rowSet.next()) {
@@ -91,7 +91,7 @@ public class JdbcUserDao implements UserDao {
     public User getUserByPhoneNumber(String phoneNumber) {
         if (phoneNumber == null) throw new IllegalArgumentException("Phone number cannot be null");
         User user = null;
-        String sql = "SELECT user_id, username, yourname, email, phonenumber, password_hash, role FROM users WHERE phonenumber = ?";
+        String sql = "SELECT user_id, username, yourname, email, phone_number, password_hash, role FROM users WHERE phonenumber = ?";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, phoneNumber);
             if (rowSet.next()) {
@@ -107,7 +107,7 @@ public class JdbcUserDao implements UserDao {
     public User createUser(RegisterUserDto user) {
         User newUser = null;
         String insertUserSql = "INSERT INTO users (username, yourname, email, " +
-                "phonenumber, password_hash, role) values (LOWER(TRIM(?)),?, ?, ?, ?, ?) RETURNING user_id";
+                "phone_number, password_hash, role) values (LOWER(TRIM(?)),?, ?, ?, ?, ?) RETURNING user_id";
         String password_hash = new BCryptPasswordEncoder().encode(user.getPassword());
         String ssRole = user.getRole().toUpperCase().startsWith("ROLE_") ? user.getRole().toUpperCase() : "ROLE_" + user.getRole().toUpperCase();
         try {
@@ -128,7 +128,7 @@ public class JdbcUserDao implements UserDao {
         user.setUsername(rs.getString("username"));
         user.setYourName(rs.getString("yourname"));
         user.setEmail(rs.getString("email"));
-        user.setPhoneNumber(rs.getString("phonenumber"));
+        user.setPhoneNumber(rs.getString("phone_number"));
         user.setPassword(rs.getString("password_hash"));
         user.setAuthorities(Objects.requireNonNull(rs.getString("role")));
         user.setActivated(true);
