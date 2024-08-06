@@ -96,7 +96,7 @@ INSERT INTO cake_frosting(frosting_name) VALUES ('Cream cheese');
 ------INSERTING FILLING TYPE----------
 INSERT INTO cake_filling(filling_name) VALUES ('Apple Jelly');
 INSERT INTO cake_filling(filling_name) VALUES ('Raspberry Jelly');
-INSERT INTO cake_filling(filling_name) VALUES ('Starwberry Jelly');
+INSERT INTO cake_filling(filling_name) VALUES ('Strawberry Jelly');
 INSERT INTO cake_filling(filling_name) VALUES ('Vanilla Custard');
 INSERT INTO cake_filling(filling_name) VALUES ('Chocolae Custard');
 INSERT INTO cake_filling(filling_name) VALUES ('Cookie Dough');
@@ -124,6 +124,11 @@ INSERT INTO cake_style(style_name) VALUES('Sheet');
 INSERT INTO cake_style(style_name) VALUES('Cupcakes');
 
 
---INSERT INTO cake(cakeName, cakeStyle, cakeSize, cakeFlavor, cakeFilling, cakeFrosting, cakeType, hasWriting, customText, amountAvaliable, price) VALUES("Chocolate");
+--
+INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, price) 
+VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 20),
+('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 20),
+('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 20),
+('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 20);
 
 COMMIT TRANSACTION;
