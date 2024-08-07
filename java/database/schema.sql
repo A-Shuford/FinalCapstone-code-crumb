@@ -62,7 +62,8 @@ CREATE TABLE cake (
 	has_writing boolean, 
 	custom_text varchar(100),
 	amount_available int,
-	price numeric,
+	price decimal(8,2),
+	image_name varchar(200),
 	
 	CONSTRAINT pk_cake_id PRIMARY KEY(cake_id),
 	CONSTRAINT fk_cake_style FOREIGN KEY(cake_style) REFERENCES cake_style(cake_style_id),
@@ -125,10 +126,11 @@ INSERT INTO cake_style(style_name) VALUES('Cupcakes');
 
 
 --
-INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, price) 
-VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 20),
-('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 20),
-('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 20),
-('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 20);
+INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, price, image_name) 
+VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 35.00,'/src/assets/Cake Images/Chocolate cake ganache 2.jpg'),
+('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 5.00,'/src/assets/Cake Images/Vanilla-Buttercream.jpg'),
+('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 31.40,'/src/assets/Cake Images/Birthday-Confetti-Cake.jpg'),
+('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 20.50,'/src/assets/Cake Images/Red-Velvet-Cake.webp'),
+('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake Images/.jpg'); 
 
 COMMIT TRANSACTION;
