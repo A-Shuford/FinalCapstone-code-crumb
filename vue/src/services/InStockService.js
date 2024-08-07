@@ -15,11 +15,11 @@ export default{
         if (querystring) {
             querystring = "?" + querystring;
         }
-        return axios.get('/products' + querystring);
+        return axios.get('/cakes' + querystring);
       },
     
-      getProductById(productId) {
-        return axios.get(`/products/${productId}`);
+      getCakeById(cakeId) {
+        return axios.get(`/cakes/${cakeId}`);
       },
       
 
