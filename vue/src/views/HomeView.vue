@@ -10,6 +10,7 @@
     <div class="cake-gallery">
       <div class="slider-container">
         <div class="slider-wrapper">
+<<<<<<< HEAD
           <img src="/src/assets/Cake Images/apple jelly cake image 1.jpg" />
           <img src="/src/assets/Cake Images/Chocolate cake ganache 2.jpg" />
           <img src="/src/assets/Cake Images/Butterscotch-Cake.jpg" />
@@ -17,6 +18,15 @@
           <img src="/src/assets/Cake Images/funfetti.jpg" />
           <img src="/src/assets/Cake Images/lemoncake.jpg" />
           <img src="/src/assets/Cake Images/vanillacupcakes.jpg" />
+=======
+          <img src="/src/assets/Cake Images/apple jelly cake image 1.jpg" alt="Apple Jelly Cake 1" />
+          <img src="/src/assets/Cake Images/Chocolate cake ganache 2.jpg" alt="Chocolate Cake Ganache 2" />
+          <img src="/src/assets/Cake Images/Butterscotch-Cake.jpg" alt="Butterscotch Cake" />
+          <img src="/src/assets/Cake Images/cupcakes.jpg" alt="Cupcakes" />
+          <img src="/src/assets/Cake Images/funfetti.jpg" alt="Funfetti Cake" />
+          <img src="/src/assets/Cake Images/lemoncake.jpg" alt="Lemon Cake" />
+          <img src="/src/assets/Cake Images/vanillacupcakes.jpg" alt="Vanilla Cupcakes" />
+>>>>>>> 29707dff4e36f4cfc73ae24098c950c46569414f
         </div>
       </div>
     </div>

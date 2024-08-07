@@ -29,8 +29,11 @@ public class Cake {
 
     private BigDecimal price;
 
-    public Cake(int cakeId, String cakeName, String cakeStyle, String cakeSize, String cakeFlavor, String cakeFilling,
-                String cakeFrosting, String cakeType, boolean hasWriting, String customText, int amountAvailable, BigDecimal price) {
+    private String imageName;
+
+    public Cake(int cakeId, String cakeName, String cakeStyle, String cakeSize, String cakeFlavor,
+                String cakeFilling, String cakeFrosting, String cakeType, boolean hasWriting,
+                String customText, int amountAvailable, BigDecimal price, String imageName) {
         CakeId = cakeId;
         this.cakeName = cakeName;
         this.cakeStyle = cakeStyle;
@@ -43,6 +46,7 @@ public class Cake {
         this.customText = customText;
         this.amountAvailable = amountAvailable;
         this.price = price;
+        this.imageName = imageName;
     }
 
     public Cake(){
@@ -145,7 +149,11 @@ public class Cake {
         this.price = price;
     }
 
+    public String getImageName() {
+        return imageName;
+    }
 
-
-
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 }

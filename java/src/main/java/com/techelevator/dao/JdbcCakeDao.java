@@ -22,7 +22,7 @@ public class JdbcCakeDao implements CakeDao {
             "cake_style.style_name, cake_size.size_name, \n" +
             "cake_flavor.flavor_name, cake_filling.filling_name, " +
             "cake_frosting.frosting_name, cake.cake_type, cake.has_writing, \n" +
-            "cake.custom_text, cake.amount_available, cake.price\n" +
+            "cake.custom_text, cake.amount_available, cake.price, cake.image_name\n" +
             "FROM cake\n" +
             "INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id\n" +
             "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id\n" +
@@ -97,7 +97,7 @@ public class JdbcCakeDao implements CakeDao {
                 "WHERE frosting_name = ?) " +
                 "INSERT INTO cake (cake_name, cake_style, cake_size, cake_flavor, " +
                 "cake_filling, cake_frosting, cake_type, has_writing, " +
-                "custom_text, amount_available, price) " +
+                "custom_text, amount_available, price, image_name) " +
                 "VALUES ( " +
                 "    ?, " + // cake_name
                 "    (SELECT cake_style_id FROM style), " +
@@ -110,6 +110,7 @@ public class JdbcCakeDao implements CakeDao {
                 "    ?, " + // custom_text
                 "    ? " + // amount_available
                 "    ? " + //price
+                "    ? " + //image_name
                 ")" +
                 "RETURNING cake_id;";
 
@@ -118,7 +119,7 @@ public class JdbcCakeDao implements CakeDao {
                     cake.getCakeSize(), cake.getCakeFlavor(), cake.getCakeFilling(),
                     cake.getCakeFrosting(), cake.getCakeName(), cake.getCakeType(),
                     cake.hasWriting(), cake.getCustomText(),
-                    cake.getAmountAvailable(), cake.getPrice());
+                    cake.getAmountAvailable(), cake.getPrice(), cake.getImageName());
             log.debug("Created new Standard Cake with Id: " +newCakeId);
             newCake = getCakeById(newCakeId);
         }catch (CannotGetJdbcConnectionException e) {
@@ -258,6 +259,7 @@ public class JdbcCakeDao implements CakeDao {
         cake.setCustomText(rs.getString("custom_text"));
         cake.setAmountAvailable(rs.getInt("amount_available"));
         cake.setPrice(rs.getBigDecimal("price"));
+        cake.setImageName(rs.getString("image_name"));
 
         return cake;
     }
