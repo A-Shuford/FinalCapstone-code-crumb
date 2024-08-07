@@ -38,15 +38,22 @@
                     <label for="zip">Zip:</label>
                     <input type="text" v-model="zip" id="zip">              
                 </div>
+               
                 <div>
                     <h3>Our cakes are made with the finest ingredients and are made to order.</h3>
                 </div>
+
+                <div>
+                    <label for="cake_Name">Custom Cake Name:</label>
+                    <input type="text" v-model="cake_Name" id="cake_Name">
+                </div>
+
                 <div>
                     <h2>Please select the size, flavor, frosting, and filling for your cake.</h2>
                 </div>
                 <div>
-                    <label for="cakesize">Cake Size:</label>
-                    <select v-model="cakesize" id="cakesize">
+                    <label for="cake_style">Cake Style:</label>
+                    <select v-model="cake_style" id="cake_style">
                         <option value="5 inch diameter">Small - 5 inch diameter</option>
                         <option value="9 inch diameter">Medium - 9 inch diameter</option>
                         <option value="12 inch diameter">Large - 12 inch diameter </option>
