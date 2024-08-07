@@ -62,6 +62,7 @@
     "footer footer footer";    ;
 }
 
+
 header {
   display: flex;
   align-items:flex-start;
@@ -115,7 +116,7 @@ nav {
   grid-template-columns: auto 1fr auto;
   background-color: #D4A373;
   border-top: 1px solid black;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid black;
 }
 
 nav #nav {
@@ -166,6 +167,22 @@ body > img {
   align-self: flex-end;
 }
 
+form div {
+  margin-bottom: 1rem; /* Add space between each form group */
+}
 
+form label {
+  display: inline-block;
+  width: 150px; /* Adjust width as needed */
+  text-align: right;
+  margin-right: 1rem; /* Space between label and input */
+}
+
+form input,
+form select,
+form textarea {
+  width: calc(100% - 200px); /* Adjust width to fit the form container */
+  padding: 0.5rem;
+}
 
 </style>

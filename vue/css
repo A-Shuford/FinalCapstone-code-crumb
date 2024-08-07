@@ -1,31 +1,9 @@
 
-.hamburger-menu {
-    display: none;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
-}
-
-.hamburger-menu div {
-    width: 2rem;
-    height: 0.25rem;
-    background: black;
-}
-
-@media (max-width: 768px) {
-    .hamburger-menu {
-        display: flex;
-    }
-
-    #navbar {
-        display: none;
-    }
-}
+/* Add your CSS here */
 
 
 
+  
 
 @media screen and (max-width: 768px) {
     /* CSS rules for screens with a maximum width of 768px (including tablets and phones) */
@@ -38,3 +16,4 @@
 @media screen and (max-width: 320px) {
     /* CSS rules for screens with a maximum width of 320px (smaller phones) */
 }
+
