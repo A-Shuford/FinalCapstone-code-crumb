@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="home">
     <h2>Welcome to Code and Crumb</h2>
     <h2 id="login-message" v-if="$store.state.token == ''">
@@ -90,11 +91,12 @@ div.home{
             <img src="/src/assets/Cake Images/apple jelly cake image 2.jpg" alt="Apple Jelly Cake 2" />
             <img src="/src/assets/CC Mascot.png" alt="CC Mascot" />
             <img src="/src/assets/Cake Images/chocolate cake ganache 3.jpg" alt="Chocolate Cake Ganache 3"/>
-            <img src="/src/assets/CC Logo.png" alt="Code and Crumb Logo" />
+            <!--<img src="/src/assets/CC Logo.png" alt="Code and Crumb Logo" />
             <img src="/src/assets/Cake Images/chocolate cake ganache.jpg" alt="Chocolate Cake Ganache" />
             <img src="/src/assets/CC Mascot.png" alt="CC Mascot" />
-            <img src="/src/assets/Cake Images/cupcakes.jpg" alt="Cupcakes" />
+            <img src="/src/assets/Cake Images/cupcakes.jpg" alt="Cupcakes" />-->
           </div>
+        </div>
         </div>
       </template>
 
@@ -115,13 +117,12 @@ div.home{
 
       .slider-wrapper {
         display: flex;
-        width: 300%; /* Assuming 6 images, this may need to be adjusted */
+        width: 50%; /* Assuming 6 images, this may need to be adjusted */
         animation: scroll 60s linear infinite;
       }
 
       .slider-wrapper img {
-        width: 400px; /* 2 inches in pixels */
-        height: 400px; /* 2 inches in pixels */
+        width: 175px; /* 2 inches in pixels */
         object-fit: cover;
       }
 
