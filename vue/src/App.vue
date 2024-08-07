@@ -167,6 +167,15 @@ body > img {
   align-self: flex-end;
 }
 
+footer {
+  grid-area: footer;
+  background-color: #D4A373;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid black;
+}
 
 
 </style>
