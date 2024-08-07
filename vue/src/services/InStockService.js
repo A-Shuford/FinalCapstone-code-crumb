@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export default{
 
-    getCake(){
+    getCakes(){
         return axios.get('/instock');
     },
 
@@ -15,11 +15,11 @@ export default{
         if (querystring) {
             querystring = "?" + querystring;
         }
-        return axios.get('/cakes' + querystring);
+        return axios.get('/instock' + querystring);
       },
     
       getCakeById(cakeId) {
-        return axios.get(`/cakes/${cakeId}`);
+        return axios.get(`/instock/${cakeId}`);
       },
       
 
