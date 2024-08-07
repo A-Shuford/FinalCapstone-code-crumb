@@ -1,10 +1,6 @@
 
 /* Add your CSS here */
 
-
-
-  
-
 @media screen and (max-width: 768px) {
     /* CSS rules for screens with a maximum width of 768px (including tablets and phones) */
 }
@@ -17,3 +13,20 @@
     /* CSS rules for screens with a maximum width of 320px (smaller phones) */
 }
 
+form div {
+    margin-bottom: 1rem; /* Add space between each form group */
+  }
+  
+  form label {
+    display: inline-block;
+    width: 150px; /* Adjust width as needed */
+    text-align: right;
+    margin-right: 1rem; /* Space between label and input */
+  }
+  
+  form input,
+  form select,
+  form textarea {
+    width: calc(100% - 200px); /* Adjust width to fit the form container */
+    padding: 0.5rem;
+  }
