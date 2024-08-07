@@ -39,37 +39,6 @@
                     <input type="text" v-model="zip" id="zip">              
                 </div>
                 <div>
-                    <h2>Is it for pick up or delivery?</h2> 
-                    <label for="pickup">Pick Up</label>
-                    <input type="radio" v-model="delivery" value="pickup" id="pickup">
-                    <label for="delivery">Delivery</label>
-                    <input type="radio" v-model="delivery" value="delivery" id="delivery">
-                </div>
-                    
-                <div v-if="delivery == 'delivery'"> 
-                    <h2>Please provide delivery information</h2>
-                <div>
-                    <label for="deliveryName">Name:</label>
-                    <input type="text" v-model="deliveryName" id="deliveryName">
-                </div>
-                <div>
-                    <label for="deliveryAddress">Address:</label>
-                    <input type="text" v-model="deliveryAddress" id="deliveryAddress">
-                </div>
-                <div>
-                    <label for="deliveryCity">City:</label>
-                    <input type="text" v-model="deliveryCity" id="deliveryCity">
-                </div>
-                <div>
-                    <label for="deliveryState">State:</label>
-                    <input type="text" v-model="deliveryState" id="deliveryState">
-                </div>
-                <div>
-                    <label for="deliveryZip">Zip:</label>
-                    <input type="text" v-model="deliveryZip" id="deliveryZip">
-                </div>
-                </div>
-                <div>
                     <h3>Our cakes are made with the finest ingredients and are made to order.</h3>
                 </div>
                 <div>
@@ -126,13 +95,13 @@
                     </select>
                 </div>
                 <div>
-                    <h2>Please select delivery date and time</h2>
-                    <label for="deliveryDate">Delivery Date:</label>
-                    <input type="date" v-model="deliveryDate" id="deliveryDate">
+                    <h2>Please select Pick Up Date and Time</h2>
+                    <label for="pick up date">Pick Up Date:</label>
+                    <input type="date" v-model="pickupdate" id="pickupdate">
                 </div>
                     <div>
-                    <label for="deliveryTime">Delivery Time:</label>
-                    <input type="time" v-model="deliveryTime" id="deliveryTime">
+                    <label for="pick up time">Pick Up Time:</label>
+                    <input type="time" v-model="pickupTime" id="pickupTime">
                 </div>
                 <div>
                     <h2>Please provide any additional notes or instructions. </h2>
