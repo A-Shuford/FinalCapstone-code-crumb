@@ -2,8 +2,7 @@
     <div class="home">
       <div id="heading-line">
         <h1>
-          In Stock Cakes
-         <loading-spinner id="spinner" v-bind:spin="isLoading" /> 
+          In Stock Cakes 
         </h1>
         <div>
           <font-awesome-icon
@@ -52,21 +51,17 @@
     </div>
   </template>
   
-  <script>
-  import InStock from "../services/InStockService.js";
-  //import LoadingSpinner from "../components/LoadingSpinner.vue";
-  import InStockTable from "../components/InStockTable.vue";
-  import InStockCards from "../components/InStockCards.vue";
-import InStockService from "../services/InStockService.js";
+<script>
+import InStock from "../services/InStockService";
+import InstockTable from "../components/InstockTable.vue";
+import InstockCards from "../components/InstockCards.vue";
   export default {
     components: {
-      //LoadingSpinner,
-      InStockTable,
+      InstockTable,
       InstockCards,
     },
     data() {
       return {
-        isLoading: false,
         cakes: [],
         filter: "",
         cardView: true,
@@ -85,16 +80,13 @@ import InStockService from "../services/InStockService.js";
           this.searchCakes();
           return;
         }
-  
-        this.isLoading = true;
-        InStockService
+
+        InStock
           .getCakes()
           .then((response) => {
             this.cakes = response.data;
-            this.isLoading = false;
           })
           .catch((error) => {
-            this.isLoading = false;
             // Something unexpected happened
             const response = error.response;
             const message =
@@ -105,15 +97,12 @@ import InStockService from "../services/InStockService.js";
           });
       },
       searchCakes() {
-        this.isLoading = true;
-        InStockService
+        InStock
           .searchCakes(this.filter)
           .then((response) => {
             this.cakes = response.data;
-            this.isLoading = false;
           })
           .catch((error) => {
-            this.isLoading = false;
             // Something unexpected happened
             const response = error.response;
             const message =
