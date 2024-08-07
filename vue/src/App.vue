@@ -136,7 +136,6 @@ nav img {
 
 body > img {
   width: 200px;
-  height: 335px;
 }
 
 body {
