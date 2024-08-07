@@ -74,7 +74,7 @@
       },
   
       details(id) {
-        this.$router.push({ name: "productDetails", params: { id: id } });
+        this.$router.push({ name: "instockDetails", params: { id: id } });
       },
     },
   };
