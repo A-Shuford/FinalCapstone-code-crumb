@@ -2,15 +2,15 @@
   <div class="home">
     <h2>Welcome to Code and Crumb</h2>
     <h2 id="login-message" v-if="$store.state.token == ''">
-      Please <router-link v-bind:to="{ name: 'login' }">login</router-link> to place an order.
+    <router-link v-bind:to="{ name: 'login' }">Please login</router-link> to place an order.
     </h2>
   </div>
 
   <div class="cake-gallery">
     <div class="slider-wrapper">
-      <img src="/src/assets/Cake Images/apple jelly cake image 1.jpg" alt="Apple Jelly Cake 1" />
-      <img src="/src/assets/CC Logo.png" alt="Code and Crumb Logo" />
-      <img src="/src/assets/Cake Images/apple jelly cake image 2.jpg" alt="Apple Jelly Cake 2" />
+            <img src="/src/assets/Cake Images/apple jelly cake image 1.jpg" alt="Apple Jelly Cake 1" />
+            <img src="/src/assets/CC Logo.png" alt="Code and Crumb Logo" />
+            <img src="/src/assets/Cake Images/apple jelly cake image 2.jpg" alt="Apple Jelly Cake 2" />
             <img src="/src/assets/CC Mascot.png" alt="CC Mascot" />
             <img src="/src/assets/Cake Images/Chocolate cake ganache 2.jpg" alt="Chocolate Cake Ganache 2" />
             <img src="/src/assets/CC Logo.png" alt="Code and Crumb Logo" />
@@ -47,8 +47,8 @@
       }
 
       .slider-wrapper img {
-        width: 500px; /* 2 inches in pixels */
-        height: 500px; /* 2 inches in pixels */
+        width: 400px; /* 2 inches in pixels */
+        height: 400px; /* 2 inches in pixels */
         object-fit: cover;
       }
 
@@ -67,11 +67,11 @@
         name: "HomeView",
         mounted() {
           const wrapper = this.$el.querySelector('.slider-wrapper');
-          const images = Array.from(wrapper.children) as HTMLImageElement[];
+          const images = Array.from(wrapper.children);
           
           // Clone images to make the scrolling continuous
           images.forEach(image => {
-            const clone = image.cloneNode(true) as HTMLImageElement;
+            const clone = image.cloneNode(true);
       wrapper.appendChild(clone);
     });
   }
