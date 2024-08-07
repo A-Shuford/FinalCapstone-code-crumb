@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Cart;
 import com.techelevator.model.CartItem;
 import java.util.List;
 
@@ -9,10 +10,9 @@ public interface CartItemDao {
     CartItem getCartItemByCakeIdAndUserId(int cakeId, int userId);
     List<CartItem> getCartItemsByUserId(int userId);
     CartItem createCartItem(CartItem item);
-    CartItem updateCartItem(CartItem item);
-    int rejectCartItemById(int cartItemId);
-    int cancelCartItemById (int cartItemId);
-    int rejectCartItemsByUserId(int userId);
-    int cancelCartItemsByUserId(int userId);
+    CartItem rejectCartItemByUserId(CartItem cartItem, int userId);
+    CartItem cancelCartItemByUserId (CartItem cartItem, int userId);
+    CartItem rejectCartItemByCakeId(CartItem cartItem, int cakeId);
+    CartItem cancelCartItemByCakeId(CartItem cartItem, int cakeId);
 
 }

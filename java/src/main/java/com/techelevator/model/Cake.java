@@ -9,15 +9,15 @@ public class Cake {
 
     private String cakeName;
 
-    private int cakeStyle;
+    private String cakeStyle;
 
-    private int cakeSize;
+    private String cakeSize;
 
-    private int cakeFlavor;
+    private String cakeFlavor;
 
-    private int cakeFilling;
+    private String cakeFilling;
 
-    private int cakeFrosting;
+    private String cakeFrosting;
 
     private String cakeType;
 
@@ -29,7 +29,8 @@ public class Cake {
 
     private BigDecimal price;
 
-    public Cake(int cakeId, String cakeName, int cakeStyle, int cakeSize, int cakeFlavor, int cakeFilling, int cakeFrosting, String cakeType, boolean hasWriting, String customText, int amountAvailable, BigDecimal price) {
+    public Cake(int cakeId, String cakeName, String cakeStyle, String cakeSize, String cakeFlavor, String cakeFilling,
+                String cakeFrosting, String cakeType, boolean hasWriting, String customText, int amountAvailable, BigDecimal price) {
         CakeId = cakeId;
         this.cakeName = cakeName;
         this.cakeStyle = cakeStyle;
@@ -64,43 +65,43 @@ public class Cake {
         this.cakeName = cakeName;
     }
 
-    public int getCakeStyle() {
+    public String getCakeStyle() {
         return cakeStyle;
     }
 
-    public void setCakeStyle(int cakeStyle) {
+    public void setCakeStyle(String cakeStyle) {
         this.cakeStyle = cakeStyle;
     }
 
-    public int getCakeSize() {
+    public String getCakeSize() {
         return cakeSize;
     }
 
-    public void setCakeSize(int cakeSize) {
+    public void setCakeSize(String cakeSize) {
         this.cakeSize = cakeSize;
     }
 
-    public int getCakeFlavor() {
+    public String getCakeFlavor() {
         return cakeFlavor;
     }
 
-    public void setCakeFlavor(int cakeFlavor) {
+    public void setCakeFlavor(String cakeFlavor) {
         this.cakeFlavor = cakeFlavor;
     }
 
-    public int getCakeFilling() {
+    public String getCakeFilling() {
         return cakeFilling;
     }
 
-    public void setCakeFilling(int cakeFilling) {
+    public void setCakeFilling(String cakeFilling) {
         this.cakeFilling = cakeFilling;
     }
 
-    public int getCakeFrosting() {
+    public String getCakeFrosting() {
         return cakeFrosting;
     }
 
-    public void setCakeFrosting(int cakeFrosting) {
+    public void setCakeFrosting(String cakeFrosting) {
         this.cakeFrosting = cakeFrosting;
     }
 
@@ -112,7 +113,7 @@ public class Cake {
         this.cakeType = cakeType;
     }
 
-    public boolean isHasWriting() {
+    public boolean hasWriting() {
         return hasWriting;
     }
 

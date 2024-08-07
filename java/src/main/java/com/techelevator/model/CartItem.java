@@ -20,9 +20,8 @@ public class CartItem {
     private LocalDate pickupDate;
     @NotEmpty
     private LocalTime pickupTime;
-    @Positive
-    private int quantity;
-    private int cartItemStatus;
+
+    private String cartItemStatus; //this is from the INNER JOIN to get name, not id
 
     public static final String CART_STATUS_PENDING = "Pending";
     public static final String CART_STATUS_REJECTED = "Rejected by bakery";
@@ -33,11 +32,10 @@ public class CartItem {
     public CartItem() {
     }
 
-    public CartItem(int cartItemId, int userId, int cakeId, int quantity, int cartItemStatus) {
+    public CartItem(int cartItemId, int userId, int cakeId, String cartItemStatus) {
         this.cartItemId = cartItemId;
         this.userId = userId;
         this.cakeId = cakeId;
-        this.quantity = quantity;
         this.cartItemStatus = cartItemStatus;
     }
 
@@ -88,20 +86,11 @@ public class CartItem {
     public void setPickupTime(LocalTime pickupTime) {
         this.pickupTime = pickupTime;
     }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public int getCartItemStatus() {
+    public String getCartItemStatus() {
         return cartItemStatus;
     }
 
-    public void setCartItemStatus(int cartItemStatus) {
+    public void setCartItemStatus(String cartItemStatus) {
         this.cartItemStatus = cartItemStatus;
     }
 
@@ -125,41 +114,46 @@ public class CartItem {
     public void confirmPickup(){
         if (isPending()){
             //only pending orders can be changed to pick-up
-            cartItemStatus = Integer.parseInt(CART_STATUS_READY_PU);
+            cartItemStatus = CART_STATUS_READY_PU;
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change order status from " +
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Cannot change order status from " +
                     cartItemStatus+ " to " + CART_STATUS_READY_PU);
         }
     }
     public void reject(){
         if (isPending()){
             //only pending orders can be rejected by employee
-            cartItemStatus = Integer.parseInt(CART_STATUS_REJECTED);
+            cartItemStatus = CART_STATUS_REJECTED;
         }  else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change order status from " +
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Cannot change order status from " +
                     cartItemStatus+ " to " + CART_STATUS_REJECTED);
         }
     }
     public void cancel(){
         if (isPending()){
             //only pending orders can be cancelled by customer
-            cartItemStatus = Integer.parseInt(CART_STATUS_CANCELLED);
+            cartItemStatus = CART_STATUS_CANCELLED;
         }  else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change order status from " +
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Cannot change order status from " +
                     cartItemStatus+ " to " + CART_STATUS_CANCELLED);
         }
     }
     public void completeOrder(){
         if (isReadyPu()){
             //orders can only be completed if ready for pick-up
-            cartItemStatus = Integer.parseInt(CART_STATUS_COMPLETED);
+            cartItemStatus = CART_STATUS_COMPLETED;
         }  else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change order status from " +
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Cannot change order status from " +
                     cartItemStatus+ " to " + CART_STATUS_COMPLETED);
         }
     }
     private void validateCartStatus (){
-        if (!(CART_STATUS_PENDING.equals(cartItemStatus)||CART_STATUS_REJECTED.equals(cartItemStatus)
+        if (!(CART_STATUS_PENDING.equals(cartItemStatus)
+                ||CART_STATUS_REJECTED.equals(cartItemStatus)
                 ||CART_STATUS_READY_PU.equals(cartItemStatus)
                 ||CART_STATUS_CANCELLED.equals(cartItemStatus)
                 ||CART_STATUS_COMPLETED.equals(cartItemStatus))){
