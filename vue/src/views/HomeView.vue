@@ -81,7 +81,6 @@ div.home{
   }
 }
 </style>
-=======
             <img src="/src/assets/Cake Images/apple jelly cake image 1.jpg" alt="Apple Jelly Cake 1" />
             <img src="/src/assets/CC Logo.png" alt="Code and Crumb Logo" />
             <img src="/src/assets/Cake Images/apple jelly cake image 2.jpg" alt="Apple Jelly Cake 2" />
@@ -151,4 +150,3 @@ div.home{
   }
 }
 </script>
->>>>>>> b3f0a6b00ca13d50831fdb0e9470cbbf8c8842fc
