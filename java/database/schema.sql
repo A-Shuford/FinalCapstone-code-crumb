@@ -128,10 +128,10 @@ INSERT INTO cake_style(style_name) VALUES('Cupcakes');
 --
 INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, price, image_name) 
 VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 45.99,'/src/assets/Cake_Images/standard_chocolate_ganache_cake.png'),
-('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 25.00,'/src/assets/Cake_Images/standard_vanilla_cake.jpg'),
+('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 25.00,'/src/assets/Cake_Images/standard_vanilla_cake.png'),
 ('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 31.40,'/src/assets/Cake_Images/standard_funfetti_cake.jpg'),
 ('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 33.00,'/src/assets/Cake_Images/standard_red_velvet_cake.png'),
-('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/standard_pound_cake.jpg'),
+('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/standard_pound_cake.png'),
 ('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
 
 INSERT INTO cart_item_status(status_name)
