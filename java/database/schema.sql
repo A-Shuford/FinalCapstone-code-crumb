@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS users, cakeStyle, cakeSize, cakeFlavor, cakeFilling, cakeFrosting, cart_item_status, cake, cart_item;
-DROP TABLE IF EXISTS users, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cart_item_status, cake, cart_item;
+DROP TABLE IF EXISTS users, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cart_item_status, cake, cart_item, cart_item_status;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -46,7 +46,7 @@ CREATE TABLE cake_frosting (
 
 CREATE TABLE cart_item_status ( 
 	cart_item_status_id SERIAL, 
-	status_name varchar(20), 
+	status_name varchar(50), 
 	CONSTRAINT pk_cart_item_status_id PRIMARY KEY(cart_item_status_id)
 );
 
@@ -127,11 +127,36 @@ INSERT INTO cake_style(style_name) VALUES('Cupcakes');
 
 --
 INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, price, image_name) 
-VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 35.00,'/src/assets/Cake_Images/Chocolate_cake_ganache_2.jpg'),
-('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 5.00,'/src/assets/Cake_Images/Vanilla_Buttercream.jpg'),
-('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 31.40,'/src/assets/Cake_Images/Birthday_Confetti_Cake.jpg'),
-('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 20.50,'/src/assets/Cake_Images/Red_Velvet_Cake.webp'),
-('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/noimage.jpg'),
-('Normal Cake', 2, 3, 1, 1, NULL, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/noimage.jpg');; 
+VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 45.99,'/src/assets/Cake_Images/standard_chocolate_ganache_cake.png'),
+('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 25.00,'/src/assets/Cake_Images/standard_vanilla_cake.jpg'),
+('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 31.40,'/src/assets/Cake_Images/standard_funfetti_cake.jpg'),
+('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 33.00,'/src/assets/Cake_Images/standard_red_velvet_cake.png'),
+('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/standard_pound_cake.jpg'),
+('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
+
+INSERT INTO cart_item_status(status_name)
+VALUES ('Pending'),
+('Rejected by bakery'),
+('Cancelled by customer'),
+('Ready for pick-up'),
+('Order Completed');
+
+
+GRANT ALL
+ON ALL TABLES IN SCHEMA public
+TO final_capstone_owner;
+
+GRANT ALL
+ON ALL SEQUENCES IN SCHEMA public
+TO final_capstone_owner;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON ALL TABLES IN SCHEMA public
+TO final_capstone_appuser;
+
+GRANT USAGE, SELECT
+ON ALL SEQUENCES IN SCHEMA public
+TO final_capstone_appuser;
+
 
 COMMIT TRANSACTION;
