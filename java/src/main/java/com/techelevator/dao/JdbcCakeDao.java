@@ -20,15 +20,15 @@ public class JdbcCakeDao implements CakeDao {
 
     private static final String SQL_SELECT_CAKE = "SELECT cake.cake_id, cake.cake_name, " +
             "cake_style.style_name, cake_size.size_name, \n" +
-            "cake_flavor.flavor_name, cake_filling, \n" +
+            "cake_flavor.flavor_name, cake_filling.filling_name, \n" +
             "cake_frosting.frosting_name, cake.cake_type, cake.has_writing, \n" +
-            "cake.custom_text, cake.amount_available, cake.price\n" + //, cake.image_name
+            "cake.custom_text, cake.amount_available, cake.price, cake.image_name \n" +
             "FROM cake\n" +
             "INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id\n" +
             "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id\n" +
-            //"INNER JOIN cake_filling on cake.cake_filling = cake_filling.cake_filling_id\n" +
+            "LEFT JOIN cake_filling on cake.cake_filling = cake_filling.cake_filling_id\n" +
             "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id\n" +
-            "INNER JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id;";
+            "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id;";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -253,14 +253,14 @@ public class JdbcCakeDao implements CakeDao {
         cake.setCakeStyle(rs.getString("style_name"));
         cake.setCakeSize(rs.getString("size_name"));
         cake.setCakeFlavor(rs.getString("flavor_name"));
-        cake.setCakeFilling(rs.getString("cake_filling"));
+        cake.setCakeFilling(rs.getString("filling_name"));
         cake.setCakeFrosting(rs.getString("frosting_name"));
         cake.setCakeType(rs.getString("cake_type"));
         cake.setHasWriting(rs.getBoolean("has_writing"));
         cake.setCustomText(rs.getString("custom_text"));
         cake.setAmountAvailable(rs.getInt("amount_available"));
         cake.setPrice(rs.getBigDecimal("price"));
-        //cake.setImageName(rs.getString("image_name"));
+        cake.setImageName(rs.getString("image_name"));
 
         return cake;
     }
