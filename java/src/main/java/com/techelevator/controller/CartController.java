@@ -63,6 +63,16 @@ public class CartController {
 
     }
 
+   /* @RequestMapping(path = "", method = RequestMethod.PUT)
+    public CartItem rejectingCartItemByUserId(){
+        try{
+            return cartService.rejectItemByUserId();
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+    }
+*/
 
 
 

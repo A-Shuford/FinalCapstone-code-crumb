@@ -11,7 +11,7 @@ export default {
     return axios.get('/cart');
   },
 
-  addItem(cake) {
+  addProduct(cake) {
     const item = {
       cakeId: cake.CakeId,
       quantity: 1,

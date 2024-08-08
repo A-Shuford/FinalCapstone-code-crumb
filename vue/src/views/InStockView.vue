@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="home">
     <div id="heading-line">
       <h1>
@@ -10,11 +11,28 @@
           @click="cardView = true"
           title="View tiles"
         >🔲</span>
+=======
+    <div class="home">
+      <div id="heading-line">
+        <h1>
+          In Stock Cakes 
+        </h1>
+        <div>
+          <span
+          :class="{ 'view-icon': true, active: cardView }"
+          @click="cardView = true"
+          title="View tiles"
+        >:black_square_button:</span>
+>>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0
         <span
           :class="{ 'view-icon': true, active: !cardView }"
           @click="cardView = false"
           title="View table"
+<<<<<<< HEAD
         >🔳</span>
+=======
+        >:white_square_button:</span>
+>>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0
         <div id="search-box">
           <input
             type="text"
@@ -30,8 +48,13 @@
             @click="getCakes"
             tabindex="-1"
           >
+<<<<<<< HEAD
             🔍
           </button>
+=======
+            </button>
+          </div>
+>>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0
         </div>
       </div>
     </div>
@@ -47,7 +70,7 @@
 </template>
 
 <script>
-import InStock from "../services/InStockService";
+import inStock from "../services/InStockService.js";
 import InstockTable from "../components/InstockTable.vue";
 import InstockCards from "../components/InstockCards.vue";
 
@@ -91,6 +114,7 @@ export default {
           console.error(message);
         });
     },
+<<<<<<< HEAD
     searchCakes() {
       InStock
         .searchCakes(this.filter)
@@ -105,6 +129,54 @@ export default {
           this.$store.commit("SET_ERROR", message);
           console.error(message);
         });
+=======
+  
+    methods: {
+      getCakes() {
+        if (this.filter) {
+          this.searchCakes();
+          return;
+        }
+
+        inStock
+          .getCakes()
+          .then((response) => {
+            this.cakes = response.data;
+          })
+          .catch((error) => {
+            // Something unexpected happened
+            const response = error.response;
+            const message =
+              "Getting in-stock cakes was unsuccessful: " +
+              (response ? response.message : "Could not reach server");
+            this.$store.commit("SET_ERROR", message);
+            console.error(message);
+          });
+      },
+      searchCakes() {
+        inStock
+          .searchCakes(this.filter)
+          .then((response) => {
+            this.cakes = response.data;
+          })
+          .catch((error) => {
+            // Something unexpected happened
+            const response = error.response;
+            const message =
+              "Getting In-stock cakes was unsuccessful: " +
+              (response ? response.message : "Could not reach server");
+            this.$store.commit("SET_ERROR", message);
+            console.error(message);
+          });
+      },
+  
+      checkSearchEnter(e) {
+        // User pressed a key. If ENTER, perform the search.
+        if (e.key === "Enter") {
+          this.getCakes();
+        }
+      },
+>>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0
     },
 
     checkSearchEnter(e) {
@@ -193,5 +265,9 @@ export default {
   #search-box {
     margin-top: 10px;
   }
+<<<<<<< HEAD
 }
 </style>
+=======
+  </style>
+>>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0
