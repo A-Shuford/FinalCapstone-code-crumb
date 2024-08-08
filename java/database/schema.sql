@@ -127,11 +127,11 @@ INSERT INTO cake_style(style_name) VALUES('Cupcakes');
 
 --
 INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, price, image_name) 
-VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 35.00,'/src/assets/Cake Images/Chocolate cake ganache 2.jpg'),
-('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 5.00,'/src/assets/Cake Images/Vanilla-Buttercream.jpg'),
-('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 31.40,'/src/assets/Cake Images/Birthday_Confetti-Cake.jpg'),
-('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 20.50,'/src/assets/Cake Images/Red-Velvet-Cake.webp'),
-('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake Images/.jpg'),
-('Normal Cake', 2, 3, 1, 1, NULL, 'Standard', true, '', 2, 45.00, '/src/assets/Cake Images/.jpg');; 
+VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 35.00,'/src/assets/Cake_Images/Chocolate_cake_ganache_2.jpg'),
+('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 5.00,'/src/assets/Cake_Images/Vanilla_Buttercream.jpg'),
+('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 31.40,'/src/assets/Cake_Images/Birthday_Confetti_Cake.jpg'),
+('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 20.50,'/src/assets/Cake_Images/Red_Velvet_Cake.webp'),
+('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/.jpg'),
+('Normal Cake', 2, 3, 1, 1, NULL, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/.jpg');; 
 
 COMMIT TRANSACTION;
