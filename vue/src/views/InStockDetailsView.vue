@@ -41,7 +41,7 @@
     },
     methods: {
       getCake(cakeId) {
-        customService
+        inStockService
           .getdetails(cakeId)
           .then((response) => {
             this.cake = response.data;

@@ -62,8 +62,8 @@ const routes = [
     }
   },
   {
-    path: "/cakes/cakeId",
-    name: 'InStockDetails',
+    path: "/cakes/:id",
+    name: 'inStockDetails',
     component: InStockDetailsView,
     meta: {
       requiresAuth: false

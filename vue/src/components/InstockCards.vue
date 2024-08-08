@@ -55,7 +55,6 @@
           .then(() => {
             // SUCCESS
             this.$store.commit("SET_SUCCESS", `Added '${cake.name}' to cart`);
-            this.isLoading = false;
           })
           .catch((error) => {
             this.isLoading = false;
@@ -69,7 +68,7 @@
       },
   
       details(id) {
-        this.$router.push({ name: "InStockDetails", params: { id : id} });
+        this.$router.push({ name: "inStockDetails", params: { id: id} });
       },
     },
   };
