@@ -13,7 +13,7 @@
             {{ cake.cakeId }}
           </td>
           <td class="action" v-on:click="details(cake.cakeId)">
-            {{ cake.name }}
+            {{ cake.cakeName }}
           </td>
           <td class="right">
             {{ currency(cake.price) }}

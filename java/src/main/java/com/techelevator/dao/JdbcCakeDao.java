@@ -28,7 +28,7 @@ public class JdbcCakeDao implements CakeDao {
             "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id\n" +
             "LEFT JOIN cake_filling on cake.cake_filling = cake_filling.cake_filling_id\n" +
             "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id\n" +
-            "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id;";
+            "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id \n";
 
     private final JdbcTemplate jdbcTemplate;
 

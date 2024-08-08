@@ -8,7 +8,7 @@
       <div class="id">{{ cake.cakeId }}</div>
         <div class="price">{{ currency(cake.price) }}</div>
         <div class="cake-name action" v-on:click="details(cake.cakeId)">
-          {{ cake.Name }}
+          {{ cake.cakeName }}
         </div>
         <div class="cake-image">
           <img v-bind:src="cake.imageName" />
