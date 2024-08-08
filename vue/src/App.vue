@@ -57,7 +57,7 @@ export default {
 header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   grid-area: header;
   background-color: #FAEDCD;
   padding: 10px;
@@ -98,7 +98,7 @@ header #loginstatus img {
 
 nav {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   grid-area: nav;
   background-color: #D4A373;
@@ -106,10 +106,11 @@ nav {
 }
 
 nav a {
-  font-size: 1.2rem;
+  font-size: x-large;
   font-weight: bold;
   display: flex;
   align-items: center;
+  color: pink
 }
 
 nav img {

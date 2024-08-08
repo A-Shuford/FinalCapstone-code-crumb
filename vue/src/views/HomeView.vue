@@ -27,8 +27,7 @@
 div {
   text-align: center;
   align-items: center;
-  
-}
+  }
 
 
 .home {
@@ -48,7 +47,7 @@ div {
 }
 
 .slider-container {
-  width: 90%; /* Adjust width as needed */
+  width: 100%; /* Adjust width as needed */
   max-width: 800px;
   overflow: hidden;
   position: relative;
