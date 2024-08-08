@@ -5,37 +5,31 @@
           In Stock Cakes 
         </h1>
         <div>
-          <font-awesome-icon
-            v-bind:class="{ 'view-icon': true, active: cardView }"
-            v-on:click="cardView = true"
-            icon="fa-solid fa-grip"
-            title="View tiles"
+          <span
+          :class="{ 'view-icon': true, active: cardView }"
+          @click="cardView = true"
+          title="View tiles"
+        >:black_square_button:</span>
+        <span
+          :class="{ 'view-icon': true, active: !cardView }"
+          @click="cardView = false"
+          title="View table"
+        >:white_square_button:</span>
+        <div id="search-box">
+          <input
+            type="text"
+            name="search-tb"
+            id="search-tb"
+            placeholder="Search..."
+            @keydown="checkSearchEnter"
+            v-model="filter"
           />
-          <font-awesome-icon
-            v-bind:class="{ 'view-icon': true, active: !cardView }"
-            v-on:click="cardView = false"
-            icon="fa-solid fa-table"
-            title="View table"
-          />
-          <div id="search-box">
-            <input
-              type="text"
-              name="search-tb"
-              id="search-tb"
-              placeholder="Search..."
-              v-on:keydown="checkSearchEnter"
-              v-model="filter"
-            />
-            <button
-              class="icon-button"
-              id="search-button"
-              v-on:click="getCakes"
-              tabindex="-1"
-            >
-              <font-awesome-icon
-                icon="fa-solid fa-magnifying-glass"
-                title="Search"
-              />
+          <button
+            class="icon-button"
+            id="search-button"
+            @click="getCakes"
+            tabindex="-1"
+          >
             </button>
           </div>
         </div>
@@ -52,7 +46,7 @@
   </template>
   
 <script>
-import InStock from "../services/InStockService";
+import inStock from "../services/InStockService.js";
 import InstockTable from "../components/InstockTable.vue";
 import InstockCards from "../components/InstockCards.vue";
   export default {
@@ -81,7 +75,7 @@ import InstockCards from "../components/InstockCards.vue";
           return;
         }
 
-        InStock
+        inStock
           .getCakes()
           .then((response) => {
             this.cakes = response.data;
@@ -97,7 +91,7 @@ import InstockCards from "../components/InstockCards.vue";
           });
       },
       searchCakes() {
-        InStock
+        inStock
           .searchCakes(this.filter)
           .then((response) => {
             this.cakes = response.data;
@@ -185,4 +179,4 @@ import InstockCards from "../components/InstockCards.vue";
     background-color: transparent;
     border: none;
   }
-  </style>../services/InStockService.js
+  </style>

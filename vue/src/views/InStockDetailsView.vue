@@ -24,7 +24,7 @@
   </template>
   
   <script>
-  import InStockService from "../services/InStockService.js";
+  import inStockService from "../services/InStockService.js";
   import cartService from "../services/CartService";
   //import LoadingSpinner from "../components/LoadingSpinner.vue";
   export default {
@@ -43,7 +43,7 @@
     methods: {
       getCake(id) {
         this.isLoading = true;
-        InStockService
+        inStockService
           .getCakeById(id)
           .then((response) => {
             this.cake = response.data;
@@ -63,7 +63,7 @@
       addToCart() {
         this.isLoading = true;
         cartService
-          .addItem(this.cake)
+          .addProduct(this.cake)
           .then(() => {
             // SUCCESS
             this.$store.commit(
