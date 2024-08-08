@@ -62,15 +62,10 @@ public class AuthenticationController {
             if (userDao.getUserByUsername(newUser.getUsername()) != null) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists.");
             }
-            else if(userDao.getUserByEmail(newUser.getEmail()) != null){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This email already exists.");
-            }
-            else if(userDao.getUserByPhoneNumber(newUser.getPhoneNumber()) != null){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone already registered.");
-            }
-            else {
-                userDao.createUser(newUser);
-            }
+            else{
+                    userDao.createUser(newUser);
+                }
+
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User registration failed.");

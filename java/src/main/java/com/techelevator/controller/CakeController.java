@@ -28,7 +28,7 @@ public class CakeController {
             if (sku == null && name == null) {
                 return cakeDao.getCakes();
             } else {
-                return cakeDao.getCakesByName(name, true);
+                return cakeDao.getCakesByName(name);
             }
         }
         catch (DaoException e) {

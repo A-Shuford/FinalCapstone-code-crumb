@@ -10,8 +10,12 @@ public class User {
 
    private int id;
    private String username;
+
+   //change the name
    private String yourName;
    private String email;
+
+   //change the name
    private String phoneNumber;
    @JsonIgnore
    private String password;

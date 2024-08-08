@@ -15,4 +15,12 @@ public interface CartItemDao {
     CartItem rejectCartItemByCakeId(CartItem cartItem, int cakeId);
     CartItem cancelCartItemByCakeId(CartItem cartItem, int cakeId);
 
+
+    // NEW IMPLEMENTATIONS
+
+    CartItem deleteCartItemsByUserId(int userId);
+
+    CartItem deleteCartItemById(int cartItem);
+
+    CartItem updateCartItem(CartItem cartItem);
 }

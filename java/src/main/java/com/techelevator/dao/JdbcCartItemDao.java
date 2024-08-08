@@ -198,6 +198,20 @@ public class JdbcCartItemDao implements CartItemDao {
         }
         return cancelEntireOrder;
     }
+    //TWO NEED METHODS ADD
+
+    public CartItem deleteCartItemsByUserId(int userId){
+
+        return null;
+    }
+
+    public CartItem deleteCartItemById(int cartItem){
+        return null;
+    }
+
+    public CartItem updateCartItem(CartItem cartItem){
+        return null;
+    }
 
 
     private CartItem mapRowToCartItem(SqlRowSet rs) {

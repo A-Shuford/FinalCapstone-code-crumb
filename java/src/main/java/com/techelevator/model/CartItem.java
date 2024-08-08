@@ -21,6 +21,11 @@ public class CartItem {
     @NotEmpty
     private LocalTime pickupTime;
 
+    //ADDED
+    private int quantity;
+
+
+
     private String cartItemStatus; //this is from the INNER JOIN to get name, not id
 
     public static final String CART_STATUS_PENDING = "Pending";
@@ -159,5 +164,14 @@ public class CartItem {
                 ||CART_STATUS_COMPLETED.equals(cartItemStatus))){
             throw new IllegalArgumentException(cartItemStatus + " is not a valid order status");
         }
+    }
+
+    //LAST MINUTE ADD
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

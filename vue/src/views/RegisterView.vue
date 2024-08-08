@@ -11,7 +11,7 @@
       </div>
       <div class="form-input-group">
         <label for="name">Name</label>
-        <input type="text" id="name" placeholder="John Smith" v-model="user.name" required/>
+        <input type="text" id="name" placeholder="John Smith" v-model="user.yourName" required/>
       </div>
       <div class="form-input-group">
         <label for="email">Email</label>
@@ -43,10 +43,10 @@ export default {
     return {
       user: {
         username: '',
-        password: '',
-        name: '',
+        yourName: '',
         email: '',
         phoneNumber: '',
+        password: '',
         confirmPassword: '',
         role: 'user',
       },
