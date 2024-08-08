@@ -1,17 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div class="home">
-    <div id="heading-line">
-      <h1>
-        In Stock Cakes 
-      </h1>
-      <div>
-        <span
-          :class="{ 'view-icon': true, active: cardView }"
-          @click="cardView = true"
-          title="View tiles"
-        >🔲</span>
-=======
     <div class="home">
       <div id="heading-line">
         <h1>
@@ -23,16 +10,11 @@
           @click="cardView = true"
           title="View tiles"
         >:black_square_button:</span>
->>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0
         <span
           :class="{ 'view-icon': true, active: !cardView }"
           @click="cardView = false"
           title="View table"
-<<<<<<< HEAD
-        >🔳</span>
-=======
         >:white_square_button:</span>
->>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0
         <div id="search-box">
           <input
             type="text"
@@ -48,13 +30,8 @@
             @click="getCakes"
             tabindex="-1"
           >
-<<<<<<< HEAD
-            🔍
-          </button>
-=======
             </button>
           </div>
->>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0
         </div>
       </div>
     </div>
@@ -66,7 +43,7 @@
     </p>
     <InstockCards :cakes="cakes" v-if="cardView" />
     <InstockTable :cakes="cakes" v-else />
-  </div>
+  
 </template>
 
 <script>
@@ -100,7 +77,7 @@ export default {
         return;
       }
 
-      InStock
+      inStock
         .getCakes()
         .then((response) => {
           this.cakes = response.data;
@@ -114,22 +91,6 @@ export default {
           console.error(message);
         });
     },
-<<<<<<< HEAD
-    searchCakes() {
-      InStock
-        .searchCakes(this.filter)
-        .then((response) => {
-          this.cakes = response.data;
-        })
-        .catch((error) => {
-          const response = error.response;
-          const message =
-            "Getting In-stock cakes was unsuccessful: " +
-            (response ? response.message : "Could not reach server");
-          this.$store.commit("SET_ERROR", message);
-          console.error(message);
-        });
-=======
   
     methods: {
       getCakes() {
@@ -176,7 +137,6 @@ export default {
           this.getCakes();
         }
       },
->>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0
     },
 
     checkSearchEnter(e) {
@@ -265,9 +225,5 @@ export default {
   #search-box {
     margin-top: 10px;
   }
-<<<<<<< HEAD
 }
 </style>
-=======
-  </style>
->>>>>>> 3d095e838465f4e2647fbe0759413cb73244adc0

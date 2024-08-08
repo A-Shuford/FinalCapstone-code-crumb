@@ -121,7 +121,8 @@
   div.cake-image > img {
     max-width: 100%;
     max-height: 100%;
-    border-radius: 5px;
+    border-radius: 5px; 
+    
   }
   
   div.cart {

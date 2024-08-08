@@ -131,7 +131,7 @@ VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 35.00
 ('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 5.00,'/src/assets/Cake_Images/Vanilla_Buttercream.jpg'),
 ('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 31.40,'/src/assets/Cake_Images/Birthday_Confetti_Cake.jpg'),
 ('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 20.50,'/src/assets/Cake_Images/Red_Velvet_Cake.webp'),
-('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/.jpg'),
-('Normal Cake', 2, 3, 1, 1, NULL, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/.jpg');; 
+('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/noimage.jpg'),
+('Normal Cake', 2, 3, 1, 1, NULL, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/noimage.jpg');; 
 
 COMMIT TRANSACTION;
