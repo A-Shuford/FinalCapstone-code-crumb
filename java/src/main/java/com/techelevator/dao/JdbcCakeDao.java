@@ -57,7 +57,7 @@ public class JdbcCakeDao implements CakeDao {
     @Override
     public Cake getCakeById(int cakeId) {
         Cake cake = null;
-        String sql =  SQL_SELECT_CAKE + "WHERE cake_id = ?";
+        String sql =  SQL_SELECT_CAKE + "WHERE cake_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cakeId);
             if (results.next()) {
@@ -74,7 +74,7 @@ public class JdbcCakeDao implements CakeDao {
     public List<Cake> getCakesByUserId(int userId) {
         List<Cake> cakes = new ArrayList<>();
         String sql = SQL_SELECT_CAKE +
-                "WHERE cake_id IN (SELECT cake_id FROM cart_item WHERE user_id = ?)";
+                "WHERE cake_id IN (SELECT cake_id FROM cart_item WHERE user_id = ?);";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -137,7 +137,7 @@ public class JdbcCakeDao implements CakeDao {
     public List<Cake> getCakesByStyle(String style) {
         List<Cake> cakes = new ArrayList<>();
         String sql = SQL_SELECT_CAKE +
-                "WHERE cake_style.style_name = ?";
+                "WHERE cake_style.style_name = ?;";
         //NOTE does the style string need to be case sensitive? How do we ensure that it reads?
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql,style);
@@ -156,9 +156,27 @@ public class JdbcCakeDao implements CakeDao {
     public List<Cake> getCakesByType(String type) {
         List<Cake> cakes = new ArrayList<>();
         String sql = SQL_SELECT_CAKE +
-                "WHERE cake.cake_type = ?";
+                "WHERE cake.cake_type = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql,type);
+            while(results.next()){
+                Cake cake = mapRowToCake(results);
+                cakes.add(cake);
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return cakes;
+    }
+
+    @Override
+    public List <Cake> getAllStandardCakes (String cakeType){
+        List<Cake> cakes = new ArrayList<>();
+        String sql = SQL_SELECT_CAKE +
+                "WHERE cake.cake_type = '?';";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cakeType);
             while(results.next()){
                 Cake cake = mapRowToCake(results);
                 cakes.add(cake);
