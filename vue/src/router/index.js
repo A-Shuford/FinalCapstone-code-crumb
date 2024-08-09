@@ -71,7 +71,7 @@ const routes = [
     }
   },
   {
-    path: "/cart-item",
+    path: "/cartitem",
     name: "cart-item",
     component: CartItemView,
     meta:{

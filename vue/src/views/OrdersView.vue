@@ -99,8 +99,7 @@
   import HeaderVue from '../components/Header.vue';
   import NavBarVue from '../components/Navbar.vue';
   import FooterVue from '../components/Footer.vue';
-  //import orderService from '../services/OrderService.js'; //Do I need an order service?
-  //I think we can use CartService.js for this
+  import CartService from '../services/CartService.js';
   
   export default {
     components: {
