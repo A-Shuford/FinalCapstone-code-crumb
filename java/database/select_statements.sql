@@ -6,7 +6,7 @@ INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id
 INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id
 INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id
 INNER JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id
-WHERE cake_style.cake_name = "Funfetti cake';
+WHERE cake.cake_type = 'Standard';
 
 _____________________
 
