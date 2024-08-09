@@ -1,5 +1,8 @@
 <template>
-    <div>
+  <header-vue />
+  <nav-bar-vue />
+  <mascot-modal-vue />
+    <div class="home">
       <div id="heading-line">
         <h1>
           {{ cake.cakeName }}
@@ -18,17 +21,29 @@
       <p>{{ cake.price }}</p>
       <p>{{ cake.cakeName }}</p>
       <img v-bind:src="cake.imageName" alt="Product photo" />
-      <p></p>
-    </div>
-  </template>
-  
-  <script>
+      </div>
+    <footer-vue />
+</template>
+
+
+<script>
   import inStockService from "../services/InStockService.js";
   import customService from "../services/CustomService.js";
   import cartService from "../services/CartService";
+  //importing the components for header and footer
+  import HeaderVue from "../components/Header.vue";
+  import NavBarVue from "../components/Navbar.vue";
+  import MascotModalVue from "../components/MascotModal.vue";
+  import FooterVue from "../components/Footer.vue";
+
   //import LoadingSpinner from "../components/LoadingSpinner.vue";
   export default {
-   /*components: { LoadingSpinner }, */
+   components:{
+    HeaderVue,
+    NavBarVue,
+    MascotModalVue,
+    FooterVue,
+   },
     data() {
       return {
         cake: {},
@@ -80,9 +95,10 @@
       this.getCake(this.$route.params.id);
     },
   };
-  </script>
+
+</script>
   
-  <style scoped>
+<style scoped>
   #heading-line {
     display: flex;
     flex-direction: row;

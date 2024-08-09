@@ -2,21 +2,25 @@
   <div id="header">
     <img id="cakelogo" src="/src/assets/CC Logo.png">
     <div class="page-title">
-      <h1>Code & Crumb</h1>
       <p>"Serving one byte at a time!"</p>
-      <h2>QUESTIONS OR ORDER</h2>
+      <h2>For questions or order</h2>
       <h2>Call 911</h2>
-      <h2>Philadelphia, PA EST 2004</h2>
-    </div>
-    <div id="login-status">
-      <p>Logged in as: {{ $store.state.username }}</p>
-    <div id="login-status-heart">  
-      <img id="login-status-heart" src="src\assets\Cake_Images\pixelheart.png">
+      <p>Address</p>  
+      <h2>EST 2004</h2>
     </div>
     <div>
       <social-media-icons-vue />
     </div>
+    <div id="loginlogoutregister">
+      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'login'}">Login</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'register'}">Register</router-link>&nbsp;
     </div>
+    
+    
+   
+    
     <!--<div id="cart">
       <router-link v-bind:to="{ name: 'cart-item' }">
       </router-link>
@@ -107,4 +111,6 @@ export default {
   display: flex;
   gap: 10px; /* Adjust spacing between icons */
   }
+
+  
 </style>

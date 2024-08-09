@@ -1,4 +1,7 @@
 <template>
+  <header-vue />
+  <nav-bar />
+  <mascot-modal-vue />
   <div id="login">
     <form v-on:submit.prevent="login">
       <h2 >Please Sign In</h2>
@@ -21,14 +24,24 @@
       <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
     </form>
   </div>
+<footer-vue />
 </template>
 
 <script>
 import authService from "../services/AuthService";
+import HeaderVue from "../components/Header.vue";
+import NavBar from "../components/NavBar.vue";
+import MascotModalVue from "../components/MascotModal.vue";
+import FooterVue from "../components/Footer.vue";
 
 export default {
-  components: {},
-  data() {
+  components: {
+  HeaderVue,
+  NavBar,
+  MascotModalVue,
+  FooterVue,
+  },
+    data() {
     return {
       user: {
         username: "",
@@ -37,6 +50,7 @@ export default {
       invalidCredentials: false
     };
   },
+  
   methods: {
     login() {
       authService
