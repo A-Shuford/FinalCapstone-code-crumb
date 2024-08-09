@@ -71,7 +71,7 @@ const routes = [
   },
   {
     path: "/cartitem",
-    name: "cartitem",
+    name: "cart-item",
     component: CartItemView,
     meta:{
       requiresAuth: false
