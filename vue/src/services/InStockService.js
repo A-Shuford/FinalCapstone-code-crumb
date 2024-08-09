@@ -7,6 +7,10 @@ export default{
         return axios.get('/instock');
     },
 
+    getdetails(cakeId){
+        return axios.get(`/cakes/${cakeId}`);
+    },
+
     searchCakes(name){
         let querystring = "";
         if (name) {
@@ -18,8 +22,8 @@ export default{
         return axios.get('/instock' + querystring);
       },
     
-      getCakeById(cakeId) {
-        return axios.get(`/instock/${cakeId}`);
+      getCakeById() {
+        return axios.get(`/cake`);
       },
       
 

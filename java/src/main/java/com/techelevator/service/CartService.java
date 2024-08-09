@@ -95,4 +95,8 @@ public class CartService {
         cartItemDao.deleteCartItemById(cartItemId);
     }
 
+    public void rejectItemByUserId(CartItem cartItem, int userId){
+        cartItemDao.rejectCartItemByUserId(cartItem, userId);
+    }
+
 }

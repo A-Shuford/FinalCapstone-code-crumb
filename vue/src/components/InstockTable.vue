@@ -13,7 +13,7 @@
             {{ cake.cakeId }}
           </td>
           <td class="action" v-on:click="details(cake.cakeId)">
-            {{ cake.name }}
+            {{ cake.cakeName }}
           </td>
           <td class="right">
             {{ currency(cake.price) }}
@@ -74,7 +74,7 @@
       },
   
       details(id) {
-        this.$router.push({ name: "instockDetails", params: { id: id } });
+        this.$router.push({ name: "InStockDetails", params: { id: id } });
       },
     },
   };

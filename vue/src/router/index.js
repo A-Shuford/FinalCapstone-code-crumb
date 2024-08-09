@@ -11,6 +11,7 @@ import CartItemView from '../views/CartItemView.vue';
 import CustomOrderView from '../views/CustomOrderView.vue';
 import ContactUsView from '../views/ContactUsView.vue';
 import ReviewsView from '../views/ReviewsView.vue';
+import InStockDetailsView from '../views/InStockDetailsView.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -57,6 +58,14 @@ const routes = [
     name: "instock",
     component: InStockView,
     meta:{
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/cakes/:id",
+    name: 'inStockDetails',
+    component: InStockDetailsView,
+    meta: {
       requiresAuth: false
     }
   },

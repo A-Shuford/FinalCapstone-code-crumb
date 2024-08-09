@@ -2,55 +2,51 @@
     <div>
       <div id="heading-line">
         <h1>
-          {{ product.name }}
-          <loading-spinner id="spinner" v-bind:spin="isLoading" />
+          {{ cake.cakeName }}
         </h1>
-        <button
-          id="add-cart"
+        <!--
+           id="add-cart"
           title="Add to shopping cart"
           v-if="isLoggedIn && product"
           v-on:click="addToCart"
         >
           <font-awesome-icon class="icon action" icon="fa-solid fa-cart-plus" />
           Add to Cart
-        </button>
+        </button> -->
       </div>
       <h2>Details</h2>
-      <p>{{ product.price }}</p>
-      <p>{{ cake.name }}</p>
-      <img v-bind:src="product.imageName" alt="Product photo" />
+      <p>{{ cake.price }}</p>
+      <p>{{ cake.cakeName }}</p>
+      <img v-bind:src="cake.imageName" alt="Product photo" />
       <p></p>
     </div>
   </template>
   
   <script>
-  import InStockService from "../services/InStockService.js";
+  import inStockService from "../services/InStockService.js";
+  import customService from "../services/CustomService.js";
   import cartService from "../services/CartService";
   //import LoadingSpinner from "../components/LoadingSpinner.vue";
   export default {
-   /*components: { LoadingSpinner },
+   /*components: { LoadingSpinner }, */
     data() {
       return {
-        product: {},
-        isLoading: false,
+        cake: {},
       };
-    }, */
+    }, 
     computed: {
       isLoggedIn() {
         return this.$store.state.token.length > 0;
       },
     },
     methods: {
-      getCake(id) {
-        this.isLoading = true;
-        InStockService
-          .getCakeById(id)
+      getCake(cakeId) {
+        inStockService
+          .getdetails(cakeId)
           .then((response) => {
             this.cake = response.data;
-            this.isLoading = false;
           })
           .catch((error) => {
-            this.isLoading = false;
             const response = error.response;
             const message =
               "Getting cake was unsuccessful: " +
@@ -61,19 +57,16 @@
       },
   
       addToCart() {
-        this.isLoading = true;
         cartService
-          .addItem(this.cake)
+          .addProduct(this.cake)
           .then(() => {
             // SUCCESS
             this.$store.commit(
               "SET_SUCCESS",
               `Added '${this.cake.name}' to cart`
             );
-            this.isLoading = false;
           })
           .catch((error) => {
-            this.isLoading = false;
             const response = error.response;
             const message =
               "Add cake was unsuccessful: " +

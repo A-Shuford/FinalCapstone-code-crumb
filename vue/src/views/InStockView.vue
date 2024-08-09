@@ -5,73 +5,91 @@
           In Stock Cakes 
         </h1>
         <div>
-          <font-awesome-icon
-            v-bind:class="{ 'view-icon': true, active: cardView }"
-            v-on:click="cardView = true"
-            icon="fa-solid fa-grip"
-            title="View tiles"
+          <span
+          :class="{ 'view-icon': true, active: cardView }"
+          @click="cardView = true"
+          title="View tiles"
+        >:black_square_button:</span>
+        <span
+          :class="{ 'view-icon': true, active: !cardView }"
+          @click="cardView = false"
+          title="View table"
+        >:white_square_button:</span>
+        <div id="search-box">
+          <input
+            type="text"
+            name="search-tb"
+            id="search-tb"
+            placeholder="Search..."
+            @keydown="checkSearchEnter"
+            v-model="filter"
           />
-          <font-awesome-icon
-            v-bind:class="{ 'view-icon': true, active: !cardView }"
-            v-on:click="cardView = false"
-            icon="fa-solid fa-table"
-            title="View table"
-          />
-          <div id="search-box">
-            <input
-              type="text"
-              name="search-tb"
-              id="search-tb"
-              placeholder="Search..."
-              v-on:keydown="checkSearchEnter"
-              v-model="filter"
-            />
-            <button
-              class="icon-button"
-              id="search-button"
-              v-on:click="getCakes"
-              tabindex="-1"
-            >
-              <font-awesome-icon
-                icon="fa-solid fa-magnifying-glass"
-                title="Search"
-              />
+          <button
+            class="icon-button"
+            id="search-button"
+            @click="getCakes"
+            tabindex="-1"
+          >
             </button>
           </div>
         </div>
       </div>
-      <p id="login-message" v-if="!isLoggedIn">
-        Welcome! You may browse anonymously as much as you wish,<br />
-        but you must
-        <router-link v-bind:to="{ name: 'login' }">Login</router-link> to add
-        items to your shopping cart.
-      </p>
-      <product-cards v-bind:cakes="cakes" v-if="cardView" />
-      <product-table v-bind:cakes="cakes" v-else />
     </div>
-  </template>
+    <p id="login-message" v-if="!isLoggedIn">
+      Welcome! You may browse anonymously as much as you wish,<br />
+      but you must
+      <router-link :to="{ name: 'login' }">Login</router-link> to add
+      items to your shopping cart.
+    </p>
+    <InstockCards :cakes="cakes" v-if="cardView" />
+    <InstockTable :cakes="cakes" v-else />
   
+</template>
+
 <script>
-import InStock from "../services/InStockService";
+import inStock from "../services/InStockService.js";
 import InstockTable from "../components/InstockTable.vue";
 import InstockCards from "../components/InstockCards.vue";
-  export default {
-    components: {
-      InstockTable,
-      InstockCards,
+
+export default {
+  components: {
+    InstockTable,
+    InstockCards,
+  },
+  data() {
+    return {
+      cakes: [],
+      filter: "",
+      cardView: true,
+    };
+  },
+
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.token.length > 0;
     },
-    data() {
-      return {
-        cakes: [],
-        filter: "",
-        cardView: true,
-      };
-    },
-  
-    computed: {
-      isLoggedIn() {
-        return this.$store.state.token.length > 0;
-      },
+  },
+
+  methods: {
+    getCakes() {
+      if (this.filter) {
+        this.searchCakes();
+        return;
+      }
+
+      inStock
+        .getCakes()
+        .then((response) => {
+          this.cakes = response.data;
+        })
+        .catch((error) => {
+          const response = error.response;
+          const message =
+            "Getting in-stock cakes was unsuccessful: " +
+            (response ? response.message : "Could not reach server");
+          this.$store.commit("SET_ERROR", message);
+          console.error(message);
+        });
     },
   
     methods: {
@@ -81,7 +99,7 @@ import InstockCards from "../components/InstockCards.vue";
           return;
         }
 
-        InStock
+        inStock
           .getCakes()
           .then((response) => {
             this.cakes = response.data;
@@ -97,7 +115,7 @@ import InstockCards from "../components/InstockCards.vue";
           });
       },
       searchCakes() {
-        InStock
+        inStock
           .searchCakes(this.filter)
           .then((response) => {
             this.cakes = response.data;
@@ -120,69 +138,92 @@ import InstockCards from "../components/InstockCards.vue";
         }
       },
     },
-  
-    created() {
-      this.getCakes();
+
+    checkSearchEnter(e) {
+      if (e.key === "Enter") {
+        this.getCakes();
+      }
     },
-  };
-  </script>
-  
-  <style scoped>
+  },
+
+  created() {
+    this.getCakes();
+  },
+};
+</script>
+
+<style scoped>
+#heading-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#spinner {
+  color: rgb(0, 0, 0);
+}
+
+.view-icon {
+  font-size: 1.2rem;
+  margin-right: 7px;
+  padding: 3px;
+  color: #c26060;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.view-icon.active {
+  background-color: #FAEDCD;
+}
+
+.view-icon:not(.active) {
+  font-size: 1.2rem;
+  margin-right: 7px;
+}
+
+.view-icon:not(.active):hover {
+  color: blue;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Search box styling */
+#search-box {
+  display: inline-block;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+}
+
+#search-tb {
+  border: none;
+  padding: 5px;
+  min-width: 200px;
+  background-color: transparent;
+}
+
+#search-tb:focus-visible {
+  outline: none;
+}
+
+#search-button {
+  color: gray;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+@media (max-width: 768px) {
   #heading-line {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: flex-start;
   }
-  
-  #spinner {
-      color: rgb(0, 0, 0);
-  }
-  
+
   .view-icon {
-    font-size: 1.2rem;
-    margin-right: 7px;
-    padding: 3px;
-    color: #c26060;
-    border-radius: 3px;
+    margin-bottom: 10px;
   }
-  
-  .view-icon.active {
-    background-color: #FAEDCD;
-  }
-  
-  .view-icon:not(.active) {
-    font-size: 1.2rem;
-    margin-right: 7px;
-    cursor: pointer;
-  }
-  
-  .view-icon:not(.active):hover {
-    color: blue;
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-  
-  /* Search box styling */
+
   #search-box {
-    display: inline-block;
-    border: 1px solid darkgray;
-    border-radius: 10px;
+    margin-top: 10px;
   }
-  
-  #search-tb {
-    border: none;
-    padding: 5px;
-    min-width: 200px;
-    background-color: transparent;
-  }
-  #search-tb:focus-visible {
-    outline: none;
-  }
-  
-  #search-button {
-    color: gray;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-  }
-  </style>../services/InStockService.js
+}
+</style>

@@ -5,9 +5,10 @@
         v-for="cake in cakes"
         v-bind:key="cake.cakeId"
       >
+      <div class="id">{{ cake.cakeId }}</div>
         <div class="price">{{ currency(cake.price) }}</div>
         <div class="cake-name action" v-on:click="details(cake.cakeId)">
-          {{ cake.name }}
+          {{ cake.cakeName }}
         </div>
         <div class="cake-image">
           <img v-bind:src="cake.imageName" />
@@ -26,6 +27,7 @@
   </template>
   
   <script>
+  import inStock from "../services/inStockService.js";
   import cartService from "../services/CartService";
   export default {
     props: {
@@ -49,11 +51,10 @@
       addToCart(cake) {
         this.isLoading = true;
         cartService
-          .addItem(cake)
+          .addProduct(cake)
           .then(() => {
             // SUCCESS
             this.$store.commit("SET_SUCCESS", `Added '${cake.name}' to cart`);
-            this.isLoading = false;
           })
           .catch((error) => {
             this.isLoading = false;
@@ -67,7 +68,7 @@
       },
   
       details(id) {
-        this.$router.push({ name: "InStockDetails", params: { id: id } });
+        this.$router.push({ name: "inStockDetails", params: { id: id} });
       },
     },
   };
@@ -119,7 +120,8 @@
   div.cake-image > img {
     max-width: 100%;
     max-height: 100%;
-    border-radius: 5px;
+    border-radius: 5px; 
+    
   }
   
   div.cart {
