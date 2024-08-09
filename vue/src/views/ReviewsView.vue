@@ -59,3 +59,16 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.reviews {
+  background-image: url('/src/assets/Cake_Images/background.png');
+  background-size:cover;
+  background-position: center;
+  padding: 40px;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 800px;
+  color: #fff;
+  text-align: center;
+}
