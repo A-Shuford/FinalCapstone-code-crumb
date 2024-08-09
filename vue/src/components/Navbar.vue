@@ -2,14 +2,18 @@
     <div id="nav">
         <router-link v-bind:to="{ name: 'home' }"><img src="/src/assets/navIcons/home.png"> Home</router-link>
         <router-link v-bind:to="{ name: 'instock' }"><img src="/src/assets/navIcons/inStock.png"> In-Stock</router-link>
-        <router-link v-bind:to="{ name: 'customorder' }"><img src="/src/assets/navIcons/custom.png"> Custom
-            Order</router-link>
-        <router-link v-bind:to="{ name: 'contactus' }"><img src="/src/assets/navIcons/contactus.png"> Contact
-            Us</router-link>
+        <router-link v-bind:to="{ name: 'customorder' }"><img src="/src/assets/navIcons/custom.png"> Custom Order</router-link>
+        <router-link v-bind:to="{ name: 'contactus' }"><img src="/src/assets/navIcons/contactus.png"> Contact Us</router-link>
         <router-link v-bind:to="{ name: 'reviews' }"><img src="/src/assets/navIcons/reviews.png"> Reviews</router-link>
     </div>
 
 </template>
+
+<script>
+export default {
+    name: "NavBarVue",
+};
+</script>
 
 <style scoped>
 #nav {

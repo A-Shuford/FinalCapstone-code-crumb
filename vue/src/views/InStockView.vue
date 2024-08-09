@@ -1,4 +1,7 @@
 <template>
+  <header-vue />
+  <nav-bar-vue />
+  <mascot-modal-vue />
     <div class="home">
       <div id="heading-line">
         <h1>
@@ -43,18 +46,26 @@
     </p>
     <InstockCards :cakes="cakes" v-if="cardView" />
     <InstockTable :cakes="cakes" v-else />
-  
+  <footer-vue />
 </template>
 
 <script>
 import inStock from "../services/InStockService.js";
 import InstockTable from "../components/InstockTable.vue";
 import InstockCards from "../components/InstockCards.vue";
+import HeaderVue from "../components/Header.vue";
+import NavBarVue from "../components/Navbar.vue";
+import MascotModalVue from "../components/MascotModal.vue";
+import FooterVue from "../components/Footer.vue";
 
 export default {
   components: {
     InstockTable,
     InstockCards,
+    HeaderVue,
+    NavBarVue,
+    MascotModalVue,
+    FooterVue,
   },
   data() {
     return {

@@ -4,11 +4,7 @@ html {
     font-size: 16px; /* Set the base font size */
     font-family: Arial, sans-serif; /* Set the default font family */
     line-height: 1.5; /* Set the default line height */
-<<<<<<< HEAD
     background-color: #FAEDCD;
-=======
-    background-color:#FAEDCD;
->>>>>>> 26944f7d4b9fdab75948c8e0ae5c06f70c8c4340
 }
 
 
@@ -31,23 +27,65 @@ body {
     /* CSS rules for screens with a maximum width of 320px (smaller phones) */
 }
 
-form div {
-    margin-bottom: 1rem; /* Add space between each form group */
+/* General form styling */
+form {
+    margin: 0 auto;
+    width: 50%;
+    padding: 10px; /* Reduced padding */
+    border: 1px solid black; /* Adjusted border width */
+    border-radius: 5px; /* Reduced border-radius */
+    background-color: #FBECEB;
+    text-align: center;
+  }
+  
+  form h1 {
+    font-size: 2em;
+    color: #8c3f09;
+    text-align: left; /* Title alignment to left */
+  }
+  
+  form h2 {
+    font-size: 1.5em;
+    color: #8c3f09;
+  }
+  
+  form h3 {
+    font-size: 1.2em;
+    color: #8c3f09;
   }
   
   form label {
-    display: inline-block;
-    width: 150px; /* Adjust width as needed */
-    text-align: right;
-    margin-right: 1rem;
-    font-weight: bold;
-   }
-  
-  form input,
-  form select,
-  form textarea {
-    width: calc(100% - 200px); /* Adjust width to fit the form container */
-    padding: 0.5rem;
+    font-size: 1.2em;
+    color: #8c3f09;
   }
-
- 
+  
+  form select {
+    font-size: 1.2em;
+    color: #8c3f09;
+  }
+  
+  form input {
+    font-size: 1.2em;
+    color: #8c3f09;
+  }
+  
+  form textarea {
+    font-size: 1.2em;
+    color: #8c3f09;
+  }
+  
+  form button {
+    font-size: 1.5em; /* Adjusted button font size */
+    color: #8c3f09;
+    background-color: #FAC965;
+    border: 1px solid #8c3f09; /* Adjusted border width */
+    border-radius: 5px; /* Reduced border-radius */
+    padding: 8px; /* Adjusted padding */
+    margin-top: 10px;
+  }
+  
+  form button:hover {
+    background-color: #D22242;
+    color: white;
+  }
+  

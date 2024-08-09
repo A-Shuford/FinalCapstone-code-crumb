@@ -13,6 +13,9 @@
     <div id="login-status-heart">  
       <img id="login-status-heart" src="src\assets\Cake_Images\pixelheart.png">
     </div>
+    <div>
+      <social-media-icons-vue />
+    </div>
     </div>
     <!--<div id="cart">
       <router-link v-bind:to="{ name: 'cart-item' }">
@@ -21,9 +24,7 @@
     <div>
       <img id="cart" src="/src/assets/cart.png">
     </div>
-    <div>
-      <social-media-icons-vue />
-    </div>
+    
   </div>  
 
 </template>
@@ -72,14 +73,15 @@ export default {
   align-items: center;
   font-size: 1.2rem;
   margin: 0;
+  margin-bottom: 10px; /* Adjust spacing between login status and social media icons */
 }
+
 
 #header #login-status-heart img {
   width: 50px; /* Adjust the width to your desired size */
   height: auto; /* Maintain aspect ratio */
   margin-left: 10px;
   margin-right: 10px;
-  z-index: 2;
 }
 
 #header #cart {
@@ -102,5 +104,7 @@ export default {
   width: 30px; /* Adjust size as needed */
   height: 30px;
   margin: 0 10px;
+  display: flex;
+  gap: 10px; /* Adjust spacing between icons */
   }
 </style>

@@ -29,7 +29,7 @@
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    z-index: 1000;
+    z-index: 100;
   }
   
   .modal-content img {

@@ -5,9 +5,12 @@
       </h2> //---->
       
     <template>
+        <header-vue />
+        <nav-bar-vue />
         <div id="customorder">
             <h1>Custom Order</h1>
             <h2>Please fill your contact information</h2>
+
             
               <form @submit.prevent="submitOrder">
                 <div>
@@ -22,22 +25,7 @@
                     <label for="phone">Phone:</label>
                     <input type="tel" v-model="phone" id="phone">   
                 </div>
-                <div>
-                    <label for="address">Address:</label>
-                    <input type="text" v-model="address" id="address">
-                </div>
-                <div>
-                    <label for="city">City:</label>
-                    <input type="text" v-model="city" id="city">
-                </div>
-                <div>
-                    <label for="state">State:</label>
-                    <input type="text" v-model="state" id="state">      
-                </div>
-                <div>
-                    <label for="zip">Zip:</label>
-                    <input type="text" v-model="zip" id="zip">              
-                </div>
+                
                
                 <div>
                     <h3>Our cakes are made with the finest ingredients and are made to order.</h3>
@@ -123,5 +111,26 @@
             </form>
         </div>
  
-  
+  <footer-vue />
     </template>
+
+<script>
+import HeaderVue from '../components/Header.vue';
+import NavBarVue from '../components/Navbar.vue';
+import MascotModalVue from '../components/MascotModal.vue'; 
+import FooterVue from '../components/Footer.vue';
+
+export default {
+  name: "HomeView",
+  components: {
+    HeaderVue,
+    NavBarVue,
+    MascotModalVue,
+    FooterVue
+  },
+};
+</script>
+
+<style scoped>
+
+</style>
