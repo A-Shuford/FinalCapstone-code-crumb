@@ -28,26 +28,14 @@ export default {
     NavBar,
     MascotModalVue,
     FooterVue
+
   },
-  methods: {
-    logout() {
-      authService
-        .logout()
-        .then(response => {
-          if (response.status == 200) {
-            this.$store.commit("LOGOUT");
-            this.$router.push("/login");
-          }
-        })
-        .catch(error => {
-          console.error("Error logging out: ", error);
-        });
-    }
-  },
-  mounted() {
-    this.logout(); // Call logout when the component is mounted
+  created() {
+    this.$store.commit("LOGOUT");
+    this.$router.push("/login");
   }
 };
+
 </script>
 
 <style scoped>
