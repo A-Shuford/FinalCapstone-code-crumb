@@ -141,6 +141,10 @@ VALUES ('Pending'),
 ('Ready for pick-up'),
 ('Order Completed');
 
+INSERT INTO users (username, yourname, email, phone_number, password_hash, role)
+VALUES ('user', 'John Smith', 'user@example.com', '123-456-7890', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_USER'),
+('admin', 'Admin Smith', 'admin@example.com', '098-765-4321', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN' );
+
 
 GRANT ALL
 ON ALL TABLES IN SCHEMA public
