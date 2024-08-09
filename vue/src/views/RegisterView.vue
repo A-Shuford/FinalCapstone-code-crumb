@@ -1,4 +1,9 @@
 <template>
+
+  <header-vue />
+  <nav-bar />
+  <mascot-modal-vue />
+
   <div id="register" class="text-center">
     <form v-on:submit.prevent="register">
       <h1>Create Account</h1>
@@ -11,15 +16,15 @@
       </div>
       <div class="form-input-group">
         <label for="name">Name</label>
-        <input type="text" id="name" placeholder="John Smith" v-model="user.yourName" required/>
+        <input type="text" id="name" placeholder="John Smith" v-model="user.yourName" required />
       </div>
       <div class="form-input-group">
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="example@example.com" v-model="user.email" required/>
+        <input type="email" id="email" placeholder="example@example.com" v-model="user.email" required />
       </div>
       <div class="form-input-group">
         <label for="phoneNumber">Phone Number</label>
-        <input type="tel" id="phone" placeholder="123-456-7890" v-model="user.phoneNumber" required/>
+        <input type="tel" id="phone" placeholder="123-456-7890" v-model="user.phoneNumber" required />
       </div>
       <div class="form-input-group">
         <label for="password">Password</label>
@@ -33,12 +38,24 @@
       <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
   </div>
+
+  <footer-vue />
 </template>
 
 <script>
 import authService from '../services/AuthService';
+import HeaderVue from "../components/Header.vue";
+import NavBar from "../components/NavBar.vue";
+import MascotModalVue from "../components/MascotModal.vue";
+import FooterVue from "../components/Footer.vue";
 
 export default {
+  components: {
+    HeaderVue,
+    NavBar,
+    MascotModalVue,
+    FooterVue,
+  },
   data() {
     return {
       user: {
@@ -91,12 +108,15 @@ export default {
 .form-input-group {
   margin-bottom: 1rem;
 }
-button{
+
+button {
   border-radius: 5px;
 }
-input{
+
+input {
   border-radius: 5px;
 }
+
 label {
   margin-right: 0.5rem;
 }
