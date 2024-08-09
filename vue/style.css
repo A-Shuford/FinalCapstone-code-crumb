@@ -8,6 +8,12 @@ html {
 }
 
 
+body {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    height: 100%;
+  } 
+
 
 @media screen and (max-width: 768px) {
     /* CSS rules for screens with a maximum width of 768px (including tablets and phones) */
