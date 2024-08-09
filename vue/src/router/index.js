@@ -12,6 +12,7 @@ import CustomOrderView from '../views/CustomOrderView.vue';
 import ContactUsView from '../views/ContactUsView.vue';
 import ReviewsView from '../views/ReviewsView.vue';
 import InStockDetailsView from '../views/InStockDetailsView.vue';
+import Header from '../components/Header.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -70,7 +71,11 @@ const routes = [
     }
   },
   {
+<<<<<<< HEAD
     path: "/cartitem",
+=======
+    path: "/cart-item",
+>>>>>>> ab40faf08ff715adab88922bb9ba4de98b07219d
     name: "cart-item",
     component: CartItemView,
     meta:{
