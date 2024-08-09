@@ -41,7 +41,7 @@
   
     computed: {
       isLoggedIn() {
-        return this.$store.state.token.length > 0;
+        return this.$store.state.token.length === 0;
       },
     },
   

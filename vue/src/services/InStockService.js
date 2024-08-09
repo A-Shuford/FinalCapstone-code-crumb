@@ -4,7 +4,7 @@ import axios from 'axios';
 export default{
 
     getCakes(){
-        return axios.get('/instock');
+        return axios.get('/instock'); //WHERE STATEMENT IS EQUALS TO STANDARD
     },
 
     getdetails(cakeId){
