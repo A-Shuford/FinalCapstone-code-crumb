@@ -223,18 +223,5 @@ export default {
   border: none;
 }
 
-@media (max-width: 768px) {
-  #heading-line {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
-  .view-icon {
-    margin-bottom: 10px;
-  }
-
-  #search-box {
-    margin-top: 10px;
-  }
-}
 </style>
