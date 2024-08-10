@@ -12,12 +12,12 @@
           :class="{ 'view-icon': true, active: cardView }"
           @click="cardView = true"
           title="View tiles"
-        >:black_square_button:</span>
+        ><img src="../assets/InStockIcons/card.png"></span>
         <span
           :class="{ 'view-icon': true, active: !cardView }"
           @click="cardView = false"
           title="View table"
-        >:white_square_button:</span>
+        ><img src="../assets/InStockIcons/table.png"></span>
         <div id="search-box">
           <input
             type="text"
@@ -221,6 +221,10 @@ export default {
   cursor: pointer;
   background-color: transparent;
   border: none;
+}
+
+.view-icon img{
+  height: 20px;
 }
 
 

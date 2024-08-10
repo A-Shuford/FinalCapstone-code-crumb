@@ -19,13 +19,13 @@
             {{ currency(cake.price) }}
           </td>
           <td>
-            <font-awesome-icon
+            <!-- <font-awesome-icon
               v-if="isLoggedIn"
               class="icon action"
-              icon="fa-solid fa-cart-plus"
               v-on:click="addToCart(cake)"
               title="Add cake to cart"
-            />
+            />  -->
+            <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon"  class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart">
           </td>
         </tr>
       </tbody>
@@ -102,5 +102,10 @@
   .action:hover {
     color: blue;
     background-color: rgba(0, 0, 0, 0.1);
+  
+  }
+
+  img{
+    height: 20px;
   }
   </style>

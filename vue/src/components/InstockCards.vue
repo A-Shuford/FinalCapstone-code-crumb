@@ -14,13 +14,7 @@
           <img v-bind:src="cake.imageName" />
         </div>
         <div class="cart">
-          <font-awesome-icon
-            v-if="isLoggedIn"
-            class="icon action"
-            icon="fa-solid fa-cart-plus"
-            v-on:click="addToCart(cake)"
-            title="Add cake to cart"
-          />
+          <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon"  class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart">
         </div>
       </article>
     </section>
@@ -85,7 +79,7 @@
     display: grid;
     grid-template-rows: 25px 40px 165px 20px;
     grid-template-areas:
-      "sku price"
+      "id price"
       "name name"
       "img img"
       " . cart";
@@ -119,7 +113,6 @@
   
   div.cake-image > img {
     max-width: 100%;
-    max-height: 100%;
     border-radius: 5px; 
     
   }
@@ -127,6 +120,7 @@
   div.cart {
     grid-area: cart;
     text-align: right;
+    
   }
   
   .action {
@@ -142,4 +136,11 @@
     color: blue;
     background-color: rgba(0, 0, 0, 0.1);
   }
+
+  div.cart img{
+    height:60px;
+  }
+
+  
+
   </style>
