@@ -1,12 +1,18 @@
 <template>
-<header-vue />
-<nav-bar-vue />
-<mascot-modal-vue />
+  <header-vue />
+  <nav-bar-vue />
+  <mascot-modal-vue />
 
-    <div class = "reviews">
-        <h1>Reviews</h1>
+  
+  <div class="reviews">
+    <div class="title-box">
+      <h1>WHAT OUR CUSTOMERS THINK ABOUT US...</h1>
+      
     </div>
-<footer-vue />
+    
+  </div>
+
+  <footer-vue />
 </template>
 
 <script>
@@ -23,5 +29,8 @@ export default {
     MascotModalVue,
     FooterVue
   },
+  
+  
+  
 };
 </script>
