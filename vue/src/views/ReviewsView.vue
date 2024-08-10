@@ -3,9 +3,14 @@
   <nav-bar-vue />
   <mascot-modal-vue />
 
+  <!-- Pop-Up Message -->
+  <div class="popup" v-if="showPopup">
+    <p>You can’t buy happiness, but you can buy cake, and that’s pretty close.</p>
+  </div>
+
   <div class="reviews">
     <div class="title-box">
-      <h1>REVIEWS</h1>
+      <h1>WHAT OUR CUSTOMERS THINK ABOUT US...</h1>
       <p>REVIEW BY – 
         <a href="https://www.yelp.com" target="_blank" class="yelp-link">YELP</a>
       </p>
@@ -42,6 +47,7 @@ export default {
   data() {
     return {
       currentReview: 0,
+      showPopup: true, // Initialize to show the pop-up
       reviews: [
         { text: "My husband surprised me with two delightful cakes from Code and Crumb. The Chocolate Ganache Cake was irresistibly rich and moist. The second was an Apple Jelly Cake that defied expectations—despite looking dry when I cut into it, it turned out to be incredibly moist, a unique and unforgettable experience!", author: "Megan M." },
         { text: "I recently had the pleasure of trying the Chocolate Ganache Cake from Code and Crumb, and it was a chocolate lover's dream come true. The rich, velvety ganache was perfectly complemented by the moist, tender cake. It was indulgent without being overwhelming—just the right balance of sweetness and decadence.", author: "Rommel S." },
@@ -56,6 +62,11 @@ export default {
         { text: "I’m amazed at the variety and quality of cupcakes here. The customer service was also top-notch.", author: "Ryan E." }
       ]
     };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showPopup = false; // Hide the pop-up after 5 seconds
+    }, 5000);
   }
 };
 </script>
@@ -63,7 +74,7 @@ export default {
 <style scoped>
 .reviews {
   background-image: url('/src/assets/Cake_Images/background.png');
-  background-size:cover;
+  background-size: cover;
   background-position: center;
   padding: 40px;
   border-radius: 8px;
@@ -73,3 +84,89 @@ export default {
   text-align: center;
 }
 
+.title-box {
+  background-color: rgba(67, 66, 66, 0.5); 
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.title-box h1, .title-box p {
+  margin: 0;
+  color: #fff;
+}
+
+.reviews h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #111111;
+}
+
+.reviews p {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+  color: #bbb;
+}
+
+.review {
+  padding: 20px;
+  background-color: rgba(51, 51, 51, 0.8); 
+  border-radius: 8px;
+  margin: 20px 0;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stars {
+  color: #FFD700;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.review p {
+  font-size: 1.1em;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.review span {
+  display: block;
+  font-size: 1em;
+  color: #999;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.pagination span {
+  width: 12px;
+  height: 12px;
+  background-color: #f5b2b2;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination span.active {
+  background-color: #fff;
+}
+
+.yelp-link {
+  color: #4a0e77;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.yelp-link:hover {
+  color: rgb(249, 66, 66);
+}
+
+/* Pop-Up Styling */
+
+.popup p {
+  margin: 0;
+}
+</style>
