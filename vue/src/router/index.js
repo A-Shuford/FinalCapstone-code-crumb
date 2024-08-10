@@ -71,11 +71,7 @@ const routes = [
     }
   },
   {
-<<<<<<< HEAD
-    path: "/cartitem",
-=======
     path: "/cart-item",
->>>>>>> ab40faf08ff715adab88922bb9ba4de98b07219d
     name: "cart-item",
     component: CartItemView,
     meta:{
