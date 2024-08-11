@@ -26,6 +26,13 @@
               <router-link v-bind:to="{ name: 'cart-item' }">
                 <img src="/src/assets/cart.png" alt="Cart Icon">
               </router-link>
+     <!-- <div
+        id="message-bar"
+        v-bind:class="'message-' + $store.state.message.level"
+        v-bind:title="$store.state.message.text"
+      >
+        {{ $store.state.message.text }}
+      </div> -->
             </div>
             <!-- Login/Register/Logout -->
             <div id="loginlogoutregister">

@@ -31,7 +31,7 @@ public class CartController {
         return cartService.getUserCart(principal);
     }
 
-    @RequestMapping(path = "", method = RequestMethod.POST)
+    @RequestMapping(path = "/items", method = RequestMethod.POST)
     public CartItem addProduct(@Valid @RequestBody CartItem item, Principal principal){
         try{
             return cartService.addToCart(principal, item);

@@ -7,6 +7,20 @@
         <h1>
           In Stock Cakes 
         </h1>
+        <div
+        id="message-bar"
+        v-bind:class="'message-' + $store.state.message.level"
+        v-bind:title="$store.state.message.text"
+      >
+      <font-awesome
+          class="dismiss-message-icon"
+          icon="fa-solid fa-xmark"
+          title="Dismiss message"
+          v-if="$store.state.message.text"
+          v-on:click="$store.commit('CLEAR_MESSAGE')"
+        /> 
+        {{ $store.state.message.text }}
+        </div>
         <div>
           <span
           :class="{ 'view-icon': true, active: cardView }"

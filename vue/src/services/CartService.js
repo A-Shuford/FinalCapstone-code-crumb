@@ -18,7 +18,7 @@ export default {
       pickupDate: null ,  
       pickupTime: null,
     };
-    return axios.post('/cartitem', item);
+    return axios.post('/cartitem/items', item);
   },
 
   clearCart() {

@@ -48,7 +48,7 @@
           .addCake(cake)
           .then(() => {
             // SUCCESS
-            this.$store.commit("SET_SUCCESS", `Added '${cake.name}' to cart`);
+            this.$store.commit("SET_SUCCESS", `Added '${cake.cakeName}' to cart`);
           })
           .catch((error) => {
             this.isLoading = false;

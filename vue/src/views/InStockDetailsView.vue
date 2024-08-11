@@ -7,20 +7,22 @@
         <h1>
           {{ cake.cakeName }}
         </h1>
-        <!--
-           id="add-cart"
-          title="Add to shopping cart"
-          v-if="isLoggedIn && product"
-          v-on:click="addToCart"
-        >
-          <font-awesome-icon class="icon action" icon="fa-solid fa-cart-plus" />
-          Add to Cart
-        </button> -->
       </div>
+      <div
+        id="message-bar"
+        v-bind:class="'message-' + $store.state.message.level"
+        v-bind:title="$store.state.message.text"
+      >
+         
+        {{ $store.state.message.text }}
+        </div>
       <h2>Details</h2>
       <p>{{ cake.price }}</p>
       <p>{{ cake.cakeName }}</p>
       <img v-bind:src="cake.imageName" alt="Product photo" />
+      <div class="cart">
+          <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon"  class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart">
+        </div>
       </div>
     <footer-vue />
 </template>
@@ -73,12 +75,12 @@
   
       addToCart() {
         cartService
-          .addProduct(this.cake)
+          .addCake(this.cake)
           .then(() => {
             // SUCCESS
             this.$store.commit(
               "SET_SUCCESS",
-              `Added '${this.cake.name}' to cart`
+              `Added '${this.cake.cakeName}' to cart`
             );
           })
           .catch((error) => {
@@ -105,6 +107,10 @@
     justify-content: space-between;
     align-items: flex-start;
   }
+
+  div.cart img{
+    height: 30px;
+  }
   
  /* #spinner {
     color: green;
@@ -113,5 +119,9 @@
   #add-cart:hover {
     color: rgb(229, 18, 18);
     background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .action {
+    cursor: pointer;
   }
   </style>

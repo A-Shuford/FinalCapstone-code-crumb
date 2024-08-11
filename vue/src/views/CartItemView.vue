@@ -30,7 +30,7 @@
               name:'inStockDetails',
               params: { id: cake.cakeId },
             }">
-          {{ cake.cakeName }}  
+          {{ cake.cake.cakeName }}  
           </router-link>
           </td>
           <td class = "right">
@@ -40,7 +40,7 @@
             {{ currency(cake.price * cake.quantity) }}
           </td>
           <td class="actions">
-            <img src="../assets/InStockIcons/removeItemIcon.jpg" alt="Cart Icon"  class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart">
+            <img src="../assets/InStockIcons/removeItemIcon.jpg" alt="Cart Icon"  class="icon action" v-on:click="removeCake(cake)" title="Add cake to cart">
           </td>
         </tr>
 
@@ -118,7 +118,7 @@ export default {
           console.error(message);
       });
     },
-    removeItem(itemId){
+    removeCake(itemId){
       cartService.deleteItem(itemId).then(()=>{
         this.getCart();
       })

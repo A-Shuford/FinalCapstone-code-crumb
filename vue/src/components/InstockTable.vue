@@ -53,13 +53,13 @@
         }).format(value);
       },
   
-      addToCart(product) {
+      addToCart(cake) {
         this.isLoading = true;
         cartService
-          .addCake(product)
+          .addCake(cake)
           .then(() => {
             // SUCCESS
-            this.$store.commit("SET_SUCCESS", `Added '${product.name}' to cart`);
+            this.$store.commit("SET_SUCCESS", `Added '${cake.cakeName}' to cart`);
             this.isLoading = false;
           })
           .catch((error) => {
