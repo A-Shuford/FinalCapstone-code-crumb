@@ -182,6 +182,7 @@ export default {
 .popup p {
   margin: 0;
 }
+
 .template {
   font: italic;
 }
