@@ -78,9 +78,9 @@ CREATE TABLE cart_item (
 	user_id int,
 	cake_id int,
 	status_id int,
-	pickup_date Date NOT NULL, 
-	pickup_time TIME NOT NULL, 
-	
+	pickup_date Date, 
+	pickup_time TIME, 
+	--pickupdate and picktime talk to team
 	CONSTRAINT pk_cart_item_id PRIMARY KEY(cart_item_id),
 	CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES users(user_id),
 	CONSTRAINT fk_cake_id FOREIGN KEY (cake_id) REFERENCES cake(cake_id),

@@ -7,17 +7,26 @@
         <h1>
           In Stock Cakes 
         </h1>
+        <div class="message-bar"
+        v-bind:class="'message-' + $store.state.message.level"
+        v-bind:title="$store.state.message.text"
+        v-if="$store.state.message.text"
+        v-on:click="$store.commit('CLEAR_MESSAGE')"
+      >
+        <img src="../assets/InStockIcons/cancel_message_icon.png">
+        {{ $store.state.message.text }}
+        </div>
         <div>
           <span
           :class="{ 'view-icon': true, active: cardView }"
           @click="cardView = true"
           title="View tiles"
-        >:black_square_button:</span>
+        ><img src="../assets/InStockIcons/card.png"></span>
         <span
           :class="{ 'view-icon': true, active: !cardView }"
           @click="cardView = false"
           title="View table"
-        >:white_square_button:</span>
+        ><img src="../assets/InStockIcons/table.png"></span>
         <div id="search-box">
           <input
             type="text"
@@ -160,6 +169,8 @@ export default {
   created() {
     this.getCakes();
   },
+  
+
 };
 </script>
 
@@ -223,18 +234,24 @@ export default {
   border: none;
 }
 
-@media (max-width: 768px) {
-  #heading-line {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .view-icon {
-    margin-bottom: 10px;
-  }
-
-  #search-box {
-    margin-top: 10px;
-  }
+.view-icon img{
+  height: 20px;
 }
+
+div.message-bar img{
+  height: 20px;
+  padding-right: 15px;
+  
+}
+
+div.message-bar{
+  display: flex;
+  background-color: greenyellow;
+  position:fixed;
+  top: 0px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5px;
+}
+
 </style>
