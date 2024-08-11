@@ -10,15 +10,15 @@
             <table>
                 <tr>
                     <td><label for="name">Name:</label></td>
-                    <td><input type="text" v-model="name" id="name"></td>
+                    <td><input type="text" v-model="name" id="name" required></td>
                 </tr>
                 <tr>
                     <td><label for="email">Email:</label></td>
-                    <td><input type="email" v-model="email" id="email"></td>
+                    <td><input type="email" v-model="email" id="email" required></td>
                 </tr>
                 <tr>
                     <td><label for="phone">Phone:</label></td>
-                    <td><input type="tel" v-model="phone" id="phone"></td>
+                    <td><input type="tel" v-model="phone" id="phone" required></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -27,7 +27,7 @@
                 </tr>
                 <tr>
                     <td><label for="cake_name">Custom Cake Name:</label></td>
-                    <td><input type="text" v-model="cake_name" id="cake_name"></td>
+                    <td><input type="text" v-model="cake_name" id="cake_name" required></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -37,7 +37,7 @@
                 <tr>
                     <td><label for="cake_style">Cake Style:</label></td>
                     <td>
-                        <select v-model="cake_style" id="cake_style">
+                        <select v-model="cake_style" id="cake_style" required>
                             <option value="Layered">Layered</option>
                             <option value="Sheet">Sheet</option>
                             <option value="Cupcakes">Cupcakes</option>
@@ -47,7 +47,7 @@
                 <tr>
                     <td><label for="cake_size">Cake Size:</label></td>
                     <td>
-                        <select v-model="cake_size" id="cake_size">
+                        <select v-model="cake_size" id="cake_size" required>
                             <option value="Small">Small</option>
                             <option value="Medium">Medium</option>
                             <option value="Large">Large</option>
@@ -57,7 +57,7 @@
                 <tr>
                     <td><label for="cake_flavor">Cake Flavor:</label></td>
                     <td>
-                        <select v-model="cake_flavor" id="cake_flavor">
+                        <select v-model="cake_flavor" id="cake_flavor" required>
                             <option value="Butterscotch">Butterscotch</option>
                             <option value="Vanilla">Vanilla</option>
                             <option value="Chocolate">Chocolate</option>
@@ -72,7 +72,7 @@
                 <tr>
                     <td><label for="cake_frosting">Cake Frosting:</label></td>
                     <td>
-                        <select v-model="cake_frosting" id="cake_frosting">
+                        <select v-model="cake_frosting" id="cake_frosting" required>
                             <option value="Vanilla">Vanilla</option>
                             <option value="Chocolate Ganache">Chocolate Ganache</option>
                             <option value="Coffee">Coffee</option>
@@ -103,11 +103,11 @@
                 </tr>
                 <tr>
                     <td><label for="pickup_date">Pick Up Date:</label></td>
-                    <td><input type="date" v-model="pickup_date" id="pickup_date"></td>
+                    <td><input type="date" v-model="pickup_date" id="pickup_date" required></td>
                 </tr>
                 <tr>
                     <td><label for="pickup_time">Pick Up Time:</label></td>
-                    <td><input type="time" v-model="pickup_time" id="pickup_time"></td>
+                    <td><input type="time" v-model="pickup_time" id="pickup_time" required></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -116,7 +116,6 @@
                         <label for="writing">Writing on the cake:</label>
                         <textarea v-model="writing" id="writing"></textarea>
                         
-                        <!-- Display fee message if there is writing -->
                         <p v-if="hasWriting">There is an additional fee for writing on the cake</p>
                         
                         <h2>Please provide any additional notes or instructions.</h2>
@@ -141,6 +140,7 @@ import HeaderVue from '../components/Header.vue';
 import NavBarVue from '../components/Navbar.vue';
 import MascotModalVue from '../components/MascotModal.vue';
 import FooterVue from '../components/Footer.vue';
+import cartService from '../services/CartService';
 
 export default {
     name: "HomeView",
@@ -152,9 +152,9 @@ export default {
     },
     data() {
         return {
-            name: '',
-            email: '',
-            phone: '',
+            name: this.$store.state.user.yourName,
+            email: this.$store.state.user.email,
+            phone: this.$store.state.user.phoneNumber,
             cake_name: '',
             cake_style: '',
             cake_size: '',
@@ -163,19 +163,40 @@ export default {
             cake_filling: '',
             pickup_date: '',
             pickup_time: '',
-            writing: '', // Adding writing property
+            writing: '', 
             additional_notes: ''
+
         };
     },
     computed: {
         hasWriting() {
             return this.writing.trim().length > 0;
+        },
+        isShopOpen() {
+            const selectedDate = new Date(this.pickup_date);
+            const day = selectedDate.getDay(); 
+            const time = this.pickup_time;
+
+            if (day === 1) { 
+                return false;
+            }
+
+            const [hours, minutes] = time.split(':').map(Number);
+            return hours >= 8 && (hours < 21 || (hours === 21 && minutes === 0));
         }
     },
     methods: {
-        submitOrder() {
-            // Handle form submission logic here
-            console.log('Order submitted:', {
+        async submitOrder() {
+            if (!this.isShopOpen) {
+                alert('The selected pickup time is outside our operating hours (8 AM to 9 PM) or the shop is closed on Monday. Please select a different time.');
+                return;
+            }
+
+ 
+        },
+        
+        addingToCustomCake () {
+            const customCake = {
                 name: this.name,
                 email: this.email,
                 phone: this.phone,
@@ -189,13 +210,21 @@ export default {
                 pickup_time: this.pickup_time,
                 writing: this.writing,
                 additional_notes: this.additional_notes
-            });
+            };
+            cartService.addCake(customCake)
+                .then(() => {
+                    this.$store.commit('SET_SUCCESS', `Added '${this.cake_name}' to cart`);
+                })
+                .catch((error) => {
+                    const response = error.response;
+                    const message = 'Add cake was unsuccessful: ' + (response ? response.message : 'Could not reach server');
+                    this.$store.commit('SET_ERROR', message);
+                    console.error(message);
+                });
 
-            if (this.hasWriting) {
-                console.log("Additional fee applies for writing on the cake.");
-            }
-        }
-    }
+        },
+
+    },
 };
 </script>
 
@@ -226,21 +255,21 @@ h2 {
 }
 
 p {
-    margin: 5px 0; /* Adjusts spacing above and below paragraph */
+    margin: 5px 0; 
     text-align: center;
 }
 
 label {
     display: block;
-    margin-bottom: 5px; /* Adjusts spacing below label */
+    margin-bottom: 5px; 
     font-weight: bold;
 }
 
 input,
 select,
 textarea {
-    width: calc(100% - 10px); /* Ensures input width fits better within the td */
-    padding: 10px; /* Adjust the padding */
+    width: calc(100% - 10px); 
+    padding: 10px; 
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -252,6 +281,8 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%;
+    text-align: center;
 }
 
 button:hover {
