@@ -6,10 +6,12 @@ import com.techelevator.model.CartItem;
 import com.techelevator.service.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.lang.annotation.Native;
 import java.security.Principal;
 
 @RestController
@@ -29,10 +31,19 @@ public class CartController {
         return cartService.getUserCart(principal);
     }
 
-    @RequestMapping(path = "/cakes", method = RequestMethod.POST)
+    @RequestMapping(path = "", method = RequestMethod.POST)
     public CartItem addProduct(@Valid @RequestBody CartItem item, Principal principal){
         try{
             return cartService.addToCart(principal, item);
+        }catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+    }
+
+    @RequestMapping(path = "/standardToCart", method = RequestMethod.POST)
+    public CartItem addingStandartCake(@Validated int cakeId, Principal principal){
+        try{
+            return cartService.addStandarCake(principal, cakeId);
         }catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }

@@ -99,4 +99,19 @@ public class CartService {
         cartItemDao.rejectCartItemByUserId(cartItem, userId);
     }
 
+    public CartItem addStandarCake(Principal principal, int cakeId) {
+        CartItem item = new CartItem();
+        int userId = getUserId(principal);
+        item.setUserId(userId);
+
+        CartItem existingItem = cartItemDao.getCartItemByCakeIdAndUserId(cakeId, userId);
+
+        if(existingItem == null){
+
+            return cartItemDao.createCartItem(item);
+        }else{
+            existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
+            return cartItemDao.updateCartItem(existingItem);
+        }
+    }
 }

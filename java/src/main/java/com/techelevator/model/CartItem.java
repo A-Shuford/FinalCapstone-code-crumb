@@ -16,10 +16,12 @@ public class CartItem {
     private int cakeId; //foreign key in "cart/order"
     private Cake cake; //references cake table in database
 
-    @NotEmpty
+
     private LocalDate pickupDate;
-    @NotEmpty
+
     private LocalTime pickupTime;
+
+    //The @Notiation must be taken out
 
     //ADDED
     private int quantity;

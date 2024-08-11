@@ -45,7 +45,7 @@
       addToCart(cake) {
         this.isLoading = true;
         cartService
-          .addProduct(cake)
+          .addCake(cake)
           .then(() => {
             // SUCCESS
             this.$store.commit("SET_SUCCESS", `Added '${cake.name}' to cart`);
