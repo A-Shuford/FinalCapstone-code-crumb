@@ -2,6 +2,7 @@
 package com.techelevator.dao;
 
 
+import com.techelevator.model.Cake;
 import com.techelevator.model.CartItem;
 import com.techelevator.exception.DaoException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -213,7 +214,11 @@ public class JdbcCartItemDao implements CartItemDao {
         return null;
     }
 
+    public List <CartItem> getAllOrdersForBaker (){
+        return null;
+    }
 
+// TODO :quantity needs to be added to Orders Table
     private CartItem mapRowToCartItem(SqlRowSet rs) {
         CartItem item = new CartItem();
         item.setCartItemId(rs.getInt("cart_item_id"));
