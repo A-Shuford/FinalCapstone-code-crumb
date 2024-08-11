@@ -42,7 +42,7 @@ public class CartService {
         List<Cake> cakes = cakeDao.getCakesByUserId(userId);
 
         for(CartItem item : items){
-            item.setCake(findCake(cakes, item.getCakeId()));
+            item.setCake(findCake(cakes, item.getCake().getCakeId()));
         }
         BigDecimal taxRate = taxService.getTaxRate();
         BigDecimal subtotal = cart.getItemSubtotal();
@@ -77,10 +77,9 @@ public class CartService {
 
     public CartItem addToCart(Principal principal, CartItem item){
 
-        int userId = getUserId(principal);
-        item.setUserId(userId);
 
-        CartItem existingItem = cartItemDao.getCartItemByCakeIdAndUserId(item.getCakeId(), userId);
+
+        CartItem existingItem = cartItemDao.getCartItemByCakeIdAndUserId(item.getCake().getCakeId(), item.getUser().getId());
 
         if(existingItem == null){
 
@@ -99,10 +98,11 @@ public class CartService {
         cartItemDao.rejectCartItemByUserId(cartItem, userId);
     }
 
-    public CartItem addStandarCake(Principal principal, int cakeId) {
+    public CartItem addStandardCake(Principal principal, int cakeId) {
         CartItem item = new CartItem();
         int userId = getUserId(principal);
-        item.setUserId(userId);
+
+        item.getUser().setId(userId);
 
         CartItem existingItem = cartItemDao.getCartItemByCakeIdAndUserId(cakeId, userId);
 

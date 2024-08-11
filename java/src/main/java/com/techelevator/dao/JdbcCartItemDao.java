@@ -17,30 +17,22 @@ import java.util.List;
 public class JdbcCartItemDao implements CartItemDao {
 
     private static final String SQL_SELECT_CART_ITEM = "SELECT cart_item.cart_item_id, " +
-<<<<<<< HEAD
-            "cart_item.user_id, cart_item.cake_id, cart_item_status.status_name,\n" +
-            "cart_item.pickup_date, cart_item.pickup_time, cart_item.quantity\n" +
-            "FROM cart_item\n" +
-            "LEFT JOIN cart_item_status ON cart_item.status_id = " +
-            "cart_item_status.cart_item_status_id ";
-=======
-            "users.user_id, users.username, users.yourname, users.email, users.phone_number, " +
-            "cart_item_cake.cake_id, cake.cake_name, cake_style.style_name, cake_size.size_name, " +
-            "cake_flavor.flavor_name, cake_filling.filling_name, cake_frosting.frosting_name, " +
-            "cake.cake_type, cake.has_writing, cake.custom_text, cart_item.quantity, " +
-            "cart_item.status_id, cart_item.pickup_date, cart_item.pickup_time, " +
-            "cake.amount_available, cake.image_name " +
-            "FROM cart_item " +
-            "INNER JOIN users ON cart_item.user_id = users.user_id " +
-            "INNER JOIN cart_item_cake ON cart_item.cart_item_id = cart_item_cake.cart_item_id " +
-            "INNER JOIN cake ON cart_item_cake.cake_id = cake.cake_id " +
-            "INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id " +
-            "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id " +
-            "LEFT JOIN cake_filling ON cake.cake_filling = cake_filling.cake_filling_id " +
-            "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id " +
-            "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id";
+        "users.user_id, users.username, users.yourname, users.email, users.phone_number, " +
+        "cart_item_cake.cake_id, cake.cake_name, cake_style.style_name, cake_size.size_name, " +
+        "cake_flavor.flavor_name, cake_filling.filling_name, cake_frosting.frosting_name, " +
+        "cake.cake_type, cake.has_writing, cake.custom_text, cart_item.quantity, " +
+        "cart_item.status_id, cart_item.pickup_date, cart_item.pickup_time, " +
+        "cake.amount_available, cake.image_name " +
+        "FROM cart_item " +
+        "INNER JOIN users ON cart_item.user_id = users.user_id " +
+        "INNER JOIN cart_item_cake ON cart_item.cart_item_id = cart_item_cake.cart_item_id " +
+        "INNER JOIN cake ON cart_item_cake.cake_id = cake.cake_id " +
+        "INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id " +
+        "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id " +
+        "LEFT JOIN cake_filling ON cake.cake_filling = cake_filling.cake_filling_id " +
+        "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id " +
+        "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id";
 
->>>>>>> 44577ff9878a03ceabd572b2e24bbc11ee21c7d0
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcCartItemDao(JdbcTemplate jdbcTemplate) {
@@ -94,19 +86,6 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public CartItem createCartItem(CartItem cartItem) {
         CartItem newCartItem = null;
-<<<<<<< HEAD
-        String sql = "INSERT INTO cart_item(user_id, cake_id, " +
-                "status_id, pickup_date, pickup_time, quantity ) " +
-                "VALUES (?, ?, ?, ?, ?) RETURNING cart_item_id;";
-
-        try {
-            int newId = jdbcTemplate.queryForObject(sql, int.class, cartItem.getUserId(),
-                    cartItem.getCakeId(), cartItem.getCartItemStatus(), cartItem.getPickupDate(),
-                    cartItem.getPickupTime(), cartItem.getQuantity());
-            newCartItem = getCartItemById(newId);
-        }
-        catch (CannotGetJdbcConnectionException e) {
-=======
         String sql = "INSERT INTO cart_item(user_id, status_id, pickup_date, pickup_time, quantity) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING cart_item_id;";
 
@@ -122,7 +101,6 @@ public class JdbcCartItemDao implements CartItemDao {
 
             newCartItem = getCartItemById(newCartItemId);
         } catch (CannotGetJdbcConnectionException e) {
->>>>>>> 44577ff9878a03ceabd572b2e24bbc11ee21c7d0
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
@@ -283,11 +261,6 @@ public class JdbcCartItemDao implements CartItemDao {
         if (rs.getTime("pickup_time") != null) {
             item.setPickupTime(rs.getTime("pickup_time").toLocalTime());
         }
-<<<<<<< HEAD
-        item.setQuantity(rs.getInt("quantity"));
-=======
-
->>>>>>> 44577ff9878a03ceabd572b2e24bbc11ee21c7d0
         return item;
     }
 

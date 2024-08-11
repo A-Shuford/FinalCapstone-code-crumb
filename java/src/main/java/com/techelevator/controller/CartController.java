@@ -43,7 +43,7 @@ public class CartController {
     @RequestMapping(path = "/standardToCart", method = RequestMethod.POST)
     public CartItem addingStandartCake(@Validated int cakeId, Principal principal){
         try{
-            return cartService.addStandarCake(principal, cakeId);
+            return cartService.addStandardCake(principal, cakeId);
         }catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
