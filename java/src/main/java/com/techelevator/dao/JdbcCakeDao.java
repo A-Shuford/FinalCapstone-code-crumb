@@ -19,16 +19,19 @@ public class JdbcCakeDao implements CakeDao {
     private Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String SQL_SELECT_CAKE = "SELECT cake.cake_id, cake.cake_name, " +
-            "cake_style.style_name, cake_size.size_name, \n" +
-            "cake_flavor.flavor_name, cake_filling.filling_name, \n" +
-            "cake_frosting.frosting_name, cake.cake_type, cake.has_writing, \n" +
-            "cake.custom_text, cake.amount_available, cake.price, cake.image_name \n" +
-            "FROM cake\n" +
-            "INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id\n" +
-            "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id\n" +
-            "LEFT JOIN cake_filling on cake.cake_filling = cake_filling.cake_filling_id\n" +
-            "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id\n" +
-            "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id \n";
+            "cake_style.style_name, cake_size.size_name, " +
+            "cake_flavor.flavor_name, cake_filling.filling_name, " +
+            "cake_frosting.frosting_name, cake.cake_type, cake.has_writing, " +
+            "cake.custom_text, cake.amount_available, cake.image_name, " +
+            "cake_price.price " +
+            "FROM cake " +
+            "INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id " +
+            "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id " +
+            "LEFT JOIN cake_filling ON cake.cake_filling = cake_filling.cake_filling_id " +
+            "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id " +
+            "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id " +
+            "INNER JOIN cake_price ON cake.cake_style = " +
+            "cake_price.cake_style_id AND cake.cake_size = cake_price.cake_size_id";;
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -74,7 +77,8 @@ public class JdbcCakeDao implements CakeDao {
     public List<Cake> getCakesByUserId(int userId) {
         List<Cake> cakes = new ArrayList<>();
         String sql = SQL_SELECT_CAKE +
-                "WHERE cake_id IN (SELECT cake_id FROM cart_item WHERE user_id = ?);";
+                " WHERE cake.cake_id IN (SELECT cake_id FROM cart_item_cake WHERE cart_item_id IN " +
+                "(SELECT cart_item_id FROM cart_item WHERE user_id = ?));";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -94,25 +98,22 @@ public class JdbcCakeDao implements CakeDao {
                 "size AS (SELECT cake_size_id FROM cake_size WHERE size_name = ?), " +
                 "flavor AS (SELECT cake_flavor_id FROM cake_flavor WHERE flavor_name = ?), " +
                 "filling AS (SELECT cake_filling_id FROM cake_filling WHERE filling_name = ?), " +
-                "frosting AS (SELECT cake_frosting_id FROM cake_frosting " +
-                "WHERE frosting_name = ?) " +
+                "frosting AS (SELECT cake_frosting_id FROM cake_frosting WHERE frosting_name = ?) " +
                 "INSERT INTO cake (cake_name, cake_style, cake_size, cake_flavor, " +
                 "cake_filling, cake_frosting, cake_type, has_writing, " +
-                "custom_text, amount_available, price, image_name) " +
+                "custom_text, amount_available) " +
                 "VALUES ( " +
                 "    ?, " + // cake_name
                 "    (SELECT cake_style_id FROM style), " +
                 "    (SELECT cake_size_id FROM size), " +
                 "    (SELECT cake_flavor_id FROM flavor), " +
                 "    (SELECT cake_filling_id FROM filling), " +
-                "    (SELECT cake_frosting_id FROM frosting), " + // cake_frosting,
+                "    (SELECT cake_frosting_id FROM frosting), " +
                 "    ?, " + // cake_type
                 "    ?, " + // has_writing
                 "    ?, " + // custom_text
-                "    ? " + // amount_available
-                "    ? " + //price
-                "    ? " + //image_name
-                ")" +
+                "    ?, " + // amount_available
+                ") " +
                 "RETURNING cake_id;";
 
         try {
@@ -120,7 +121,7 @@ public class JdbcCakeDao implements CakeDao {
                     cake.getCakeSize(), cake.getCakeFlavor(), cake.getCakeFilling(),
                     cake.getCakeFrosting(), cake.getCakeName(), cake.getCakeType(),
                     cake.hasWriting(), cake.getCustomText(),
-                    cake.getAmountAvailable(), cake.getPrice(), cake.getImageName());
+                    cake.getAmountAvailable(), cake.getPrice());
             log.debug("Created new Standard Cake with Id: " +newCakeId);
             newCake = getCakeById(newCakeId);
         }catch (CannotGetJdbcConnectionException e) {
