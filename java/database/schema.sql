@@ -1,7 +1,8 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, cakeStyle, cakeSize, cakeFlavor, cakeFilling, cakeFrosting, cart_item_status, cake, cart_item;
-DROP TABLE IF EXISTS users, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cart_item_status, cake, cart_item, cart_item_status;
+DROP TABLE IF EXISTS users, cake_style, cake_size, cake_flavor, cake_filling, 
+cake_frosting, cart_item_status, cake, cart_item, cart_item_status, 
+cart_item_cake, cart_item_cake, cake_price;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -50,6 +51,13 @@ CREATE TABLE cart_item_status (
 	CONSTRAINT pk_cart_item_status_id PRIMARY KEY(cart_item_status_id)
 );
 
+CREATE TABLE cake_price (
+    cake_price_id SERIAL PRIMARY KEY,
+    cake_style_id int NOT NULL REFERENCES cake_style(cake_style_id),
+    cake_size_id int NOT NULL REFERENCES cake_size(cake_size_id),
+    price decimal(8,2) NOT NULL
+);
+
 CREATE TABLE cake (
 	cake_id SERIAL,
 	cake_name varchar(50) NOT NULL,
@@ -62,7 +70,6 @@ CREATE TABLE cake (
 	has_writing boolean, 
 	custom_text varchar(100),
 	amount_available int,
-	price decimal(8,2),
 	image_name varchar(200),
 	
 	CONSTRAINT pk_cake_id PRIMARY KEY(cake_id),
@@ -76,15 +83,23 @@ CREATE TABLE cake (
 CREATE TABLE cart_item (
 	cart_item_id SERIAL,
 	user_id int,
-	cake_id int,
 	status_id int,
 	pickup_date Date, 
 	pickup_time TIME, 
 	--pickupdate and picktime talk to team
 	CONSTRAINT pk_cart_item_id PRIMARY KEY(cart_item_id),
 	CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES users(user_id),
-	CONSTRAINT fk_cake_id FOREIGN KEY (cake_id) REFERENCES cake(cake_id),
 	CONSTRAINT fk_status_id FOREIGN KEY (status_id) REFERENCES cart_item_status(cart_item_status_id)
+);
+
+CREATE TABLE cart_item_cake (
+    cart_item_cake_id SERIAL PRIMARY KEY,
+    cart_item_id int NOT NULL,
+    cake_id int NOT NULL,
+    quantity int NOT NULL DEFAULT 1,
+    price decimal(8,2) NOT NULL,  -- Price of the cake at the time of order
+    CONSTRAINT fk_cart_item FOREIGN KEY(cart_item_id) REFERENCES cart_item(cart_item_id),
+    CONSTRAINT fk_cake FOREIGN KEY(cake_id) REFERENCES cake(cake_id)
 );
 ----INSERTING FROSTING TYPES---------
 INSERT INTO cake_frosting(frosting_name) VALUES ('Vanilla');
@@ -124,15 +139,32 @@ INSERT INTO cake_style(style_name) VALUES('Layered');
 INSERT INTO cake_style(style_name) VALUES('Sheet');
 INSERT INTO cake_style(style_name) VALUES('Cupcakes');
 
+-- Prices for Layered Cakes
+INSERT INTO cake_price (cake_style_id, cake_size_id, price) VALUES 
+(1, 1, 17.00),  -- Layered, Small 6'
+(1, 2, 46.00),  -- Layered, Medium 8'
+(1, 3, 67.00);  -- Layered, Large 12'
 
---
-INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, price, image_name) 
-VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2, 45.99,'/src/assets/Cake_Images/standard_chocolate_ganache_cake.png'),
-('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3, 25.00,'/src/assets/Cake_Images/standard_vanilla_cake.png'),
-('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1, 31.40,'/src/assets/Cake_Images/standard_funfetti_cake.jpg'),
-('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2, 33.00,'/src/assets/Cake_Images/standard_red_velvet_cake.png'),
-('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/standard_pound_cake.png'),
-('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', true, '', 2, 45.00, '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
+-- Prices for Sheet Cakes
+INSERT INTO cake_price (cake_style_id, cake_size_id, price) VALUES 
+(2, 1, 39.00),  -- Sheet, Small 1/4 
+(2, 2, 57.00),  -- Sheet, Medium 1/2
+(2, 3, 107.00); -- Sheet, Large Whole Sheet
+
+-- Prices for Cupcakes
+INSERT INTO cake_price (cake_style_id, cake_size_id, price) VALUES 
+(3, 1, 18.00),  -- Cupcakes, Small (6 cupcakes)
+(3, 2, 36.00),  -- Cupcakes, Medium (12 cupcakes)
+(3, 3, 72.00); -- Cupcakes, Large (24 cupcakes)
+
+--INSERTING CAKES--
+INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, image_name) 
+VALUES('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', true,'', 2,'/src/assets/Cake_Images/standard_chocolate_ganache_cake.png'),
+('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', true,'', 3,'/src/assets/Cake_Images/standard_vanilla_cake.png'),
+('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', true,'', 1,'/src/assets/Cake_Images/standard_funfetti_cake.jpg'),
+('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', true,'', 2,'/src/assets/Cake_Images/standard_red_velvet_cake.png'),
+('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', true, '', 2,'/src/assets/Cake_Images/standard_pound_cake.png'),
+('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', true, '', 2,'/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
 
 INSERT INTO cart_item_status(status_name)
 VALUES ('Pending'),
