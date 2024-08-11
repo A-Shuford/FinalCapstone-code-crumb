@@ -18,7 +18,7 @@ public class JdbcCartItemDao implements CartItemDao {
 
     private static final String SQL_SELECT_CART_ITEM = "SELECT cart_item.cart_item_id, " +
             "cart_item.user_id, cart_item.cake_id, cart_item_status.status_name,\n" +
-            "cart_item.pickup_date, cart_item.pickup_time\n" +
+            "cart_item.pickup_date, cart_item.pickup_time, cart_item.quantity\n" +
             "FROM cart_item\n" +
             "LEFT JOIN cart_item_status ON cart_item.status_id = " +
             "cart_item_status.cart_item_status_id ";
@@ -84,13 +84,13 @@ public class JdbcCartItemDao implements CartItemDao {
     public CartItem createCartItem(CartItem cartItem) {
         CartItem newCartItem = null;
         String sql = "INSERT INTO cart_item(user_id, cake_id, " +
-                "status_id, pickup_date, pickup_time ) " +
+                "status_id, pickup_date, pickup_time, quantity ) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING cart_item_id;";
 
         try {
             int newId = jdbcTemplate.queryForObject(sql, int.class, cartItem.getUserId(),
                     cartItem.getCakeId(), cartItem.getCartItemStatus(), cartItem.getPickupDate(),
-                    cartItem.getPickupTime());
+                    cartItem.getPickupTime(), cartItem.getQuantity());
             newCartItem = getCartItemById(newId);
         }
         catch (CannotGetJdbcConnectionException e) {
@@ -226,6 +226,7 @@ public class JdbcCartItemDao implements CartItemDao {
         if (rs.getDate("pickup_time") != null) {
             item.setPickupTime(rs.getTime("pickup_time").toLocalTime());
         }
+        item.setQuantity(rs.getInt("quantity"));
         return item;
     }
 

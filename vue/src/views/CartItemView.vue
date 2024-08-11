@@ -14,32 +14,32 @@
       <thead>
         <tr>
         <th class = "right"> Qty</th>
-        <th> Product</th>
+        <th> Cake</th>
         <th class = "right"> Price</th>
-        <th class = "right"> Amout</th>
+        <th class = "right"> Amount</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="cake in cart.cakes" v-bind:key="cake.cartItemId">
+        <tr v-for="item in cart.items" v-bind:key="item.cartItemId">
           <td class = "right">
-            {{ cake.quantity }}
+            {{ item.quantity }}
           </td>
 
           <td class="action">
             <router-link v-bind:to="{
               name:'inStockDetails',
-              params: { id: cake.cakeId },
+              params: { id: item.cakeId },
             }">
-          {{ cake.cake.cakeName }}  
+          {{ item.cake.cakeName }}  
           </router-link>
           </td>
           <td class = "right">
-            {{ currency(cake.price) }}
+            {{ currency(item.cake.price) }}
           </td>
           <td class = "right">
-            {{ currency(cake.price * cake.quantity) }}
+            {{ currency(item.cake.price * item.quantity) }}
           </td>
-          <td class="actions">
+          <td class="actionRemove">
             <img src="../assets/InStockIcons/removeItemIcon.jpg" alt="Cart Icon"  class="icon action" v-on:click="removeCake(cake)" title="Add cake to cart">
           </td>
         </tr>
@@ -217,5 +217,10 @@ tr.begin-summary > td {
 
 .actions {
   padding-left: 20px;
+}
+
+.actionRemove img{
+  height: 20px;
+  
 }
 </style>
