@@ -8,15 +8,17 @@ import axios from 'axios';
 export default {
 
   getCart() {
-    return axios.get('/cart');
+    return axios.get('/cartitem');
   },
 
-  addProduct(cake) {
+  addCake(cake) {
     const item = {
-      cakeId: cake.CakeId,
-      quantity: 1,
+      cakeId: cake.cakeId,
+      cartItemStatus: null,
+      pickupDate: null ,  
+      pickupTime: null,
     };
-    return axios.post('/cart/items', item);
+    return axios.post('/cartitem', item);
   },
 
   clearCart() {

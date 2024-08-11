@@ -62,7 +62,7 @@ export default {
       return this.$store.state.token !== ''; 
     },
     username() {
-      return this.$store.state.username || 'Guest';
+      return this.$store.state.user.username || 'Guest';
     }
   }
 };

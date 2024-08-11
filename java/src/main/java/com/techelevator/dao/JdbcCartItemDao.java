@@ -20,7 +20,7 @@ public class JdbcCartItemDao implements CartItemDao {
             "cart_item.user_id, cart_item.cake_id, cart_item_status.status_name,\n" +
             "cart_item.pickup_date, cart_item.pickup_time\n" +
             "FROM cart_item\n" +
-            "INNER JOIN cart_item_status ON cart_item.status_id = " +
+            "LEFT JOIN cart_item_status ON cart_item.status_id = " +
             "cart_item_status.cart_item_status_id ";
     private final JdbcTemplate jdbcTemplate;
 
@@ -32,11 +32,11 @@ public class JdbcCartItemDao implements CartItemDao {
     public CartItem getCartItemById(int cartItemId) {
         CartItem cartItem = null;
         String sql = SQL_SELECT_CART_ITEM +
-                " WHERE cart_item_id = ?";
+                " WHERE cart_item_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cartItemId);
             if (results.next()) {
-                cartItem = mapRowToCartItem(results);
+                return mapRowToCartItem(results);
             }
         }
         catch (CannotGetJdbcConnectionException e) {
@@ -84,8 +84,8 @@ public class JdbcCartItemDao implements CartItemDao {
     public CartItem createCartItem(CartItem cartItem) {
         CartItem newCartItem = null;
         String sql = "INSERT INTO cart_item(user_id, cake_id, " +
-                "cart_item_status.status_name, pickup_date, pickup_time ) " +
-                "VALUES (?, ?, ?, ?, ?) RETURNING cart_item_id";
+                "status_id, pickup_date, pickup_time ) " +
+                "VALUES (?, ?, ?, ?, ?) RETURNING cart_item_id;";
 
         try {
             int newId = jdbcTemplate.queryForObject(sql, int.class, cartItem.getUserId(),
@@ -220,8 +220,12 @@ public class JdbcCartItemDao implements CartItemDao {
         item.setUserId(rs.getInt("user_id"));
         item.setCakeId(rs.getInt("cake_id"));
         item.setCartItemStatus(rs.getString("status_name"));
-        item.setPickupDate(rs.getDate("pickup_date").toLocalDate());
-        item.setPickupTime(rs.getTime("pickupt_time").toLocalTime());
+        if (rs.getDate("pickup_date") != null) {
+            item.setPickupDate(rs.getDate("pickup_date").toLocalDate());
+        }
+        if (rs.getDate("pickup_time") != null) {
+            item.setPickupTime(rs.getTime("pickup_time").toLocalTime());
+        }
         return item;
     }
 
