@@ -23,4 +23,6 @@ public interface CartItemDao {
     CartItem deleteCartItemById(int cartItem);
 
     CartItem updateCartItem(CartItem cartItem);
+
+    List <CartItem> getAllOrdersForBaker ();
 }
