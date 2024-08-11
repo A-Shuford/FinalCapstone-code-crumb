@@ -65,8 +65,8 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      this.showPopup = false; // pop-up timeout
-    }, 10000);
+      this.showPopup = false; 
+    }, 10000); // pop-up timeout
   }
 };
 </script>
@@ -186,4 +186,5 @@ export default {
 .template {
   font: italic;
 }
+
 </style>
