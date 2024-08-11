@@ -7,18 +7,13 @@
         <h1>
           In Stock Cakes 
         </h1>
-        <div
-        id="message-bar"
+        <div class="message-bar"
         v-bind:class="'message-' + $store.state.message.level"
         v-bind:title="$store.state.message.text"
+        v-if="$store.state.message.text"
+        v-on:click="$store.commit('CLEAR_MESSAGE')"
       >
-      <font-awesome
-          class="dismiss-message-icon"
-          icon="fa-solid fa-xmark"
-          title="Dismiss message"
-          v-if="$store.state.message.text"
-          v-on:click="$store.commit('CLEAR_MESSAGE')"
-        /> 
+        <img src="../assets/InStockIcons/cancel_message_icon.png">
         {{ $store.state.message.text }}
         </div>
         <div>
@@ -174,6 +169,8 @@ export default {
   created() {
     this.getCakes();
   },
+  
+
 };
 </script>
 
@@ -241,5 +238,20 @@ export default {
   height: 20px;
 }
 
+div.message-bar img{
+  height: 20px;
+  padding-right: 15px;
+  
+}
+
+div.message-bar{
+  display: flex;
+  background-color: greenyellow;
+  position:fixed;
+  top: 0px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5px;
+}
 
 </style>

@@ -13,9 +13,11 @@
         <div class="cake-image">
           <img v-bind:src="cake.imageName" />
         </div>
+        
         <div class="cart">
           <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon"  class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart">
         </div>
+        
       </article>
     </section>
   </template>
@@ -49,6 +51,9 @@
           .then(() => {
             // SUCCESS
             this.$store.commit("SET_SUCCESS", `Added '${cake.cakeName}' to cart`);
+            setTimeout(() => {
+              this.$store.commit("CLEAR_SUCCESS");
+            }, 5000);
           })
           .catch((error) => {
             this.isLoading = false;

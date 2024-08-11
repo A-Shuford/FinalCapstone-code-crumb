@@ -12,8 +12,8 @@
         id="message-bar"
         v-bind:class="'message-' + $store.state.message.level"
         v-bind:title="$store.state.message.text"
+        
       >
-         
         {{ $store.state.message.text }}
         </div>
       <h2>Details</h2>
@@ -22,6 +22,15 @@
       <img v-bind:src="cake.imageName" alt="Product photo" />
       <div class="cart">
           <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon"  class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart">
+        </div>
+        <div class="message-bar"
+        v-bind:class="'message-' + $store.state.message.level"
+        v-bind:title="$store.state.message.text"
+        v-if="$store.state.message.text"
+        v-on:click="$store.commit('CLEAR_MESSAGE')"
+      >
+        <img src="../assets/InStockIcons/cancel_message_icon.png">
+        {{ $store.state.message.text }}
         </div>
       </div>
     <footer-vue />
@@ -124,4 +133,20 @@
   .action {
     cursor: pointer;
   }
+
+  div.message-bar img{
+  height: 20px;
+  padding-right: 15px;
+  
+}
+
+div.message-bar{
+  display: flex;
+  background-color: greenyellow;
+  position: sticky;
+  bottom: 0px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10px;
+}
   </style>
