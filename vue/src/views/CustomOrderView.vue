@@ -140,6 +140,7 @@ import HeaderVue from '../components/Header.vue';
 import NavBarVue from '../components/Navbar.vue';
 import MascotModalVue from '../components/MascotModal.vue';
 import FooterVue from '../components/Footer.vue';
+import cartService from '../services/CartService';
 
 export default {
     name: "HomeView",
@@ -151,9 +152,9 @@ export default {
     },
     data() {
         return {
-            name: '',
-            email: '',
-            phone: '',
+            name: this.$store.state.user.yourName,
+            email: this.$store.state.user.email,
+            phone: this.$store.state.user.phoneNumber,
             cake_name: '',
             cake_style: '',
             cake_size: '',
@@ -164,6 +165,7 @@ export default {
             pickup_time: '',
             writing: '', 
             additional_notes: ''
+
         };
     },
     computed: {
@@ -190,46 +192,39 @@ export default {
                 return;
             }
 
-            try {
-                const response = await fetch('http://localhost:9000/api/cart_item', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: this.name,
-                        email: this.email,
-                        phone: this.phone,
-                        cake_name: this.cake_name,
-                        cake_style: this.cake_style,
-                        cake_size: this.cake_size,
-                        cake_flavor: this.cake_flavor,
-                        cake_frosting: this.cake_frosting,
-                        cake_filling: this.cake_filling,
-                        pickup_date: this.pickup_date,
-                        pickup_time: this.pickup_time,
-                        writing: this.writing,
-                        additional_notes: this.additional_notes,
-                    }),
+ 
+        },
+        
+        addingToCustomCake () {
+            const customCake = {
+                name: this.name,
+                email: this.email,
+                phone: this.phone,
+                cake_name: this.cake_name,
+                cake_style: this.cake_style,
+                cake_size: this.cake_size,
+                cake_flavor: this.cake_flavor,
+                cake_frosting: this.cake_frosting,
+                cake_filling: this.cake_filling,
+                pickup_date: this.pickup_date,
+                pickup_time: this.pickup_time,
+                writing: this.writing,
+                additional_notes: this.additional_notes
+            };
+            cartService.addCake(customCake)
+                .then(() => {
+                    this.$store.commit('SET_SUCCESS', `Added '${this.cake_name}' to cart`);
+                })
+                .catch((error) => {
+                    const response = error.response;
+                    const message = 'Add cake was unsuccessful: ' + (response ? response.message : 'Could not reach server');
+                    this.$store.commit('SET_ERROR', message);
+                    console.error(message);
                 });
 
-                if (!response.ok) {
-                    throw new Error('Failed to submit order');
-                }
+        },
 
-                const data = await response.json();
-                console.log('Order submitted:', data);
-                alert('Order placed successfully!');
-            } catch (error) {
-                console.error('Error submitting order:', error);
-                alert('There was an error placing your order. Please try again.');
-            }
-
-            if (this.hasWriting) {
-                console.log("Additional fee applies for writing on the cake.");
-            }
-        }
-    }
+    },
 };
 </script>
 
