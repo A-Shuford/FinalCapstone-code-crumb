@@ -1,6 +1,6 @@
 <template>
     <footer>
-      <p>&copy; 2024 Your Website Name. All Rights Reserved.</p>
+      <p>&copy; 2024 Code and Crumb "Serving one byte at a time". All Rights Reserved.</p>
       <social-media-icons-vue />
     </footer>
   </template>

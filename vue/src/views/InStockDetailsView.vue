@@ -2,81 +2,68 @@
   <header-vue />
   <nav-bar-vue />
   <mascot-modal-vue />
-    <div class="home">
-      <div id="heading-line">
-        <h1>
-          {{ cake.cakeName }}
-        </h1>
-      </div>
-      <div
-        id="message-bar"
-        v-bind:class="'message-' + $store.state.message.level"
-        v-bind:title="$store.state.message.text"
-        
-      >
-        {{ $store.state.message.text }}
-        </div>
-      <h2>Details</h2>
-      <p>{{ cake.price}}</p>
-      <p>{{ cake.cakeName }}</p>
-      <p> Style: {{ cake.cakeStyle }}</p>
-      <p> Flavor: {{ cake.cakeFlavor }}</p>
-      <p> Frosting: {{ cake.cakeFrosting }}</p>
-      <p> Filling: {{ cake.cakeFilling }}</p>
-      <p> Size: {{ cake.cakeSize }}</p>
-      <p> Available: {{ cake.amountAvailable }}</p>
-
-      <img v-bind:src="cake.imageName" alt="Product photo" />
-      <div class = "custom-text">
-        <input type="checkbox" v-model = "cake.hasWriting" @change = "toggleCustomText(cake)"/> Optional Writing $5 fee
-        <div v-if = "cake.hasWriting">
-          <input type="text" v-model = "cake.customText" placeholder = "Enter custom text"/>
-          </div>
-      <div class="cart">
-          <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon"  class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart">
-        </div>
-        <div class="message-bar"
-        v-bind:class="'message-' + $store.state.message.level"
-        v-bind:title="$store.state.message.text"
-        v-if="$store.state.message.text"
-        v-on:click="$store.commit('CLEAR_MESSAGE')"
-      >
-        <img src="../assets/InStockIcons/cancel_message_icon.png">
-        {{ $store.state.message.text }}
-        </div>
+  <div class="home">
+    <div id="heading-line">
+      <h1>
+        {{ cake.cakeName }}
+      </h1>
+    </div>
+    <div
+      id="message-bar"
+      v-bind:class="'message-' + $store.state.message.level"
+      v-bind:title="$store.state.message.text"
+    >
+      {{ $store.state.message.text }}
+    </div>
+    <h2>Details</h2>
+    <p>Price: {{ cake.price }}</p>
+    <p>Cake Name: {{ cake.cakeName }}</p>
+    <p>Style: {{ cake.cakeStyle }}</p>
+    <p>Flavor: {{ cake.cakeFlavor }}</p>
+    <p>Frosting: {{ cake.cakeFrosting }}</p>
+    <p>Filling: {{ cake.cakeFilling }}</p>
+    <p>Size: {{ cake.cakeSize }}</p>
+    <p>Available: {{ cake.amountAvailable }}</p>
+    <img v-bind:src="cake.imageName" alt="Product photo" />
+    <div class="custom-text">
+      <input type="checkbox" v-model="cake.hasWriting" /> Optional Writing (no extra charge)
+      <div v-if="cake.hasWriting">
+        <input type="text" v-model="cake.customText" placeholder="Enter custom text" />
       </div>
     </div>
-    <footer-vue />
-
+    <div class="cart">
+      <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon" class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart" />
+    </div>
+  </div>
+  <footer-vue />
 </template>
-
 
 <script>
   import inStockService from "../services/InStockService.js";
-  import customService from "../services/CustomService.js";
   import cartService from "../services/CartService";
-  //importing the components for header and footer
   import HeaderVue from "../components/Header.vue";
   import NavBarVue from "../components/Navbar.vue";
   import MascotModalVue from "../components/MascotModal.vue";
   import FooterVue from "../components/Footer.vue";
 
-  //import LoadingSpinner from "../components/LoadingSpinner.vue";
   export default {
-   components:{
-    HeaderVue,
-    NavBarVue,
-    MascotModalVue,
-    FooterVue,
-   },
+    components: {
+      HeaderVue,
+      NavBarVue,
+      MascotModalVue,
+      FooterVue,
+    },
     data() {
       return {
         cake: {},
       };
-    }, 
+    },
     computed: {
       isLoggedIn() {
         return this.$store.state.token.length > 0;
+      },
+      isAdmin() {
+        return this.$store.state.user.authorities.some(auth => auth.name === 'ROLE_ADMIN');
       },
     },
     methods: {
@@ -100,7 +87,6 @@
         cartService
           .addCake(this.cake)
           .then(() => {
-            // SUCCESS
             this.$store.commit(
               "SET_SUCCESS",
               `Added '${this.cake.cakeName}' to cart`
@@ -115,22 +101,13 @@
             console.error(message);
           });
       },
-      toggleCustomText(){
-        if(this.cake.hasWriting){
-          this.cake.price += 5;
-        } else {
-          this.cake.price += 0;
-          this.cake.customText = "";
-        }
-      }
     },
     created() {
       this.getCake(this.$route.params.id);
     },
   };
-
 </script>
-  
+
 <style scoped>
   #heading-line {
     display: flex;
@@ -139,36 +116,26 @@
     align-items: flex-start;
   }
 
-  div.cart img{
+  div.cart img {
     height: 30px;
-  }
-  
- /* #spinner {
-    color: green;
-  }*/
-  
-  #add-cart:hover {
-    color: rgb(229, 18, 18);
-    background-color: rgba(0, 0, 0, 0.1);
   }
 
   .action {
     cursor: pointer;
   }
 
-  div.message-bar img{
-  height: 20px;
-  padding-right: 15px;
-  
-}
+  div.message-bar img {
+    height: 20px;
+    padding-right: 15px;
+  }
 
-div.message-bar{
-  display: flex;
-  background-color: greenyellow;
-  position: sticky;
-  bottom: 0px;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 10px;
-}
-  </style>
+  div.message-bar {
+    display: flex;
+    background-color: greenyellow;
+    position: sticky;
+    bottom: 0px;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px;
+  }
+</style>

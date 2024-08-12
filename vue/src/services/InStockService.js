@@ -11,6 +11,10 @@ export default{
         return axios.get(`/cakes/${cakeId}`);
     },
 
+    updateCake(cake) {
+        return axios.put(`/cakes/${cake.cakeId}`, cake);
+      },
+
     searchCakes(name){
         let querystring = "";
         if (name) {
