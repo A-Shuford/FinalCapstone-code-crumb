@@ -24,6 +24,8 @@ public class CartService {
     private UserDao userDao;
     private TaxService taxService;
 
+    private final BigDecimal WRITING_FEE = new BigDecimal(5.00);
+
 
     public CartService(CartItemDao cartItemDao, CakeDao cakeDao, UserDao userDao, TaxService taxService) {
         this.cartItemDao = cartItemDao;
