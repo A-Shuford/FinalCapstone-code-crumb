@@ -1,42 +1,51 @@
 <template>
-
   <header-vue />
   <nav-bar />
   <mascot-modal-vue />
 
-  <div id="register" class="text-center">
+  <div class="form-container">
+    <h1>Create Account</h1>
     <form v-on:submit.prevent="register">
-      <h1>Create Account</h1>
-      <div role="alert" v-if="registrationErrors">
-        {{ registrationErrorMsg }}
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" placeholder="John Smith" v-model="user.yourName" required />
-      </div>
-      <div class="form-input-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="example@example.com" v-model="user.email" required />
-      </div>
-      <div class="form-input-group">
-        <label for="phoneNumber">Phone Number</label>
-        <input type="tel" id="phone" placeholder="123-456-7890" v-model="user.phoneNumber" required />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-      </div>
-      <button type="submit">Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+      <table>
+        <tr>
+          <td colspan="2">
+            <div role="alert" v-if="registrationErrors">
+              {{ registrationErrorMsg }}
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="username">Username:</label></td>
+          <td><input type="text" id="username" v-model="user.username" required autofocus /></td>
+        </tr>
+        <tr>
+          <td><label for="name">Name:</label></td>
+          <td><input type="text" id="name" placeholder="John Smith" v-model="user.yourName" required /></td>
+        </tr>
+        <tr>
+          <td><label for="email">Email:</label></td>
+          <td><input type="email" id="email" placeholder="example@example.com" v-model="user.email" required /></td>
+        </tr>
+        <tr>
+          <td><label for="phoneNumber">Phone Number:</label></td>
+          <td><input type="tel" id="phone" placeholder="123-456-7890" v-model="user.phoneNumber" required /></td>
+        </tr>
+        <tr>
+          <td><label for="password">Password:</label></td>
+          <td><input type="password" id="password" v-model="user.password" required /></td>
+        </tr>
+        <tr>
+          <td><label for="confirmPassword">Confirm Password:</label></td>
+          <td><input type="password" id="confirmPassword" v-model="user.confirmPassword" required /></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button type="submit">Create Account</button>
+          </td>
+        </tr>
+      </table>
     </form>
+    <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
   </div>
 
   <footer-vue />
@@ -105,19 +114,44 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
+.form-container {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #FBECEB;
+    border-radius: 8px;
+    max-width: 600px;
+    text-align: center; /* Center the titles */
 }
 
-button {
-  border-radius: 5px;
-}
-
-input {
-  border-radius: 5px;
+table {
+    width: 100%;
+    border-spacing: 10px;
 }
 
 label {
-  margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #8C3F09;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+}
+
+button:hover {
+    background-color: #921A39;
 }
 </style>

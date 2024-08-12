@@ -2,29 +2,45 @@
   <header-vue />
   <nav-bar />
   <mascot-modal-vue />
-  <div id="login">
+  
+  <div class="form-container">
+    <h1>Login</h1>
+  
+    
     <form v-on:submit.prevent="login">
-      <h2 >Please Sign In</h2>
-      <div role="alert" v-if="invalidCredentials">
-        Invalid username and password!
-      </div>
-      <div role="alert" v-if="this.$route.query.registration">
-        Thank you for registering, please sign in.
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <button type="submit">Sign in</button>
-      <p>
-      <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
+      <table>
+        <tr>
+          <td><label for="username">Username:</label></td>
+          <td><input type="text" id="username" v-model="user.username" required autofocus /></td>
+        </tr>
+        <tr>
+          <td><label for="password">Password:</label></td>
+          <td><input type="password" id="password" v-model="user.password" required /></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div role="alert" v-if="invalidCredentials">
+              Invalid username and password!
+            </div>
+            <div role="alert" v-if="this.$route.query.registration">
+              Thank you for registering, please sign in.
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button type="submit">Sign in</button>
+          </td>
+        </tr>
+      </table>
     </form>
+
+    <p>
+      <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+    </p>
   </div>
-<footer-vue />
+
+  <footer-vue />
 </template>
 
 <script>
@@ -36,12 +52,12 @@ import FooterVue from "../components/Footer.vue";
 
 export default {
   components: {
-  HeaderVue,
-  NavBar,
-  MascotModalVue,
-  FooterVue,
+    HeaderVue,
+    NavBar,
+    MascotModalVue,
+    FooterVue,
   },
-    data() {
+  data() {
     return {
       user: {
         username: "",
@@ -50,7 +66,6 @@ export default {
       invalidCredentials: false
     };
   },
-  
   methods: {
     login() {
       authService
@@ -64,7 +79,6 @@ export default {
         })
         .catch(error => {
           const response = error.response;
-
           if (response.status === 401) {
             this.invalidCredentials = true;
           }
@@ -75,18 +89,43 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
+.form-container {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #FBECEB;
+    border-radius: 8px;
+    max-width: 600px;
+    text-align: center; /* Center the titles */
 }
-button {
-  border-radius: 5px;
+
+table {
+    width: 100%;
+    border-spacing: 10px;
 }
-input {
-  border-radius: 5px;
-  padding: 0.25rem;
-  width: 100%;
-}
+
 label {
-  margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #8C3F09;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+   }
+
+button:hover {
+    background-color: #921A39;
 }
 </style>

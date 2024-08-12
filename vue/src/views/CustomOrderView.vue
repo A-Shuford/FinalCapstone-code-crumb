@@ -8,23 +8,7 @@
 
         <form @submit.prevent="submitOrder">
             <table>
-                <tr>
-                    <td><label for="name">Name:</label></td>
-                    <td><input type="text" v-model="name" id="name" required></td>
-                </tr>
-                <tr>
-                    <td><label for="email">Email:</label></td>
-                    <td><input type="email" v-model="email" id="email" required></td>
-                </tr>
-                <tr>
-                    <td><label for="phone">Phone:</label></td>
-                    <td><input type="tel" v-model="phone" id="phone" required></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <h2>Our cakes are made with the finest ingredients and are made to order.</h2>
-                    </td>
-                </tr>
+                
                 <tr>
                     <td><label for="cake_name">Custom Cake Name:</label></td>
                     <td><input type="text" v-model="cake.cakeName" id="cake.cakeName" required></td>
@@ -96,31 +80,13 @@
                         </select>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2">
-                        <h2>Please select Pick Up Date and Time</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="pickup_date">Pick Up Date:</label></td>
-                    <td><input type="date" v-model="pickup_date" id="cake.pickupDate" required></td>
-                </tr>
-                <tr>
-                    <td><label for="pickup_time">Pick Up Time:</label></td>
-                    <td><input type="time" v-model="pickup_time" id="pickup_time" required></td>
-                </tr>
+                
                 <tr>
                     <td colspan="2">
                         <p>If you would like any sayings like Congratulations or Happy Birthday.</p>
                         <p>Please double check the spelling of any names!</p>
-                        <label for="cake.hasWriting">Writing on the cake:</label>
-                        <textarea v-model="cake.hasWriting" id="cake.hasWriting"></textarea>
-                        
-                        <p v-if="hasWriting">There is an additional fee for writing on the cake</p>
-                        
-                        <h2>Please provide any additional notes or instructions.</h2>
-                        <label for="additionalNotes">Additional Notes:</label>
-                        <textarea v-model="additional_notes" id="additionalNotes"></textarea>
+                        <label for="cake.customText">Writing on the cake:</label>
+                        <textarea v-model="cake.customText" id="cake.customText"></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -131,24 +97,26 @@
             </table>
         </form>
     </div>
-
+  
     <footer-vue />
-</template>
-
-<script>
-import HeaderVue from '../components/Header.vue';
-import NavBarVue from '../components/Navbar.vue';
-import MascotModalVue from '../components/MascotModal.vue';
-import FooterVue from '../components/Footer.vue';
-import cartService from '../services/CartService';
-
-export default {
-    name: "HomeView",
+  </template>
+  
+  
+  
+  <script>
+  import HeaderVue from '../components/Header.vue';
+  import NavBarVue from '../components/Navbar.vue';
+  import MascotModalVue from '../components/MascotModal.vue';
+  import FooterVue from '../components/Footer.vue';
+  import cartService from '../services/CartService';
+  
+  export default {
+    name: "CustomOrder",
     components: {
-        HeaderVue,
-        NavBarVue,
-        MascotModalVue,
-        FooterVue
+      HeaderVue,
+      NavBarVue,
+      MascotModalVue,
+      FooterVue
     },
     data() {
         return {
@@ -159,21 +127,23 @@ export default {
                 cakeFlavor: '',
                 cakeFrosting: '',
                 cakeFilling: '',
-                pickupDate: '',
-                pickupTime: '',
-                hasWriting: '', 
-                additional_notes: '',
+                hasWriting: false,
+                cakeType: 'Custom',
+                customText: '',
+                price: 0,
             },
 
         };
     },
     methods: {
-        addingToCustomCake () {
+
+        async submitOrder() {
+            this.cake.hasWriting = this.checkWriting();
             cartService.createCustomCake(this.cake)
                 .then((response) => {
                     if (response.status == 201) {
               this.$router.push({
-                path: '/',
+                path: '/cartitem',
               });
             }
           }).catch((error) => {
@@ -183,6 +153,14 @@ export default {
                     console.error(message);
                 });
 
+        },
+
+
+        checkWriting() {
+            if(this.cake.customText.length > 0){
+                this.cake.hasWriting = true;
+              return this.cake.hasWriting;    
+            }
         },
     },
 };
@@ -202,34 +180,29 @@ table {
     border-spacing: 10px;
 }
 
-table td {
-    padding: 10px;
+td {
+    vertical-align: top; /* Ensure all cells align at the top */
 }
 
-h1 {
-    text-align: center;
+td:first-child {
+    width: 150px;
+    text-align: left;
+    padding-right: 10px;
 }
 
-h2 {
-    text-align: center;
-}
-
-p {
-    margin: 5px 0; 
+h1, h2, p {
     text-align: center;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px; 
     font-weight: bold;
 }
 
 input,
 select,
 textarea {
-    width: calc(100% - 10px); 
-    padding: 10px; 
+    width: 100%;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -241,11 +214,13 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
-    text-align: center;
+    display: block;
+    margin: 20px auto 0;
+    width: 100px;
 }
 
 button:hover {
     background-color: #921A39;
 }
 </style>
+
