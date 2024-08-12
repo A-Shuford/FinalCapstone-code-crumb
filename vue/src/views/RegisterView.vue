@@ -121,6 +121,8 @@ export default {
     border-radius: 8px;
     max-width: 600px;
     text-align: center; /* Center the titles */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Light shadow for emphasis */
 }
 
 table {

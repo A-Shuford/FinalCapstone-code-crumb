@@ -10,11 +10,12 @@
         <!-- Page Title Column -->
         <td id="title-column">
           <div class="page-title">
-            <p>"Serving one byte at a time!"</p>
+            <h3>"Serving one byte at a time"</h3>
             <h2>For questions or order</h2>
-            <h2>Call 911</h2>
-            <p>1234 Baker St, Confection City</p>  
-            <h2>EST 2004</h2>
+            <h3>Call 911</h3>
+            <p>1234 Baker Street</p>
+            <p>Confection City, NLR 11111</p>  
+            <h3>Established 2024</h3>
           </div>
         </td>
         
@@ -89,7 +90,6 @@ table {
 
 td {
   vertical-align: center; 
-  padding: 10px;
 }
 
 #logo-column {
