@@ -5,6 +5,7 @@ import com.techelevator.dao.CartItemDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Cake;
 import com.techelevator.model.Cart;
+import com.techelevator.model.CartItem;
 import com.techelevator.model.User;
 import org.springframework.stereotype.Component;
 
@@ -19,15 +20,21 @@ public class CakeService {
 
     private UserDao userDao;
 
-    public CakeService(CartItemDao cartItemDao, CakeDao cakeDao, UserDao userDao) {
+    private CartService cartService;
+
+    public CakeService(CartItemDao cartItemDao, CakeDao cakeDao, UserDao userDao, CartService cartService) {
         this.cartItemDao = cartItemDao;
         this.cakeDao = cakeDao;
         this.userDao = userDao;
+        this.cartService = cartService;
     }
 
     public Cake addingCustomCake(Cake cake, Principal principal) {
-        String cakeName = cake.getCakeName();
-        return null;
+        Cake newCake = cakeDao.createNewCake(cake);
+        CartItem cartItem = new CartItem();
+        cartItem.setCake(newCake);
+        cartService.addToCart(principal, cartItem);
+        return newCake;
     }
 
     private int getUserId(Principal principal){
