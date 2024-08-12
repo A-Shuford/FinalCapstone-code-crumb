@@ -60,7 +60,7 @@ public class JdbcCakeDao implements CakeDao {
     @Override
     public Cake getCakeById(int cakeId) {
         Cake cake = null;
-        String sql =  SQL_SELECT_CAKE + "WHERE cake_id = ?;";
+        String sql =  SQL_SELECT_CAKE + " WHERE cake_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cakeId);
             if (results.next()) {

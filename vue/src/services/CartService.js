@@ -11,12 +11,26 @@ export default {
     return axios.get('/cartitem');
   },
 
+
+  createCustomCake(cake){
+    return axios.post('/customorder', cake);
+  },
+
   addCake(cake) {
     const item = {
-      cakeId: cake.cakeId,
-      cartItemStatus: null,
-      pickupDate: null ,  
-      pickupTime: null,
+      cake:{
+        cakeId: cake.cakeId,
+        cakeName: cake.cakeName,
+        cakeStyle: cake.cakeStyle,
+        cakeSize: cake.cakeSize,
+        cakeFlavor: cake.cakeFlavor,
+        cakeFrosting: cake.cakeFrosting,
+        cakeType: cake.cakeType,
+        hasWriting: cake.hasWriting,
+        customText: cake.customText,
+        amountAvailable: cake.amountAvailable,
+        cakePrice: cake.cakePrice,
+      },
     };
     return axios.post('/cartitem/items', item);
   },

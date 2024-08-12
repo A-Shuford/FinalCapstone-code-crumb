@@ -27,7 +27,7 @@
                 </tr>
                 <tr>
                     <td><label for="cake_name">Custom Cake Name:</label></td>
-                    <td><input type="text" v-model="cake_name" id="cake_name" required></td>
+                    <td><input type="text" v-model="cake.cakeName" id="cake.cakeName" required></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -35,9 +35,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="cake_style">Cake Style:</label></td>
+                    <td><label for="cake.cakeStyle">Cake Style:</label></td>
                     <td>
-                        <select v-model="cake_style" id="cake_style" required>
+                        <select v-model="cake.cakeStyle" id="cake.cakeStyle" required>
                             <option value="Layered">Layered</option>
                             <option value="Sheet">Sheet</option>
                             <option value="Cupcakes">Cupcakes</option>
@@ -45,9 +45,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="cake_size">Cake Size:</label></td>
+                    <td><label for="cake.cakeSize">Cake Size:</label></td>
                     <td>
-                        <select v-model="cake_size" id="cake_size" required>
+                        <select v-model="cake.cakeSize" id="cake.cakeSize" required>
                             <option value="Small">Small</option>
                             <option value="Medium">Medium</option>
                             <option value="Large">Large</option>
@@ -55,9 +55,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="cake_flavor">Cake Flavor:</label></td>
+                    <td><label for="cake.cakeFlavor">Cake Flavor:</label></td>
                     <td>
-                        <select v-model="cake_flavor" id="cake_flavor" required>
+                        <select v-model="cake.cakeFlavor" id="cake.cakeFlavor" required>
                             <option value="Butterscotch">Butterscotch</option>
                             <option value="Vanilla">Vanilla</option>
                             <option value="Chocolate">Chocolate</option>
@@ -70,9 +70,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="cake_frosting">Cake Frosting:</label></td>
+                    <td><label for="cake.cakeFrosting">Cake Frosting:</label></td>
                     <td>
-                        <select v-model="cake_frosting" id="cake_frosting" required>
+                        <select v-model="cake.cakeFrosting" id="cake.cakeFrosting" required>
                             <option value="Vanilla">Vanilla</option>
                             <option value="Chocolate Ganache">Chocolate Ganache</option>
                             <option value="Coffee">Coffee</option>
@@ -83,9 +83,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="cake_filling">Cake Filling:</label></td>
+                    <td><label for="cake.cakeFilling">Cake Filling:</label></td>
                     <td>
-                        <select v-model="cake_filling" id="cake_filling">
+                        <select v-model="cake.cakeFilling" id="cake.cakeFilling">
                             <option value="Apple Jelly">Apple Jelly</option>
                             <option value="Raspberry Jelly">Raspberry Jelly</option>
                             <option value="Vanilla Custard">Vanilla Custard</option>
@@ -103,7 +103,7 @@
                 </tr>
                 <tr>
                     <td><label for="pickup_date">Pick Up Date:</label></td>
-                    <td><input type="date" v-model="pickup_date" id="pickup_date" required></td>
+                    <td><input type="date" v-model="pickup_date" id="cake.pickupDate" required></td>
                 </tr>
                 <tr>
                     <td><label for="pickup_time">Pick Up Time:</label></td>
@@ -113,8 +113,8 @@
                     <td colspan="2">
                         <p>If you would like any sayings like Congratulations or Happy Birthday.</p>
                         <p>Please double check the spelling of any names!</p>
-                        <label for="writing">Writing on the cake:</label>
-                        <textarea v-model="writing" id="writing"></textarea>
+                        <label for="cake.hasWriting">Writing on the cake:</label>
+                        <textarea v-model="cake.hasWriting" id="cake.hasWriting"></textarea>
                         
                         <p v-if="hasWriting">There is an additional fee for writing on the cake</p>
                         
@@ -152,70 +152,31 @@ export default {
     },
     data() {
         return {
-            name: this.$store.state.user.yourName,
-            email: this.$store.state.user.email,
-            phone: this.$store.state.user.phoneNumber,
-            cake_name: '',
-            cake_style: '',
-            cake_size: '',
-            cake_flavor: '',
-            cake_frosting: '',
-            cake_filling: '',
-            pickup_date: '',
-            pickup_time: '',
-            writing: '', 
-            additional_notes: ''
+            cake : {
+                cakeName: '',
+                cakeStyle: '',
+                cakeSize: '',
+                cakeFlavor: '',
+                cakeFrosting: '',
+                cakeFilling: '',
+                pickupDate: '',
+                pickupTime: '',
+                hasWriting: '', 
+                additional_notes: '',
+            },
 
         };
     },
-    computed: {
-        hasWriting() {
-            return this.writing.trim().length > 0;
-        },
-        isShopOpen() {
-            const selectedDate = new Date(this.pickup_date);
-            const day = selectedDate.getDay(); 
-            const time = this.pickup_time;
-
-            if (day === 1) { 
-                return false;
-            }
-
-            const [hours, minutes] = time.split(':').map(Number);
-            return hours >= 8 && (hours < 21 || (hours === 21 && minutes === 0));
-        }
-    },
     methods: {
-        async submitOrder() {
-            if (!this.isShopOpen) {
-                alert('The selected pickup time is outside our operating hours (8 AM to 9 PM) or the shop is closed on Monday. Please select a different time.');
-                return;
-            }
-
- 
-        },
-        
         addingToCustomCake () {
-            const customCake = {
-                name: this.name,
-                email: this.email,
-                phone: this.phone,
-                cake_name: this.cake_name,
-                cake_style: this.cake_style,
-                cake_size: this.cake_size,
-                cake_flavor: this.cake_flavor,
-                cake_frosting: this.cake_frosting,
-                cake_filling: this.cake_filling,
-                pickup_date: this.pickup_date,
-                pickup_time: this.pickup_time,
-                writing: this.writing,
-                additional_notes: this.additional_notes
-            };
-            cartService.addCake(customCake)
-                .then(() => {
-                    this.$store.commit('SET_SUCCESS', `Added '${this.cake_name}' to cart`);
-                })
-                .catch((error) => {
+            cartService.createCustomCake(this.cake)
+                .then((response) => {
+                    if (response.status == 201) {
+              this.$router.push({
+                path: '/',
+              });
+            }
+          }).catch((error) => {
                     const response = error.response;
                     const message = 'Add cake was unsuccessful: ' + (response ? response.message : 'Could not reach server');
                     this.$store.commit('SET_ERROR', message);
@@ -223,7 +184,6 @@ export default {
                 });
 
         },
-
     },
 };
 </script>

@@ -28,7 +28,7 @@
           <td class="action">
             <router-link v-bind:to="{
               name:'inStockDetails',
-              params: { id: item.cakeId },
+              params: { id : item.cake.cakeId },
             }">
           {{ item.cake.cakeName }}  
           </router-link>
