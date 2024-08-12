@@ -80,11 +80,7 @@
                         </select>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2">
-                        <h2>Pick Up Date and Time will be select at the checkout</h2>
-                    </td>
-                </tr>
+                
                 <tr>
                     <td colspan="2">
                         <p>If you would like any sayings like Congratulations or Happy Birthday.</p>
