@@ -7,12 +7,16 @@ export default{
         return axios.get('/instock'); //WHERE STATEMENT IS EQUALS TO STANDARD
     },
 
+    getCakesAdmin(){
+        return axios.get('/admincakes');
+    },
+
     getdetails(cakeId){
         return axios.get(`/cakes/${cakeId}`);
     },
 
-    updateCake(cake) {
-        return axios.put(`/cakes/${cake.cakeId}`, cake);
+    updateCakeAmountAvailable(cake) {
+        return axios.put('/cakes/update-amount', cake);
       },
 
     searchCakes(name){

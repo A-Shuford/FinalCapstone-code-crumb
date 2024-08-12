@@ -5,6 +5,7 @@ import com.techelevator.exception.DaoException;
 import com.techelevator.model.Cake;
 import com.techelevator.service.CakeService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -60,6 +61,29 @@ public class CakeController {
             return cakeService.addingCustomCake(cake, principal);
         }catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(path = "/admincakes", method = RequestMethod.GET)
+    public List<Cake> getCakesAdminOnly (){
+        try{
+            return cakeDao.getCakesAdmin();
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+
+    @RequestMapping (path = "/cakes/update-amount", method = RequestMethod.PUT)
+    public Cake updateCakeAmount(@RequestBody Cake cake) {
+        try{
+            return cakeDao.updateAvailableCakeAmountsByName(cake);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error -" +e.getMessage());
         }
     }
 

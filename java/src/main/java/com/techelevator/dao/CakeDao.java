@@ -8,6 +8,8 @@ public interface CakeDao {
 
     List<Cake> getCakes();
 
+    List<Cake> getCakesAdmin();
+
     Cake getCakeById(int cakeId);
 
     List<Cake> getCakesByUserId(int userId);

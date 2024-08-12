@@ -2,8 +2,9 @@
 <div id="nav">
         <router-link v-bind:to="{ name: 'home' }"><img src="/src/assets/navIcons/home.png"> Home</router-link>
         <router-link v-bind:to="{ name: 'instock' }"><img src="/src/assets/navIcons/inStock.png"> In-Stock</router-link>
-        <!-- Conditionally display the Orders link if the user is an admin -->
         <router-link v-if="isAdmin" v-bind:to="{ name: 'orders' }"><img src="/src/assets/navIcons/custom.png"> Orders</router-link>
+        <!-- Conditionally display the Orders link if the user is an admin -->
+        <router-link v-if="isAdmin" v-bind:to="{ name: 'admincakes' }"><img src="/src/assets/navIcons/custom.png"> Cake Inventory</router-link>
         <router-link v-bind:to="{ name: 'customorder' }"><img src="/src/assets/navIcons/custom.png"> Custom Order</router-link>
         <router-link v-bind:to="{ name: 'contactus' }"><img src="/src/assets/navIcons/contactus.png"> Contact Us</router-link>
         <router-link v-bind:to="{ name: 'reviews' }"><img src="/src/assets/navIcons/reviews.png"> Reviews</router-link>

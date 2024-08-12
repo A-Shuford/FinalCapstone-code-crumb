@@ -76,6 +76,7 @@ export default {
     MascotModalVue,
     FooterVue,
   },
+  
   data() {
     return {
       cakes: [],
@@ -102,61 +103,16 @@ export default {
         .then((response) => {
           this.cakes = response.data;
         })
-        .catch((error) => {
-          const response = error.response;
-          const message =
-            "Getting in-stock cakes was unsuccessful: " +
-            (response ? response.message : "Could not reach server");
-          this.$store.commit("SET_ERROR", message);
-          console.error(message);
-        });
+        .catch(this.handleError("Getting in-stock cakes was unsuccessful"));
     },
-  
-    methods: {
-      getCakes() {
-        if (this.filter) {
-          this.searchCakes();
-          return;
-        }
 
-        inStock
-          .getCakes()
-          .then((response) => {
-            this.cakes = response.data;
-          })
-          .catch((error) => {
-            // Something unexpected happened
-            const response = error.response;
-            const message =
-              "Getting in-stock cakes was unsuccessful: " +
-              (response ? response.message : "Could not reach server");
-            this.$store.commit("SET_ERROR", message);
-            console.error(message);
-          });
-      },
-      searchCakes() {
-        inStock
-          .searchCakes(this.filter)
-          .then((response) => {
-            this.cakes = response.data;
-          })
-          .catch((error) => {
-            // Something unexpected happened
-            const response = error.response;
-            const message =
-              "Getting In-stock cakes was unsuccessful: " +
-              (response ? response.message : "Could not reach server");
-            this.$store.commit("SET_ERROR", message);
-            console.error(message);
-          });
-      },
-  
-      checkSearchEnter(e) {
-        // User pressed a key. If ENTER, perform the search.
-        if (e.key === "Enter") {
-          this.getCakes();
-        }
-      },
+    searchCakes() {
+      inStock
+        .searchCakes(this.filter)
+        .then((response) => {
+          this.cakes = response.data;
+        })
+        .catch(this.handleError("Getting in-stock cakes was unsuccessful"));
     },
 
     checkSearchEnter(e) {
@@ -164,14 +120,23 @@ export default {
         this.getCakes();
       }
     },
+
+    handleError(baseMessage) {
+      return (error) => {
+        const response = error.response;
+        const message =
+          baseMessage + ": " + (response ? response.message : "Could not reach server");
+        this.$store.commit("SET_ERROR", message);
+        console.error(message);
+      };
+    }
   },
 
   created() {
     this.getCakes();
   },
-  
-
 };
+
 </script>
 
 <style scoped>

@@ -14,6 +14,7 @@ import ReviewsView from '../views/ReviewsView.vue';
 import InStockDetailsView from '../views/InStockDetailsView.vue';
 import Header from '../components/Header.vue';
 import OrdersView from '../views/OrdersView.vue';
+import AdminInStockView from '../views/AdminInStockView.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -110,6 +111,15 @@ const routes = [
       requiresAuth: true,
       requiresAdmin: true
     }
+  },
+  {path: "/admincakes",
+    name: "admincakes",
+    component: AdminInStockView,
+    meta:{
+      requiresAuth: true,
+      requiresAdmin: true
+    }
+
   }
 ];
 

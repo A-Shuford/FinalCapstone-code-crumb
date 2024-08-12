@@ -43,6 +43,24 @@ public class JdbcCakeDao implements CakeDao {
     @Override
     public List<Cake> getCakes() {
         List<Cake> cakes = new ArrayList<>();
+        String standardCake = SQL_SELECT_CAKE + "WHERE cake.has_writing = false AND cake_type = 'Standard' AND cake.amount_Available != 0;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(standardCake);
+        try {
+            while (results.next()) {
+                Cake cake = mapRowToCake(results);
+                cakes.add(cake);
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return cakes;
+    }
+
+    @Override
+    public List<Cake> getCakesAdmin() {
+        List<Cake> cakes = new ArrayList<>();
         String standardCake = SQL_SELECT_CAKE + "WHERE cake.has_writing = false AND cake_type = 'Standard';";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(standardCake);
@@ -211,7 +229,7 @@ public class JdbcCakeDao implements CakeDao {
     @Override
     public Cake updateAvailableCakeAmountsByName(Cake cake) {
         Cake updatedCake = null;
-        String sql = "UPDATE cake SET amount_available = ?, WHERE cake_name = ?;";
+        String sql = "UPDATE cake SET amount_available = ? WHERE cake_name = ?;";
         try {
             int numberOfRows = jdbcTemplate.update(sql, cake.getAmountAvailable(), cake.getCakeName());
 
