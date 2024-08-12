@@ -13,6 +13,7 @@ import ContactUsView from '../views/ContactUsView.vue';
 import ReviewsView from '../views/ReviewsView.vue';
 import InStockDetailsView from '../views/InStockDetailsView.vue';
 import Header from '../components/Header.vue';
+import OrdersView from '../views/OrdersView.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -101,6 +102,14 @@ const routes = [
     meta:{
       requiresAuth: false
     }
+  },
+  {path: "/orders",
+    name: "orders",
+    component: OrdersView,
+    meta:{
+      requiresAuth: true,
+      requiresAdmin: true
+    }
   }
 ];
 
@@ -118,9 +127,16 @@ router.beforeEach((to) => {
   // Determine if the route requires Authentication
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
 
+  //Determine if the route requires Admin privileges
+  const requiresAdmin = to.matched.some(x => x.meta.requiresAdmin);
+
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && store.state.token === '') {
     return {name: "login"};
+  }
+
+  if (requiresAdmin && !store.state.user.authorities.some(auth => auth.name === 'ROLE_ADMIN')) {
+    return {name: "home"};
   }
   // Otherwise, do nothing and they'll go to their next destination
 });

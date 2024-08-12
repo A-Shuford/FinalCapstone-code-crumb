@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.lang.annotation.Native;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -41,7 +42,7 @@ public class CartController {
     }
 
     @RequestMapping(path = "/standardToCart", method = RequestMethod.POST)
-    public CartItem addingStandartCake(@Validated int cakeId, Principal principal){
+    public CartItem addingStandardCake(@Validated int cakeId, Principal principal){
         try{
             return cartService.addStandardCake(principal, cakeId);
         }catch (DaoException e) {
@@ -73,6 +74,29 @@ public class CartController {
 
 
     }
+
+    /**
+     * Get all orders ONLY accessible by admin
+     * @return List of all CartItems.
+     */
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/all")
+    public List<CartItem> getAllOrdersForBaker() {
+        return cartService.getAllOrders();
+    }
+
+    /**
+     * @param cartItemId The ID of the CartItem to update.
+     * @param newStatus  The new status for the CartItem.
+     * @return The updated CartItem.
+     */
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/items/{cartItemId}/status")
+    public CartItem updateCartItemStatus(@PathVariable int cartItemId, @RequestBody String newStatus) {
+        return cartService.updateCartItemStatus(cartItemId, newStatus);
+    }
+
 
    /* @RequestMapping(path = "", method = RequestMethod.PUT)
     public CartItem rejectingCartItemByUserId(){

@@ -114,4 +114,16 @@ public class CartService {
             return cartItemDao.updateCartItem(existingItem);
         }
     }
+
+    // New Method: Get all orders for baker
+    public List<CartItem> getAllOrders() {
+        return cartItemDao.getAllOrdersForBaker();
+    }
+
+    // New Method: Update cart item status
+    public CartItem updateCartItemStatus(int cartItemId, String newStatus) {
+        CartItem cartItem = cartItemDao.getCartItemById(cartItemId);
+        cartItem.setCartItemStatus(newStatus);
+        return cartItemDao.updateCartItem(cartItem);
+    }
 }

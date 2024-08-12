@@ -29,4 +29,14 @@ export default {
     return axios.delete(`/cart/items/${itemId}`);
   },
 
+    // New Method: Get all orders for baker (ADMIN only)
+    getAllOrders() {
+      return axios.get('/cartitem/all');
+    },
+  
+    // New Method: Update the status of a cart item (ADMIN only)
+    updateCartItemStatus(cartItemId, newStatus) {
+      return axios.put(`/cartitem/items/${cartItemId}/status`, { status: newStatus });
+    }
+
 }
