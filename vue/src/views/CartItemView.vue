@@ -77,7 +77,13 @@
               <input type="time" v-model="pickup_time" id="pickup_time" required>
             </div>
           </td>
-        </tr>
+          </tr>
+          <tr>
+
+                    <td colspan="2">
+                        <button type="submit" @click="submitOrder">Submit</button>
+                    </td>
+                </tr>
       </tbody>
     </table>
   </div>
@@ -166,7 +172,7 @@ export default {
 #cart-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0px;
   background-color: #FBECEB;
   /* Pink background */
   border-radius: 8px;
@@ -254,5 +260,23 @@ tr.begin-summary>td {
 
 .actionRemove img {
   height: 20px;
+}
+
+
+button {
+    background-color: #8C3F09;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0;
+    width: 100px;
+  
+}
+
+button:hover {
+    background-color: #921A39;
 }
 </style>
