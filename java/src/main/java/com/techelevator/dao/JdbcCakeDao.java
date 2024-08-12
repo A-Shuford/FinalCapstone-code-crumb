@@ -120,7 +120,7 @@ public class JdbcCakeDao implements CakeDao {
         try {
             int newCakeId = jdbcTemplate.queryForObject(sql, int.class,cake.getCakeStyle(),
                     cake.getCakeSize(), cake.getCakeFlavor(), cake.getCakeFilling(),
-                    cake.getCakeFrosting(), cake.getCakeName(), cake.getCakeType(),
+                    cake.getCakeFrosting(), cake.getCakeName(), "Custom",
                     cake.hasWriting(), cake.getCustomText(),
                     cake.getAmountAvailable(), cake.getPrice());
             log.debug("Created new Standard Cake with Id: " +newCakeId);
