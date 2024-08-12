@@ -77,13 +77,13 @@ public class CartService {
 
     public CartItem addToCart(Principal principal, CartItem item){
 
+        int userId = getUserId(principal);
 
-
-        CartItem existingItem = cartItemDao.getCartItemByCakeIdAndUserId(item.getCake().getCakeId(), item.getUser().getId());
+        CartItem existingItem = cartItemDao.getCartItemByCakeIdAndUserId(item.getCake().getCakeId(), userId);
 
         if(existingItem == null){
 
-            return cartItemDao.createCartItem(item);
+            return cartItemDao.createCartItem(item, userId);
         }else{
             existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
             return cartItemDao.updateCartItem(existingItem);
@@ -108,7 +108,7 @@ public class CartService {
 
         if(existingItem == null){
 
-            return cartItemDao.createCartItem(item);
+            return cartItemDao.createCartItem(item, userId);
         }else{
             existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
             return cartItemDao.updateCartItem(existingItem);

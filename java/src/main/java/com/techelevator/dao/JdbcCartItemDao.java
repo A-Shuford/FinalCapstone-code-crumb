@@ -20,7 +20,7 @@ public class JdbcCartItemDao implements CartItemDao {
         "users.user_id, users.username, users.yourname, users.email, users.phone_number, " +
         "cart_item_cake.cake_id, cake.cake_name, cake_style.style_name, cake_size.size_name, " +
         "cake_flavor.flavor_name, cake_filling.filling_name, cake_frosting.frosting_name, " +
-        "cake.cake_type, cake.has_writing, cake.custom_text, cart_item.quantity, " +
+        "cake.cake_type, cake.has_writing, cake.custom_text, cart_item_cake.quantity, " +
         "cart_item.status_id, cart_item.pickup_date, cart_item.pickup_time, " +
         "cake.amount_available, cake.image_name " +
         "FROM cart_item " +
@@ -31,7 +31,7 @@ public class JdbcCartItemDao implements CartItemDao {
         "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id " +
         "LEFT JOIN cake_filling ON cake.cake_filling = cake_filling.cake_filling_id " +
         "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id " +
-        "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id";
+        "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id ";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -84,15 +84,14 @@ public class JdbcCartItemDao implements CartItemDao {
     }
 
     @Override
-    public CartItem createCartItem(CartItem cartItem) {
+    public CartItem createCartItem(CartItem cartItem, int userId) {
         CartItem newCartItem = null;
-        String sql = "INSERT INTO cart_item(user_id, status_id, pickup_date, pickup_time, quantity) " +
-                "VALUES (?, ?, ?, ?, ?) RETURNING cart_item_id;";
+        String sql = "INSERT INTO cart_item(user_id, status_id, pickup_date, pickup_time) " +
+                "VALUES (?, ?, ?, ?) RETURNING cart_item_id;";
 
         try {
-            int statusId = mapStatusNameToId(cartItem.getCartItemStatus());
-            int newCartItemId = jdbcTemplate.queryForObject(sql, int.class, cartItem.getUser().getId(),
-                    statusId, cartItem.getPickupDate(), cartItem.getPickupTime(), cartItem.getQuantity());
+            int newCartItemId = jdbcTemplate.queryForObject(sql, int.class, userId,
+                    1, cartItem.getPickupDate(), cartItem.getPickupTime());
 
             String sqlCartItemCake = "INSERT INTO cart_item_cake(cart_item_id, cake_id, price) " +
                     "VALUES (?, ?, ?);";
