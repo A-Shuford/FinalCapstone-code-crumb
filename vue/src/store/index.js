@@ -46,6 +46,11 @@ export function createStore(currentToken, currentUser) {
         axios.defaults.headers.common = {};
       }
     },
+    getters: {
+      isAdmin: (state) => {
+        return state.user.authorities && state.user.authorities.some(auth => auth.name === 'ROLE_ADMIN');
+      }
+    }
   });
   return store;
 }
