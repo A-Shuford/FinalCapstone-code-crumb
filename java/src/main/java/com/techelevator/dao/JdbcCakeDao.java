@@ -121,14 +121,9 @@ public class JdbcCakeDao implements CakeDao {
         try {
             int newCakeId = jdbcTemplate.queryForObject(sql, int.class,cake.getCakeStyle(),
                     cake.getCakeSize(), cake.getCakeFlavor(), cake.getCakeFilling(),
-<<<<<<< HEAD
-                    cake.getCakeFrosting(), cake.getCakeName(), "Custom",
-                    cake.hasWriting(), cake.getCustomText(),
-                    cake.getAmountAvailable(), cake.getPrice());
-=======
+
                     cake.getCakeFrosting(), cake.getCakeName(), cake.getCakeType(),
                     cake.hasWriting(), cake.getCustomText());
->>>>>>> c55597e87c58966b940cf1e58aadd658f122d88d
             log.debug("Created new Standard Cake with Id: " +newCakeId);
             newCake = getCakeById(newCakeId);
         }catch (CannotGetJdbcConnectionException e) {
