@@ -17,9 +17,21 @@
         {{ $store.state.message.text }}
         </div>
       <h2>Details</h2>
-      <p>{{ cake.price }}</p>
+      <p>{{ cake.price}}</p>
       <p>{{ cake.cakeName }}</p>
+      <p> Style: {{ cake.cakeStyle }}</p>
+      <p> Flavor: {{ cake.cakeFlavor }}</p>
+      <p> Frosting: {{ cake.cakeFrosting }}</p>
+      <p> Filling: {{ cake.cakeFilling }}</p>
+      <p> Size: {{ cake.cakeSize }}</p>
+      <p> Available: {{ cake.amountAvailable }}</p>
+
       <img v-bind:src="cake.imageName" alt="Product photo" />
+      <div class = "custom-text">
+        <input type="checkbox" v-model = "cake.hasWriting" @change = "toggleCustomText(cake)"/> Optional Writing $5 fee
+        <div v-if = "cake.hasWriting">
+          <input type="text" v-model = "cake.customText" placeholder = "Enter custom text"/>
+          </div>
       <div class="cart">
           <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon"  class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart">
         </div>
@@ -33,7 +45,9 @@
         {{ $store.state.message.text }}
         </div>
       </div>
+    </div>
     <footer-vue />
+
 </template>
 
 
@@ -101,6 +115,14 @@
             console.error(message);
           });
       },
+      toggleCustomText(){
+        if(this.cake.hasWriting){
+          this.cake.price += 5;
+        } else {
+          this.cake.price += 0;
+          this.cake.customText = "";
+        }
+      }
     },
     created() {
       this.getCake(this.$route.params.id);
