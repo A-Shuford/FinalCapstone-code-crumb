@@ -8,23 +8,7 @@
 
         <form @submit.prevent="submitOrder">
             <table>
-                <tr>
-                    <td><label for="name">Name:</label></td>
-                    <td><input type="text" v-model="name" id="name" required></td>
-                </tr>
-                <tr>
-                    <td><label for="email">Email:</label></td>
-                    <td><input type="email" v-model="email" id="email" required></td>
-                </tr>
-                <tr>
-                    <td><label for="phone">Phone:</label></td>
-                    <td><input type="tel" v-model="phone" id="phone" required></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <h2>Our cakes are made with the finest ingredients and are made to order.</h2>
-                    </td>
-                </tr>
+                
                 <tr>
                     <td><label for="cake_name">Custom Cake Name:</label></td>
                     <td><input type="text" v-model="cake.cakeName" id="cake.cakeName" required></td>
@@ -98,29 +82,15 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <h2>Please select Pick Up Date and Time</h2>
+                        <h2>Pick Up Date and Time will be select at the checkout</h2>
                     </td>
-                </tr>
-                <tr>
-                    <td><label for="pickup_date">Pick Up Date:</label></td>
-                    <td><input type="date" v-model="pickup_date" id="cake.pickupDate" required></td>
-                </tr>
-                <tr>
-                    <td><label for="pickup_time">Pick Up Time:</label></td>
-                    <td><input type="time" v-model="pickup_time" id="pickup_time" required></td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <p>If you would like any sayings like Congratulations or Happy Birthday.</p>
                         <p>Please double check the spelling of any names!</p>
-                        <label for="cake.hasWriting">Writing on the cake:</label>
-                        <textarea v-model="cake.hasWriting" id="cake.hasWriting"></textarea>
-                        
-                        <p v-if="hasWriting">There is an additional fee for writing on the cake</p>
-                        
-                        <h2>Please provide any additional notes or instructions.</h2>
-                        <label for="additionalNotes">Additional Notes:</label>
-                        <textarea v-model="additional_notes" id="additionalNotes"></textarea>
+                        <label for="cake.customText">Writing on the cake:</label>
+                        <textarea v-model="cake.customText" id="cake.customText"></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -159,21 +129,23 @@ export default {
                 cakeFlavor: '',
                 cakeFrosting: '',
                 cakeFilling: '',
-                pickupDate: '',
-                pickupTime: '',
-                hasWriting: '', 
-                additional_notes: '',
+                hasWriting: false,
+                cakeType: 'Custom',
+                customText: '',
+                price: 0,
             },
 
         };
     },
     methods: {
-        addingToCustomCake () {
+
+        async submitOrder() {
+            this.cake.hasWriting = this.checkWriting();
             cartService.createCustomCake(this.cake)
                 .then((response) => {
                     if (response.status == 201) {
               this.$router.push({
-                path: '/',
+                path: '/cartitem',
               });
             }
           }).catch((error) => {
@@ -183,6 +155,14 @@ export default {
                     console.error(message);
                 });
 
+        },
+
+
+        checkWriting() {
+            if(this.cake.customText.length > 0){
+                this.cake.hasWriting = true;
+              return this.cake.hasWriting;    
+            }
         },
     },
 };
