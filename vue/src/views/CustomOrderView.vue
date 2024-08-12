@@ -188,7 +188,7 @@ td {
 
 td:first-child {
     width: 150px;
-    text-align: right;
+    text-align: left;
     padding-right: 10px;
 }
 
