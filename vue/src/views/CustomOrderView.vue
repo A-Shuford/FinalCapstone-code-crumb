@@ -3,12 +3,12 @@
     <nav-bar-vue />
     <mascot-modal-vue />
     <div id="customorder">
-        <h1>Custom Order</h1>
+        <h5>Custom Order</h5>
         <h2>Please fill your contact information</h2>
 
         <form @submit.prevent="submitOrder">
             <table>
-                
+
                 <tr>
                     <td><label for="cake_name">Custom Cake Name:</label></td>
                     <td><input type="text" v-model="cake.cakeName" id="cake.cakeName" required></td>
@@ -80,7 +80,7 @@
                         </select>
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td colspan="2">
                         <p>If you would like any sayings like Congratulations or Happy Birthday.</p>
@@ -97,30 +97,30 @@
             </table>
         </form>
     </div>
-  
+
     <footer-vue />
-  </template>
-  
-  
-  
-  <script>
-  import HeaderVue from '../components/Header.vue';
-  import NavBarVue from '../components/Navbar.vue';
-  import MascotModalVue from '../components/MascotModal.vue';
-  import FooterVue from '../components/Footer.vue';
-  import cartService from '../services/CartService';
-  
-  export default {
+</template>
+
+
+
+<script>
+import HeaderVue from '../components/Header.vue';
+import NavBarVue from '../components/Navbar.vue';
+import MascotModalVue from '../components/MascotModal.vue';
+import FooterVue from '../components/Footer.vue';
+import cartService from '../services/CartService';
+
+export default {
     name: "CustomOrder",
     components: {
-      HeaderVue,
-      NavBarVue,
-      MascotModalVue,
-      FooterVue
+        HeaderVue,
+        NavBarVue,
+        MascotModalVue,
+        FooterVue
     },
     data() {
         return {
-            cake : {
+            cake: {
                 cakeName: '',
                 cakeStyle: '',
                 cakeSize: '',
@@ -142,11 +142,11 @@
             cartService.createCustomCake(this.cake)
                 .then((response) => {
                     if (response.status == 201) {
-              this.$router.push({
-                path: '/cartitem',
-              });
-            }
-          }).catch((error) => {
+                        this.$router.push({
+                            path: '/cartitem',
+                        });
+                    }
+                }).catch((error) => {
                     const response = error.response;
                     const message = 'Add cake was unsuccessful: ' + (response ? response.message : 'Could not reach server');
                     this.$store.commit('SET_ERROR', message);
@@ -157,9 +157,9 @@
 
 
         checkWriting() {
-            if(this.cake.customText.length > 0){
+            if (this.cake.customText.length > 0) {
                 this.cake.hasWriting = true;
-              return this.cake.hasWriting;    
+                return this.cake.hasWriting;
             }
         },
     },
@@ -174,7 +174,7 @@
     border-radius: 8px;
     max-width: 600px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  /* Light shadow for emphasis */
+    /* Light shadow for emphasis */
 }
 
 table {
@@ -183,7 +183,8 @@ table {
 }
 
 td {
-    vertical-align: top; /* Ensure all cells align at the top */
+    vertical-align: top;
+    /* Ensure all cells align at the top */
 }
 
 td:first-child {
@@ -192,7 +193,9 @@ td:first-child {
     padding-right: 10px;
 }
 
-h1, h2, p {
+h1,
+h2,
+p {
     text-align: center;
 }
 
@@ -224,5 +227,11 @@ button {
 button:hover {
     background-color: #921A39;
 }
-</style>
 
+h5 {
+    font-family: "Press Start 2P", system-ui;
+    font-size: 1.5rem;
+    color: #4B1202;
+    text-align: center
+}
+</style>

@@ -139,6 +139,7 @@ public class JdbcCakeDao implements CakeDao {
         try {
             int newCakeId = jdbcTemplate.queryForObject(sql, int.class,cake.getCakeStyle(),
                     cake.getCakeSize(), cake.getCakeFlavor(), cake.getCakeFilling(),
+
                     cake.getCakeFrosting(), cake.getCakeName(), cake.getCakeType(),
                     cake.hasWriting(), cake.getCustomText());
             log.debug("Created new Standard Cake with Id: " +newCakeId);

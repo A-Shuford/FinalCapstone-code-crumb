@@ -4,8 +4,8 @@
     <mascot-modal-vue />
 
     <div class="form-container">
-        <h1>Contact Us</h1>
-       
+        
+        <h5>Contact Us</h5>
 
         <form @submit.prevent="submitOrder">
             <table>
@@ -47,20 +47,20 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit" @click="submitOrder">Submit</button>
+                        <button type="submitContactUs" @click="submitContactUs">Submit Contact Us</button>
                     </td>
                 </tr>
             </table>
         </form>
     </div>
-    
+
     <footer-vue />
 </template>
 
 <script>
 import HeaderVue from '../components/Header.vue';
 import NavBarVue from '../components/Navbar.vue';
-import MascotModalVue from '../components/MascotModal.vue'; 
+import MascotModalVue from '../components/MascotModal.vue';
 import FooterVue from '../components/Footer.vue';
 
 export default {
@@ -81,14 +81,17 @@ export default {
     background-color: #FBECEB;
     border-radius: 8px;
     max-width: 600px;
-    text-align: center; /* Center the titles */
+    text-align: center;
+    /* Center the titles and form elements */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  /* Light shadow for emphasis */
+    /* Light shadow for emphasis */
 }
 
 table {
     width: 100%;
+    /* Ensure table takes up full width */
     border-spacing: 10px;
+    /* Add spacing between cells */
 }
 
 label {
@@ -99,6 +102,7 @@ input,
 select,
 textarea {
     width: 100%;
+    /* Ensure input elements fill their container */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -111,10 +115,26 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    
+    display: block;
+    /* Make button a block-level element */
+    margin: 20px auto;
+    /* Center button horizontally */
 }
 
 button:hover {
     background-color: #921A39;
+}
+
+/* Ensure the last row containing the button is centered */
+tr:last-child td {
+    text-align: center;
+}
+
+
+
+h5{
+    font-family: "Press Start 2P", system-ui;
+    font-size: 1.5rem;
+    color: #4B1202;
 }
 </style>
