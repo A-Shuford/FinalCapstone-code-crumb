@@ -4,7 +4,7 @@
   <mascot-modal-vue />
 
   <div class="form-container">
-    <h1>Create Account</h1>
+    <h5>Create Account</h5>
     <form v-on:submit.prevent="register">
       <table>
         <tr>
@@ -155,5 +155,11 @@ button {
 
 button:hover {
     background-color: #921A39;
+}
+
+h5{
+    font-family: "Press Start 2P", system-ui;
+    font-size: 1.5rem;
+    color: #4B1202;
 }
 </style>

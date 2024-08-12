@@ -4,7 +4,7 @@
   <mascot-modal-vue />
   
   <div class="form-container">
-    <h1>Login</h1>
+    <h5>Login</h5>
   
     
     <form v-on:submit.prevent="login">
@@ -129,5 +129,11 @@ button {
 
 button:hover {
     background-color: #921A39;
+}
+
+h5{
+    font-family: "Press Start 2P", system-ui;
+    font-size: 1.5rem;
+    color: #4B1202;
 }
 </style>

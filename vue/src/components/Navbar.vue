@@ -35,7 +35,7 @@ export default {
 }
 
 #nav a {
-    font-size: x-large;
+    font-size: large;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -47,6 +47,12 @@ export default {
     width: 25px;
     height: 25px;
     margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+    #nav {
+        flex-direction: column;
+    }
 }
 </style>
 

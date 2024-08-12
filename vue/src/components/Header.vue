@@ -6,7 +6,7 @@
         <td id="logo-column">
           <img id="cakelogo" src="/src/assets/CC Logo.png" alt="Code & Crumb Logo">
         </td>
-        
+
         <!-- Page Title Column -->
         <td id="title-column">
           <div class="page-title">
@@ -14,11 +14,11 @@
             <h2>For questions or order</h2>
             <h3>Call 911</h3>
             <p>1234 Baker Street</p>
-            <p>Confection City, NLR 11111</p>  
+            <p>Confection City, NLR 11111</p>
             <h3>Established 2024</h3>
           </div>
         </td>
-        
+
         <!-- Account Column -->
         <td id="account-column">
           <div id="cart-login-status">
@@ -27,7 +27,7 @@
               <router-link v-bind:to="{ name: 'cart-item' }">
                 <img src="/src/assets/cart.png" alt="Cart Icon">
               </router-link>
-     <!-- <div
+              <!-- <div
         id="message-bar"
         v-bind:class="'message-' + $store.state.message.level"
         v-bind:title="$store.state.message.text"
@@ -39,7 +39,7 @@
             <div id="loginlogoutregister">
               <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token">Logout</router-link>
               <router-link v-bind:to="{ name: 'login' }" v-if="!$store.state.token">Login</router-link>&nbsp;|
-              <router-link v-bind:to="{ name: 'register'}" v-if="!$store.state.token">Register</router-link>&nbsp;
+              <router-link v-bind:to="{ name: 'register' }" v-if="!$store.state.token">Register</router-link>&nbsp;
             </div>
             <!-- Login Status -->
             <div id="login-status">
@@ -54,7 +54,7 @@
         </td>
       </tr>
     </table>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     isLoggedIn() {
-      return this.$store.state.token !== ''; 
+      return this.$store.state.token !== '';
     },
     username() {
       return this.$store.state.user.username || 'Guest';
@@ -85,20 +85,23 @@ export default {
 table {
   width: 100%;
   table-layout: auto;
-  border-collapse: collapse; /* Remove gaps between cells */
+  border-collapse: collapse;
+  /* Remove gaps between cells */
 }
 
 td {
-  vertical-align: center; 
+  vertical-align: center;
 }
 
 #logo-column {
-  width: 40%; /* Adjust as necessary */
+  width: 40%;
+  /* Adjust as necessary */
   text-align: center;
 }
 
 #cakelogo {
-  width: 400px; /* Adjust as necessary */
+  width: 400px;
+  /* Adjust as necessary */
   height: auto;
 }
 
@@ -116,36 +119,44 @@ td {
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0 10px; /* Adjust horizontal padding if needed */
+  padding: 0 10px;
+  /* Adjust horizontal padding if needed */
 }
 
 #cart {
-  margin-bottom: 10px; /* Space between cart and login/register */
+  margin-bottom: 10px;
+  /* Space between cart and login/register */
 }
 
 #cart img {
-  width: 30px; /* Adjust size as necessary */
-  margin-bottom: 30px; /* Space between cart and login/register */
+  width: 30px;
+  /* Adjust size as necessary */
+  margin-bottom: 30px;
+  /* Space between cart and login/register */
 }
 
 #loginlogoutregister {
-  margin-bottom: 30px; /* Space between login/register and heart */
+  margin-bottom: 30px;
+  /* Space between login/register and heart */
 }
 
 #login-status {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px; /* Space between heart and social media */
+  margin-bottom: 30px;
+  /* Space between heart and social media */
 }
 
 #login-status-heart {
-  width: 30px; /* Adjust size as necessary */
+  width: 30px;
+  /* Adjust size as necessary */
 }
 
 #social-media {
   text-align: center;
-  margin-top: 30px; /* Space between heart and social media */
+  margin-top: 30px;
+  /* Space between heart and social media */
 }
 
 /* Media Queries for responsiveness */

@@ -4,7 +4,7 @@
   <mascot-modal-vue />
 
   <div id="cart-container">
-    <h1>Your Shopping Cart</h1>
+    <h5>Your Shopping Cart</h5>
 
     <table id="cart-table">
       <thead>
@@ -20,9 +20,9 @@
           <td class="right">{{ item.quantity }}</td>
           <td class="action">
             <router-link v-bind:to="{
-              name: 'inStockDetails',
-              params: { id: item.cake.cakeId },
-            }">
+          name: 'inStockDetails',
+          params: { id: item.cake.cakeId },
+        }">
               {{ item.cake.cakeName }}
             </router-link>
           </td>
@@ -77,13 +77,18 @@
               <input type="time" v-model="pickup_time" id="pickup_time" required>
             </div>
           </td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
+          <td colspan="4" class="submitCartOrder">
+            <button id="submitCartOrder" @click="submitCartOrder">Submit Cart</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" class="clearCartOrder">
+            <button id="clear-cart" @click="clearCart">Clear Cart</button>
+          </td>
 
-                    <td colspan="2">
-                        <button type="submit" @click="submitOrder">Submit</button>
-                    </td>
-                </tr>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -170,15 +175,13 @@ export default {
 
 <style scoped>
 #cart-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0px;
-  background-color: #FBECEB;
-  /* Pink background */
-  border-radius: 8px;
-  /* Rounded corners */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  /* Light shadow for emphasis */
+  margin: 20px auto;
+    padding: 20px;
+    background-color: #FBECEB;
+    border-radius: 8px;
+    max-width: 600px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Light shadow for emphasis */
 }
 
 #cart-container h1 {
@@ -264,19 +267,27 @@ tr.begin-summary>td {
 
 
 button {
-    background-color: #8C3F09;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: block;
-    margin: 20px auto 0;
-    width: 100px;
-  
+  background-color: #8C3F09;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  /* Make button a block-level element */
+  margin: 20px auto;
+  /* Center button horizontally */
 }
 
+
 button:hover {
-    background-color: #921A39;
+  background-color: #921A39;
+}
+
+h5{
+    font-family: "Press Start 2P", system-ui;
+    font-size: 1.5rem;
+    color: #4B1202;
+    text-align: center
 }
 </style>

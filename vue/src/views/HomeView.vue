@@ -9,7 +9,7 @@
 
     <main>
       <div class="home">
-        <h2>Welcome to Code and Crumb</h2>
+        <h5>Welcome to Code and Crumb</h5>
         <h2 id="login-message" v-if="$store.state.token == ''">
           <router-link v-bind:to="{ name: 'login' }">Please login</router-link> to place an order.
         </h2>
@@ -141,5 +141,11 @@ footer {
   100% {
     transform: translateX(-100%);
   }
+}
+
+h5{
+    font-family: "Press Start 2P", system-ui;
+    font-size: 1.5rem;
+    color: #4B1202;
 }
 </style>

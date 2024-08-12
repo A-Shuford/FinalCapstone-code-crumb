@@ -7,7 +7,19 @@ html {
     background-color: #FAEDCD;
 }
 
+.flavors-regular {
+    font-family: "Flavors", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
 
+  .press-start-2p-regular {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
 body {
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
