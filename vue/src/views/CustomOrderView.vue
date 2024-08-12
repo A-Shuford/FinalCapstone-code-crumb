@@ -80,11 +80,7 @@
                         </select>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2">
-                        <h2>Pick Up Date and Time will be select at the checkout</h2>
-                    </td>
-                </tr>
+                
                 <tr>
                     <td colspan="2">
                         <p>If you would like any sayings like Congratulations or Happy Birthday.</p>
@@ -101,24 +97,26 @@
             </table>
         </form>
     </div>
-
+  
     <footer-vue />
-</template>
-
-<script>
-import HeaderVue from '../components/Header.vue';
-import NavBarVue from '../components/Navbar.vue';
-import MascotModalVue from '../components/MascotModal.vue';
-import FooterVue from '../components/Footer.vue';
-import cartService from '../services/CartService';
-
-export default {
-    name: "HomeView",
+  </template>
+  
+  
+  
+  <script>
+  import HeaderVue from '../components/Header.vue';
+  import NavBarVue from '../components/Navbar.vue';
+  import MascotModalVue from '../components/MascotModal.vue';
+  import FooterVue from '../components/Footer.vue';
+  import cartService from '../services/CartService';
+  
+  export default {
+    name: "CustomOrder",
     components: {
-        HeaderVue,
-        NavBarVue,
-        MascotModalVue,
-        FooterVue
+      HeaderVue,
+      NavBarVue,
+      MascotModalVue,
+      FooterVue
     },
     data() {
         return {
@@ -182,34 +180,29 @@ table {
     border-spacing: 10px;
 }
 
-table td {
-    padding: 10px;
+td {
+    vertical-align: top; /* Ensure all cells align at the top */
 }
 
-h1 {
-    text-align: center;
+td:first-child {
+    width: 150px;
+    text-align: right;
+    padding-right: 10px;
 }
 
-h2 {
-    text-align: center;
-}
-
-p {
-    margin: 5px 0; 
+h1, h2, p {
     text-align: center;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px; 
     font-weight: bold;
 }
 
 input,
 select,
 textarea {
-    width: calc(100% - 10px); 
-    padding: 10px; 
+    width: 100%;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -221,11 +214,13 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
-    text-align: center;
+    display: block;
+    margin: 20px auto 0;
+    width: 100px;
 }
 
 button:hover {
     background-color: #921A39;
 }
 </style>
+

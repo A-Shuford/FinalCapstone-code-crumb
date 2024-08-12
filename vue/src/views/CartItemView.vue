@@ -1,49 +1,38 @@
 <template>
-    <header-vue />
-    <nav-bar-vue />
-    <mascot-modal-vue />
-    <div id="heading-line">
-      <h1>
-        Your Shopping Cart!
-    </h1>
-    </div>
-    <!-- 
-      clear buttom must go here
-    -->
+  <header-vue />
+  <nav-bar-vue />
+  <mascot-modal-vue />
+
+  <div id="cart-container">
+    <h1>Your Shopping Cart</h1>
+
     <table id="cart-table">
       <thead>
         <tr>
-        <th class = "right"> Qty</th>
-        <th> Cake</th>
-        <th class = "right"> Price</th>
-        <th class = "right"> Amount</th>
+          <th class="right">Qty</th>
+          <th>Cake</th>
+          <th class="right">Price</th>
+          <th class="right">Amount</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in cart.items" v-bind:key="item.cartItemId">
-          <td class = "right">
-            {{ item.quantity }}
-          </td>
-
+          <td class="right">{{ item.quantity }}</td>
           <td class="action">
             <router-link v-bind:to="{
-              name:'inStockDetails',
-              params: { id : item.cake.cakeId },
+              name: 'inStockDetails',
+              params: { id: item.cake.cakeId },
             }">
-          {{ item.cake.cakeName }}  
-          </router-link>
+              {{ item.cake.cakeName }}
+            </router-link>
           </td>
-          <td class = "right">
-            {{ currency(item.cake.price) }}
-          </td>
-          <td class = "right">
-            {{ currency(item.cake.price * item.quantity) }}
-          </td>
+          <td class="right">{{ currency(item.cake.price) }}</td>
+          <td class="right">{{ currency(item.cake.price * item.quantity) }}</td>
           <td class="actionRemove">
-            <img src="../assets/InStockIcons/removeItemIcon.jpg" alt="Cart Icon"  class="icon action" v-on:click="removeCake(cake)" title="Add cake to cart">
+            <img src="../assets/InStockIcons/removeItemIcon.jpg" alt="Cart Icon" class="icon action"
+              v-on:click="removeCake(cake)" title="Remove cake from cart">
           </td>
         </tr>
-
 
         <tr class="begin-summary">
           <td></td>
@@ -67,63 +56,76 @@
           <td></td>
         </tr>
 
-
-
-
-
+        <!-- Pick Up Date and Time Section -->
+        <tr>
+          <td colspan="4" class="centered">
+            <h2>Select Pick Up Date and Time</h2>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" class="centered">
+            <div class="date-time-fields">
+              <label for="pickup_date">Pick Up Date:</label>
+              <input type="date" v-model="pickup_date" id="pickup_date" required>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" class="centered">
+            <div class="date-time-fields">
+              <label for="pickup_time">Pick Up Time:</label>
+              <input type="time" v-model="pickup_time" id="pickup_time" required>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
+  </div>
 
-
-<footer-vue />
+  <footer-vue />
 </template>
 
 <script>
-
 import HeaderVue from '../components/Header.vue';
 import NavBarVue from '../components/Navbar.vue';
-import MascotModalVue from '../components/MascotModal.vue'; 
+import MascotModalVue from '../components/MascotModal.vue';
 import FooterVue from '../components/Footer.vue';
 import cartService from '../services/CartService';
 
 export default {
-  name: "HomeView",
+  name: "CartItemView",
   components: {
     HeaderVue,
     NavBarVue,
     MascotModalVue,
     FooterVue
   },
-
-  data(){
-    return{
+  data() {
+    return {
       cart: {},
     };
   },
-
-  methods:{
-    getCart(){
+  methods: {
+    getCart() {
       cartService.getCart()
-      .then((response) => {
-        this.cart = response.data;
-      })
-      .catch((error) => {
+        .then((response) => {
+          this.cart = response.data;
+        })
+        .catch((error) => {
           this.isLoading = false;
-          // Something unexpected happened
           const response = error.response;
           const message =
             "Getting cart was unsuccessful: " +
             (response ? response.message : "Could not reach server");
           this.$store.commit("SET_ERROR", message);
           console.error(message);
-      });
+        });
     },
-    removeCake(itemId){
-      cartService.deleteItem(itemId).then(()=>{
+    removeCake(itemId) {
+      cartService.deleteItem(itemId).then(() => {
         this.getCart();
       })
-      .catch((error) => {
-          // Something unexpected happened
+        .catch((error) => {
           const response = error.response;
           const message =
             "Removing item from cart was unsuccessful: " +
@@ -132,13 +134,12 @@ export default {
           console.error(message);
         });
     },
-    clearCart(){
-      cartService.clearCart.then(()=>{
+    clearCart() {
+      cartService.clearCart.then(() => {
         this.getCart();
       })
-      .catch((error) => {
+        .catch((error) => {
           this.isLoading = false;
-          // Something unexpected happened
           const response = error.response;
           const message =
             "Clear cart was unsuccessful: " +
@@ -146,70 +147,102 @@ export default {
           this.$store.commit("SET_ERROR", message);
           console.error(message);
         });
-      },
-        currency(value) {
-          if (isNaN(value)) return "";
-          return new Intl.NumberFormat(`en-US`, {
-            currency: `USD`,
-            style: "currency",
-          }).format(value);
     },
+    currency(value) {
+      if (isNaN(value)) return "";
+      return new Intl.NumberFormat(`en-US`, {
+        currency: `USD`,
+        style: "currency",
+      }).format(value);
     },
-
-    created(){
-      this.getCart();
-    },
-  };
+  },
+  created() {
+    this.getCart();
+  },
+};
 </script>
 
-
 <style scoped>
-#heading-line {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+#cart-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #FBECEB;
+  /* Pink background */
+  border-radius: 8px;
+  /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Light shadow for emphasis */
 }
 
-#spinner {
-  color: green;
+#cart-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
 }
+
 table#cart-table {
-  min-width: 500px;
+  width: 100%;
+  /* Make the table take the full width of the container */
   border-collapse: collapse;
 }
+
 th,
 td {
-  padding: 2px 7px;
+  padding: 10px;
   text-align: left;
 }
+
+td.centered {
+  text-align: center;
+}
+
+.date-time-fields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date-time-fields label,
+.date-time-fields input {
+  display: block;
+  margin: 5px 0;
+}
+
 tr.summary {
   font-weight: 600;
 }
-tr.begin-summary > td {
+
+tr.begin-summary>td {
   border-top: 1px solid black;
 }
 
 .right {
   text-align: right;
 }
+
 .action,
 .delete-action {
   cursor: pointer;
 }
-.action > a {
+
+.action>a {
   text-decoration: none;
   color: inherit;
 }
+
 .icon.delete-action {
   font-size: 1.2em;
   color: #444;
 }
+
 .delete-action:hover,
 #clear-cart:hover {
   color: red;
   background-color: rgba(0, 0, 0, 0.1);
 }
+
 .action:hover {
   color: blue;
   background-color: rgba(0, 0, 0, 0.1);
@@ -219,8 +252,7 @@ tr.begin-summary > td {
   padding-left: 20px;
 }
 
-.actionRemove img{
+.actionRemove img {
   height: 20px;
-  
 }
 </style>

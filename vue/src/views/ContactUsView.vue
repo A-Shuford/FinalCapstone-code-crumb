@@ -5,7 +5,7 @@
 
     <div class="form-container">
         <h1>Contact Us</h1>
-        <h2>Please fill your contact information</h2>
+       
 
         <form @submit.prevent="submitOrder">
             <table>
@@ -39,7 +39,6 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <h2>Your message to us</h2>
                     </td>
                 </tr>
                 <tr>
@@ -110,7 +109,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%; /* Full width button */
+    
 }
 
 button:hover {
