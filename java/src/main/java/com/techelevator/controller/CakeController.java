@@ -78,7 +78,7 @@ public class CakeController {
 
     @PreAuthorize("hasRole('ADMIN')")
 
-    @RequestMapping (path = "/cakes/update-amount", method = RequestMethod.PUT)
+    @RequestMapping (path = "/admincakes/update-amount", method = RequestMethod.PUT)
     public Cake updateCakeAmount(@RequestBody Cake cake) {
         try{
             return cakeDao.updateAvailableCakeAmountsByName(cake);

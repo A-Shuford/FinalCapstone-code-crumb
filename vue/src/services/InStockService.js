@@ -15,6 +15,10 @@ export default{
         return axios.get(`/cakes/${cakeId}`);
     },
 
+    updateCakeAmountAvailableFromAdminStock(cake){
+        return axios.put('/admincakes/update-amount', cake);
+    },
+
     updateCakeAmountAvailable(cake) {
         return axios.put('/cakes/update-amount', cake);
       },

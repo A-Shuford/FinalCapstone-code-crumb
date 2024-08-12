@@ -11,17 +11,27 @@
         <div class="price">{{ currency(cake.price) }}</div>
         <div class="cake-name action" v-on:click="details(cake.cakeId)">
           {{ cake.cakeName }}
+          {{ cake.amountAvailable }}
         </div>
       
         <div class="cake-image">
           <img v-bind:src="cake.imageName" />
         </div>
-        
-        <div class="cart">
-          <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon"  class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart">
-        </div>
-        
-      </article>
+        <div class = "update" v-bind:to=" 'UpdatedAvailability'">
+      <td><label for="updateAvailable">Amount Available:</label></td>
+                    <td>
+                        <select v-model="cake.amountAvailable" id="cake.amountAvailable" required>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </td>
+                    <img src="/public/update_icon.jpg" alt="Update Icon" class="icon action" v-on:click="updateAvailability(cake)" title="Update Availability" />
+                    </div>
+                  </article>
     </section>
     <footer-vue />
   </template>
@@ -48,7 +58,6 @@ export default {
   data() {
     return {
       cakes: [],
-      filter: "",
       cardView: true,
     };
   },
@@ -68,8 +77,44 @@ export default {
         console.error(message);
       };
     },
+    currency(value) {
+        return new Intl.NumberFormat(`en-US`, {
+          currency: `USD`,
+          style: "currency",
+        }).format(value);
+      },
+      updateAvailability(){
+        inStock.updateCakeAmountAvailableFromAdminStock(this.cake).then(() => {
+          this.$store.commit(
+            "SET_SUCCESS",
+            `Updated '${this.cake.cakeName}' availability`
+          );
+        })
+        .catch((error) => {
+            const response = error.response;
+            const message =
+              "Unable to update cake amount: " +
+              (response ? response.message : "Could not reach server");
+            this.$store.commit("SET_ERROR", message);
+            console.error(message);
+          });
+        
+      },
 
-
+      details(id) {
+        this.$router.push({ name: "inStockDetails", params: { id: id} });
+      },
+    
+  },
+  created() {
+    this.getCakes();
   },
 };
 </script>
+
+<style scoped>
+ div.update img {
+    height: 30px;
+  }
+
+</style>
