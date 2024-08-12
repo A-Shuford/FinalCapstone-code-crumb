@@ -18,19 +18,19 @@ public class JdbcCakeDao implements CakeDao {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String SQL_SELECT_CAKE = "SELECT cake.cake_id, cake.cake_name,\n" +
-            "cake_style.style_name, cake_size.size_name,\n" +
-            "cake_flavor.flavor_name, cake_filling.filling_name,\n" +
-            "cake_frosting.frosting_name, cake.cake_type, cake_price.has_writing,\n" +
-            "cake.custom_text, cake.amount_available, cake.image_name,\n" +
-            "cake_price.price\n" +
+    private static final String SQL_SELECT_CAKE = "SELECT cake.cake_id, cake.cake_name,cake_style.style_name, \n" +
+            "cake_size.size_name, cake_flavor.flavor_name, cake_filling.filling_name,\n" +
+            "cake_frosting.frosting_name, cake.cake_type, cake.has_writing,\n" +
+            "cake.custom_text, cake.amount_available, cake_price.price, cake.image_name\n" +
+            "\n" +
             "FROM cake\n" +
             "INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id\n" +
             "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id\n" +
             "LEFT JOIN cake_filling ON cake.cake_filling = cake_filling.cake_filling_id\n" +
             "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id\n" +
             "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id\n" +
-            "INNER JOIN cake_price ON cake.cake_style = cake_price.cake_style_id AND cake.cake_size = cake_price.cake_size_id \n";
+            "INNER JOIN cake_price ON cake.cake_style = cake_price.cake_style_id \n" +
+            "AND cake.cake_size = cake_price.cake_size_id ";
 
     private final JdbcTemplate jdbcTemplate;
 
