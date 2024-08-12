@@ -16,22 +16,22 @@ import java.util.List;
 @Component
 public class JdbcCartItemDao implements CartItemDao {
 
-    private static final String SQL_SELECT_CART_ITEM = "SELECT cart_item.cart_item_id, " +
-        "users.user_id, users.username, users.yourname, users.email, users.phone_number, " +
-        "cart_item_cake.cake_id, cake.cake_name, cake_style.style_name, cake_size.size_name, " +
-        "cake_flavor.flavor_name, cake_filling.filling_name, cake_frosting.frosting_name, " +
-        "cake.cake_type, cake.has_writing, cake.custom_text, cart_item_cake.quantity, " +
-        "cart_item.status_id, cart_item.pickup_date, cart_item.pickup_time, " +
-        "cake.amount_available, cake.image_name " +
-        "FROM cart_item " +
-        "INNER JOIN users ON cart_item.user_id = users.user_id " +
-        "INNER JOIN cart_item_cake ON cart_item.cart_item_id = cart_item_cake.cart_item_id " +
-        "INNER JOIN cake ON cart_item_cake.cake_id = cake.cake_id " +
-        "INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id " +
-        "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id " +
-        "LEFT JOIN cake_filling ON cake.cake_filling = cake_filling.cake_filling_id " +
-        "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id " +
-        "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id ";
+    private static final String SQL_SELECT_CART_ITEM = "SELECT cart_item.cart_item_id, \n" +
+            "users.user_id, users.username, users.yourname, users.email, users.phone_number, cart_item_cake.cake_id, cake.cake_name, \n" +
+            "cake_style.style_name, cake_size.size_name,cake_flavor.flavor_name, cake_filling.filling_name, cake_frosting.frosting_name, \n" +
+            "cake.cake_type, cake.has_writing, cake_price.price, cake.custom_text, cart_item_cake.quantity, \n" +
+            "cart_item.status_id, cart_item.pickup_date, cart_item.pickup_time,\n" +
+            "cake.amount_available, cake.image_name \n" +
+            "FROM cart_item \n" +
+            "INNER JOIN users ON cart_item.user_id = users.user_id \n" +
+            "INNER JOIN cart_item_cake ON cart_item.cart_item_id = cart_item_cake.cart_item_id \n" +
+            "INNER JOIN cake ON cart_item_cake.cake_id = cake.cake_id \n" +
+            "INNER JOIN cake_style ON cake.cake_style = cake_style.cake_style_id \n" +
+            "INNER JOIN cake_size ON cake.cake_size = cake_size.cake_size_id\n" +
+            "LEFT JOIN cake_filling ON cake.cake_filling = cake_filling.cake_filling_id\n" +
+            "INNER JOIN cake_flavor ON cake.cake_flavor = cake_flavor.cake_flavor_id \n" +
+            "LEFT JOIN cake_frosting ON cake.cake_frosting = cake_frosting.cake_frosting_id\n" +
+            "INNER JOIN cake_price ON cake.cake_price = cake_price.cake_price_id";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -93,10 +93,9 @@ public class JdbcCartItemDao implements CartItemDao {
             int newCartItemId = jdbcTemplate.queryForObject(sql, int.class, userId,
                     1, cartItem.getPickupDate(), cartItem.getPickupTime());
 
-            String sqlCartItemCake = "INSERT INTO cart_item_cake(cart_item_id, cake_id, price) " +
-                    "VALUES (?, ?, ?);";
-            jdbcTemplate.update(sqlCartItemCake, newCartItemId, cartItem.getCake().getCakeId(),
-                    cartItem.getCake().getPrice());
+            String sqlCartItemCake = "INSERT INTO cart_item_cake(cart_item_id, cake_id) " +
+                    "VALUES (?, ?);";
+            jdbcTemplate.update(sqlCartItemCake, newCartItemId, cartItem.getCake().getCakeId());
 
             newCartItem = getCartItemById(newCartItemId);
         } catch (CannotGetJdbcConnectionException e) {
@@ -154,14 +153,33 @@ public class JdbcCartItemDao implements CartItemDao {
     }
 
     @Override
-    public CartItem updateCartItem(CartItem cartItem) {
-        String sql = "UPDATE cart_item " +
-                "SET status_id = ?, pickup_date = ?, pickup_time = ?, quantity = ? " +
-                "WHERE cart_item_id = ?;";
+    public CartItem updateCartItemQuantity(CartItem cartItem) {
+        String sql = "UPDATE cart_item_cake\n" +
+                "SET\n" +
+                "quantity = quantity +1\n" +
+                "WHERE cart_item_id = ? AND cake_id = ?";
         try {
-            int statusId = mapStatusNameToId(cartItem.getCartItemStatus());
+            jdbcTemplate.update(sql, cartItem.getCartItemId(), cartItem.getCake().getCakeId());
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return getCartItemById(cartItem.getCartItemId());
+    }
+
+    @Override
+    public CartItem updateCartItemDetails(CartItem cartItem, int userId) {
+        String sql = "UPDATE cart_item \n" +
+                "SET status_id = ?, \n" +
+                "pickup_date = ?, \n" +
+                "pickup_time = ?\n" +
+                "WHERE cart_item_id = ? AND user_id = ?";
+        int statusId = mapStatusNameToId(cartItem.getCartItemStatus());
+        try {
             jdbcTemplate.update(sql, statusId, cartItem.getPickupDate(),
-                    cartItem.getPickupTime(), cartItem.getQuantity(), cartItem.getCartItemId());
+                    cartItem.getPickupTime(),
+                    cartItem.getCartItemId(), userId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {

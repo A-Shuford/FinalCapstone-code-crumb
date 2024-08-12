@@ -17,6 +17,8 @@ public interface CartItemDao {
     // New Methods
     CartItem deleteCartItemsByUserId(int userId);
     CartItem deleteCartItemById(int cartItemId);
-    CartItem updateCartItem(CartItem cartItem);
+    CartItem updateCartItemQuantity(CartItem cartItem);
+
+    CartItem updateCartItemDetails(CartItem cartItem, int userId);
     List<CartItem> getAllOrdersForBaker();
 }

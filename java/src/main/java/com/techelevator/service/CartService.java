@@ -86,7 +86,7 @@ public class CartService {
             return cartItemDao.createCartItem(item, userId);
         }else{
             existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
-            return cartItemDao.updateCartItem(existingItem);
+            return cartItemDao.updateCartItemQuantity(existingItem);
         }
     }
 
@@ -111,7 +111,7 @@ public class CartService {
             return cartItemDao.createCartItem(item, userId);
         }else{
             existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
-            return cartItemDao.updateCartItem(existingItem);
+            return cartItemDao.updateCartItemQuantity(existingItem);
         }
     }
 
@@ -121,9 +121,10 @@ public class CartService {
     }
 
     // New Method: Update cart item status
-    public CartItem updateCartItemStatus(int cartItemId, String newStatus) {
+    public CartItem updateCartItemStatus(int cartItemId, String newStatus, Principal principal) {
         CartItem cartItem = cartItemDao.getCartItemById(cartItemId);
+        int userId = getUserId(principal);
         cartItem.setCartItemStatus(newStatus);
-        return cartItemDao.updateCartItem(cartItem);
+        return cartItemDao.updateCartItemDetails(cartItem, userId);
     }
 }
