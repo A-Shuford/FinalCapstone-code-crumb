@@ -95,34 +95,40 @@ public class JdbcCakeDao implements CakeDao {
     @Override
     public Cake createNewCake (Cake cake){
         Cake newCake = null;
-        String sql = "WITH style AS (SELECT cake_style_id FROM cake_style WHERE style_name = ?), " +
-                "size AS (SELECT cake_size_id FROM cake_size WHERE size_name = ?), " +
-                "flavor AS (SELECT cake_flavor_id FROM cake_flavor WHERE flavor_name = ?), " +
-                "filling AS (SELECT cake_filling_id FROM cake_filling WHERE filling_name = ?), " +
-                "frosting AS (SELECT cake_frosting_id FROM cake_frosting WHERE frosting_name = ?) " +
-                "INSERT INTO cake (cake_name, cake_style, cake_size, cake_flavor, " +
-                "cake_filling, cake_frosting, cake_type, has_writing, " +
-                "custom_text, amount_available) " +
-                "VALUES ( " +
-                "    ?, " + // cake_name
-                "    (SELECT cake_style_id FROM style), " +
-                "    (SELECT cake_size_id FROM size), " +
-                "    (SELECT cake_flavor_id FROM flavor), " +
-                "    (SELECT cake_filling_id FROM filling), " +
-                "    (SELECT cake_frosting_id FROM frosting), " +
-                "    ?, " + // cake_type
-                "    ?, " + // has_writing
-                "    ?, " + // custom_text
-                "    ?, " + // amount_available
-                ") " +
+        String sql = "WITH style AS (SELECT cake_style_id FROM cake_style WHERE style_name = ?),\n" +
+                "size AS (SELECT cake_size_id FROM cake_size WHERE size_name = ?),\n" +
+                "flavor AS (SELECT cake_flavor_id FROM cake_flavor WHERE flavor_name = ?),\n" +
+                "filling AS (SELECT cake_filling_id FROM cake_filling WHERE filling_name = ?),\n" +
+                "frosting AS (SELECT cake_frosting_id FROM cake_frosting WHERE frosting_name = ?)\n" +
+                "INSERT INTO cake (cake_name, cake_style, cake_size, cake_flavor,\n" +
+                "cake_filling, cake_frosting, cake_type, has_writing, \n" +
+                "custom_text, cake_price, amount_available) \n" +
+                "VALUES (?, \n" + //cake_name
+                "(SELECT cake_style_id FROM style),\n" +
+                " (SELECT cake_size_id FROM size),\n" +
+                "(SELECT cake_flavor_id FROM flavor),\n" +
+                "(SELECT cake_filling_id FROM filling),\n" +
+                "(SELECT cake_frosting_id FROM frosting),\n" +
+                "?, \n" + //type
+                "?, \n" + //has_writing
+                " ?,\n" + //custom text
+                "(SELECT cake_price_id FROM cake_price \n" +
+                "WHERE cake_style_id = (SELECT cake_style_id FROM style)\n" +
+                "AND cake_size_id = (SELECT cake_size_id FROM size)),\n" +
+                " 1)\n" + //amountAvailable
                 "RETURNING cake_id;";
 
         try {
             int newCakeId = jdbcTemplate.queryForObject(sql, int.class,cake.getCakeStyle(),
                     cake.getCakeSize(), cake.getCakeFlavor(), cake.getCakeFilling(),
+<<<<<<< HEAD
                     cake.getCakeFrosting(), cake.getCakeName(), "Custom",
                     cake.hasWriting(), cake.getCustomText(),
                     cake.getAmountAvailable(), cake.getPrice());
+=======
+                    cake.getCakeFrosting(), cake.getCakeName(), cake.getCakeType(),
+                    cake.hasWriting(), cake.getCustomText());
+>>>>>>> c55597e87c58966b940cf1e58aadd658f122d88d
             log.debug("Created new Standard Cake with Id: " +newCakeId);
             newCake = getCakeById(newCakeId);
         }catch (CannotGetJdbcConnectionException e) {
@@ -161,24 +167,6 @@ public class JdbcCakeDao implements CakeDao {
                 "WHERE cake.cake_type = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql,type);
-            while(results.next()){
-                Cake cake = mapRowToCake(results);
-                cakes.add(cake);
-            }
-        }
-        catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        }
-        return cakes;
-    }
-
-    @Override
-    public List <Cake> getAllStandardCakes (String cakeType){
-        List<Cake> cakes = new ArrayList<>();
-        String sql = SQL_SELECT_CAKE +
-                "WHERE cake.cake_type = '?';";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cakeType);
             while(results.next()){
                 Cake cake = mapRowToCake(results);
                 cakes.add(cake);
