@@ -17,10 +17,8 @@ public interface CakeDao {
     List<Cake> getCakesByStyle (String style);
 
     List<Cake> getCakesByType (String type);
-    List <Cake> getAllStandardCakes (String cakeType);
     Cake updateCakeDetails (Cake cake);
     Cake updateAvailableCakeAmountsByName (Cake cake);
-
     List<Cake> getCakesByName (String cakeName);
 
 }
