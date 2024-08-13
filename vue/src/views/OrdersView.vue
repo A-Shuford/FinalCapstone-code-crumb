@@ -97,15 +97,17 @@
             <td>{{ item.pickupDate }}</td>
             <td>{{ item.pickupTime }}</td>
             <td>
-              <select v-model="item.newStatus" @change="enableSubmit(item)">
-                <option :value="item.status" disabled>{{ item.status }}</option>
-                <option v-if="item.status === 'Pending'" value="Rejected">Rejected</option>
-                <option v-if="item.status === 'Pending'" value="Ready to be Pick-up">Ready to be Pick-up</option>
-                <option v-if="item.status === 'Ready to be Pick-up'" value="Order Completed">Order Completed</option>
-              </select>
+              <label for="submitChange">Update Order Status:</label>
+            <select v-model="item.cartItemStatus" required>
+              <option value="Pending">Pending</option>
+              <option value="Rejected by bakery">Rejected by bakery</option>
+              <option value="Cancelled by customer">Cancelled by customer</option>
+              <option value="Ready for pick-up">Ready for pick-up</option>
+              <option value="Order Completed">Order Completed</option>
+            </select>
             </td>
             <td>
-              <button type="button" @click="submitChange(item)" :disabled="!item.canSubmit">Submit</button>
+              <button type="button" @click="submitChange(item)">Submit</button>
             </td>
           </tr>
         </tbody>
@@ -176,18 +178,18 @@ export default {
     enableSubmit(item) {
       item.canSubmit = item.newStatus !== item.cartItemStatus;
     },
-    submitChange(item) {
-      if (item.canSubmit) {
-        CartService.updateCartItemStatus(item.cartItemId, item.newStatus)
+    async submitChange(item) {
+        CartService.updateCartItemStatus(item.cartItemId, item)
           .then(() => {
-            item.cartItemStatus = item.newStatus;
-            item.canSubmit = false;
-            this.filterCartItems();
+            this.$store.commit(
+            "SET_SUCCESS",
+            `Updated '${item}' status`
+          );
           })
           .catch((error) => {
             console.error("Error updating cart item status:", error);
           });
-      }
+      
     }
   },
   created() {
