@@ -169,6 +169,29 @@ INSERT INTO cake_price (cake_style_id, cake_size_id, has_writing, price) VALUES
 --INSERTING CAKES--
 INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, cake_price, image_name) 
 VALUES
+<<<<<<< HEAD
+('Chocolate Ganache Cake', 1, 2, 3, 1, 2, 'Standard', false,'', 2, (SELECT cake_price_id
+																		FROM cake_price
+																		WHERE cake_style_id =1 AND cake_size_id = 2)
+ ,'/src/assets/Cake_Images/standard_chocolate_ganache_cake.png'),
+('Vanilla Buttercream Cake', 1, 2, 2, 1, 1, 'Standard', false,'', 3, (SELECT cake_price_id
+																		FROM cake_price
+																		WHERE cake_style_id =1 AND cake_size_id = 2),'/src/assets/Cake_Images/standard_vanilla_cake.png'),
+('Funfetti cake', 1, 1, 6, 1, 1, 'Standard', false,'', 1, (SELECT cake_price_id
+																		FROM cake_price
+																		WHERE cake_style_id =1 AND cake_size_id = 1),'/src/assets/Cake_Images/standard_funfetti_cake.jpg'),
+('Red Velvet Cake', 3, 2, 3, 1, 1, 'Standard', false,'', 2, (SELECT cake_price_id
+																		FROM cake_price
+																		WHERE cake_style_id =3 AND cake_size_id = 2),'/src/assets/Cake_Images/standard_red_velvet_cake.png'),
+('Pound Cake', 2, 3, 1, 1, 1, 'Standard', false, '', 2, (SELECT cake_price_id
+																		FROM cake_price
+																		WHERE cake_style_id =2 AND cake_size_id = 3),'/src/assets/Cake_Images/standard_pound_cake.png'),
+('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', false, '', 2, (SELECT cake_price_id
+																		FROM cake_price
+																		WHERE cake_style_id =2 AND cake_size_id = 3), '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
+
+-- INSERTING STATUSES --
+=======
 ('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', false,'', 2, 2,'/src/assets/Cake_Images/standard_chocolate_ganache_cake.png'),
 ('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', false,'', 3, 2,'/src/assets/Cake_Images/standard_vanilla_cake.png'),
 ('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', false,'', 1, 1,'/src/assets/Cake_Images/standard_funfetti_cake.jpg'),
@@ -176,6 +199,7 @@ VALUES
 ('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', false, '', 2, 6,'/src/assets/Cake_Images/standard_pound_cake.png'),
 ('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', false, '', 2, 6, '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
 
+>>>>>>> a90e303b1033fa1cc3544dcbfbb0b4ac69101b81
 INSERT INTO cart_item_status(status_name)
 VALUES ('Pending'),
 ('Rejected by bakery'),
