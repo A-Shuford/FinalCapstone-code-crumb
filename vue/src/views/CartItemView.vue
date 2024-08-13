@@ -65,16 +65,16 @@
         <tr>
           <td colspan="4" class="centered">
             <div class="date-time-fields">
-              <label for="cart2.pickupDate">Pick Up Date:</label>
-              <input type="date" v-model="cart2.pickupDate" id="cart2.pickupDate" required>
+              <label for="cart.pickupDate">Pick Up Date:</label>
+              <input type="date" v-model="cart.pickupDate" id="cart.pickupDate" required>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="4" class="centered">
             <div class="date-time-fields">
-              <label for="cart2.pickupTime">Pick Up Time:</label>
-              <input type="time" v-model="cart2.pickupTime" id="cart2.pickupTime" required>
+              <label for="cart.pickupTime">Pick Up Time:</label>
+              <input type="time" v-model="cart.pickupTime" id="cart.pickupTime" required>
             </div>
           </td>
         </tr>
@@ -87,7 +87,6 @@
           <td colspan="4" class="clearCartOrder">
             <button id="clear-cart" @click="clearCart">Clear Cart</button>
           </td>
-
         </tr>
       </tbody>
     </table>
@@ -113,17 +112,20 @@ export default {
   },
   data() {
     return {
-
-      cart:{},
-      cart2: {
-        item: [
-          {
-          pickupDate: "",
-          pickupTime: "",
-          }
-        ],
+      cart: {
+        items: [],
+        itemSubtotal: 0,
+        tax: 0,
+        total: 0,
+        pickupDate: '',
+        pickupTime: ''
       },
-    }
+      storeHours: {
+        open: 9, // Store opening hour (24-hour format)
+        close: 18, // Store closing hour (24-hour format)
+        closedDays: [1] // Store closed on Mondays (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+      }
+    };
   },
   methods: {
     getCart() {
@@ -132,7 +134,6 @@ export default {
           this.cart = response.data;
         })
         .catch((error) => {
-          this.isLoading = false;
           const response = error.response;
           const message =
             "Getting cart was unsuccessful: " +
@@ -159,7 +160,6 @@ export default {
         this.getCart();
       })
         .catch((error) => {
-          this.isLoading = false;
           const response = error.response;
           const message =
             "Clear cart was unsuccessful: " +
@@ -175,20 +175,43 @@ export default {
         style: "currency",
       }).format(value);
     },
-    async submitCartOrder(){
-      cartService.submitOrderForRevision(this.cart2).then((response) => {
-          this.cart2 = response.data;
-        })
-        .catch((error) => {
-          this.isLoading = false;
-          const response = error.response;
-          const message =
-            "Getting cart was unsuccessful: " +
-            (response ? response.message : "Could not reach server");
-          this.$store.commit("SET_ERROR", message);
-          console.error(message);
-        });
+    isStoreClosed(date) {
+      // Parse the date string into a Date object
+      const parsedDate = new Date(date + 'T00:00:00'); // Adding 'T00:00:00' to ensure it's treated as a full date
+      
+      // Extract the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+      const dayOfWeek = parsedDate.getDay();
+      
+      // Check if the store is closed on this day
+      return this.storeHours.closedDays.includes(dayOfWeek);
     },
+    submitCartOrder() {
+      const pickupDateTime = new Date(`${this.cart.pickupDate} ${this.cart.pickupTime}`);
+      const pickupHour = pickupDateTime.getHours();
+
+      // Check if the selected pick-up date is on a closed day
+      if (this.isStoreClosed(this.cart.pickupDate)) {
+        alert('Sorry, the store is closed on the selected pick-up date. Please choose another day.');
+        return;
+      }
+
+      // Check if the selected pick-up time is within the store's opening hours
+      if (pickupHour >= this.storeHours.open && pickupHour < this.storeHours.close) {
+        // Store is open, proceed with the order submission
+        alert('Your order has been submitted successfully!');
+      } else {
+        // Store is closed, display an alert
+        alert('Sorry, the store is currently closed. Please select a different pick-up time.');
+      }
+      // Check if the selected pick-up time is within the store's opening hours
+      if (pickupHour >= this.storeHours.open && pickupHour < this.storeHours.close) {
+        // Store is open, proceed with the order submission
+        alert('Your order has been submitted successfully!');
+      } else {
+        // Store is closed, display an alert
+        alert('Sorry, the store is currently closed. Please select a different pick-up time.');
+      }
+    }
   },
   created() {
     this.getCart();
@@ -199,24 +222,23 @@ export default {
 <style scoped>
 #cart-container {
   margin: 20px auto;
-    padding: 20px;
-    background-color: #FBECEB;
-    border-radius: 8px;
-    max-width: 600px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    /* Light shadow for emphasis */
+  padding: 20px;
+  background-color: #FBECEB;
+  border-radius: 8px;
+  max-width: 600px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Light shadow for emphasis */
 }
 
-#cart-container h1 {
+#cart-container h5 {
   text-align: center;
   margin-bottom: 20px;
-  font-size: 2rem;
-  color: #333;
+  font-size: 1.5rem;
+  color: #4B1202;
 }
 
 table#cart-table {
   width: 100%;
-  /* Make the table take the full width of the container */
   border-collapse: collapse;
 }
 
@@ -288,7 +310,6 @@ tr.begin-summary>td {
   height: 20px;
 }
 
-
 button {
   background-color: #8C3F09;
   color: white;
@@ -297,20 +318,14 @@ button {
   border-radius: 4px;
   cursor: pointer;
   display: block;
-  /* Make button a block-level element */
   margin: 20px auto;
-  /* Center button horizontally */
 }
-
 
 button:hover {
   background-color: #921A39;
 }
 
-h5{
-    font-family: "Press Start 2P", system-ui;
-    font-size: 1.5rem;
-    color: #4B1202;
-    text-align: center
+h5 {
+  font-family: "Press Start 2P", system-ui
 }
 </style>
