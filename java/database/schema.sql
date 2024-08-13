@@ -55,7 +55,6 @@ CREATE TABLE cake_price (
     cake_price_id SERIAL PRIMARY KEY,
     cake_style_id int NOT NULL REFERENCES cake_style(cake_style_id),
     cake_size_id int NOT NULL REFERENCES cake_size(cake_size_id),
-	has_writing boolean NOT NULL,
     price decimal(8,2) NOT NULL
 );
 
@@ -143,33 +142,26 @@ INSERT INTO cake_style(style_name) VALUES('Sheet');
 INSERT INTO cake_style(style_name) VALUES('Cupcakes');
 
 -- Prices for Layered Cakes
-INSERT INTO cake_price (cake_style_id, cake_size_id, has_writing, price) VALUES 
-(1, 1, false, 39.00),  -- Layered, Small 6'
-(1, 2, false, 46.00),  -- Layered, Medium 8'
-(1, 3, false, 67.00),  -- Layered, Large 12'
-(1, 1, true, 44.00),  -- Layered, Small 6'
-(1, 2, true, 51.00),  -- Layered, Medium 8'
-(1, 3, true, 72.00);  -- Layered, Large 12'
+INSERT INTO cake_price (cake_style_id, cake_size_id, price) VALUES 
+(1, 1, 39.00),  -- Layered, Small 6'
+(1, 2, 46.00),  -- Layered, Medium 8'
+(1, 3, 67.00);  -- Layered, Large 12'
 
 -- Prices for Sheet Cakes
-INSERT INTO cake_price (cake_style_id, cake_size_id, has_writing, price) VALUES 
-(2, 1, false, 39.00),  -- Sheet, Small 1/4 
-(2, 2, false, 57.00),  -- Sheet, Medium 1/2
-(2, 3, false, 107.00), -- Sheet, Large Whole Sheet
-(2, 1, true, 44.00),  -- Sheet, Small 1/4 
-(2, 2, true, 62.00),  -- Sheet, Medium 1/2
-(2, 3, true, 112.00); -- Sheet, Large Whole Sheet
+INSERT INTO cake_price (cake_style_id, cake_size_id, price) VALUES 
+(2, 1,  39.00),  -- Sheet, Small 1/4 
+(2, 2,  57.00),  -- Sheet, Medium 1/2
+(2, 3, 107.00); -- Sheet, Large Whole Sheet
 
 -- Prices for Cupcakes
-INSERT INTO cake_price (cake_style_id, cake_size_id, has_writing, price) VALUES 
-(3, 1, false, 18.00),  -- Cupcakes, Small (6 cupcakes)
-(3, 2, false, 36.00),  -- Cupcakes, Medium (12 cupcakes)
-(3, 3, false, 72.00); -- Cupcakes, Large (24 cupcakes)
+INSERT INTO cake_price (cake_style_id, cake_size_id, price) VALUES 
+(3, 1, 18.00),  -- Cupcakes, Small (6 cupcakes)
+(3, 2, 36.00),  -- Cupcakes, Medium (12 cupcakes)
+(3, 3, 72.00); -- Cupcakes, Large (24 cupcakes)
 
 --INSERTING CAKES--
 INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, cake_price, image_name) 
 VALUES
-<<<<<<< HEAD
 ('Chocolate Ganache Cake', 1, 2, 3, 1, 2, 'Standard', false,'', 2, (SELECT cake_price_id
 																		FROM cake_price
 																		WHERE cake_style_id =1 AND cake_size_id = 2)
@@ -191,15 +183,6 @@ VALUES
 																		WHERE cake_style_id =2 AND cake_size_id = 3), '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
 
 -- INSERTING STATUSES --
-=======
-('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', false,'', 2, 2,'/src/assets/Cake_Images/standard_chocolate_ganache_cake.png'),
-('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', false,'', 3, 2,'/src/assets/Cake_Images/standard_vanilla_cake.png'),
-('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', false,'', 1, 1,'/src/assets/Cake_Images/standard_funfetti_cake.jpg'),
-('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', false,'', 2, 8,'/src/assets/Cake_Images/standard_red_velvet_cake.png'),
-('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', false, '', 2, 6,'/src/assets/Cake_Images/standard_pound_cake.png'),
-('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', false, '', 2, 6, '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
-
->>>>>>> a90e303b1033fa1cc3544dcbfbb0b4ac69101b81
 INSERT INTO cart_item_status(status_name)
 VALUES ('Pending'),
 ('Rejected by bakery'),
