@@ -12,7 +12,6 @@ import CustomOrderView from '../views/CustomOrderView.vue';
 import ContactUsView from '../views/ContactUsView.vue';
 import ReviewsView from '../views/ReviewsView.vue';
 import InStockDetailsView from '../views/InStockDetailsView.vue';
-import Header from '../components/Header.vue';
 import OrdersView from '../views/OrdersView.vue';
 import AdminInStockView from '../views/AdminInStockView.vue';
 /**

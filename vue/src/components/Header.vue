@@ -31,7 +31,6 @@
         id="message-bar"
         v-bind:class="'message-' + $store.state.message.level"
         v-bind:title="$store.state.message.text"
-      >
         {{ $store.state.message.text }}
       </div> -->
             </div>

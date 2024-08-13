@@ -2,61 +2,60 @@
   <header-vue />
   <nav-bar-vue />
   <mascot-modal-vue />
-    <div class="home">
-      <div id="heading-line">
-        <h1>
-          In Stock Cakes 
-        </h1>
-        <div class="message-bar"
-        v-bind:class="'message-' + $store.state.message.level"
-        v-bind:title="$store.state.message.text"
-        v-if="$store.state.message.text"
-        v-on:click="$store.commit('CLEAR_MESSAGE')"
-      >
-        <img src="../assets/InStockIcons/cancel_message_icon.png">
-        {{ $store.state.message.text }}
-        </div>
-        <div>
-          <span
-          :class="{ 'view-icon': true, active: cardView }"
-          @click="cardView = true"
-          title="View tiles"
-        ><img src="../assets/InStockIcons/card.png"></span>
-        <span
-          :class="{ 'view-icon': true, active: !cardView }"
-          @click="cardView = false"
-          title="View table"
-        ><img src="../assets/InStockIcons/table.png"></span>
-        <div id="search-box">
-          <input
-            type="text"
-            name="search-tb"
-            id="search-tb"
-            placeholder="Search..."
-            @keydown="checkSearchEnter"
-            v-model="filter"
-          />
-          <button
-            class="icon-button"
-            id="search-button"
-            @click="getCakes"
-            tabindex="-1"
-          >
-            </button>
-          </div>
-        </div>
-      </div>
+  <div class="controls">
+    <span
+      :class="{ 'view-icon': true, active: cardView }"
+      @click="cardView = true"
+      title="View tiles">
+      <img src="../assets/InStockIcons/card.png">
+    </span>
+    <span
+      :class="{ 'view-icon': true, active: !cardView }"
+      @click="cardView = false"
+      title="View table">
+      <img src="../assets/InStockIcons/table.png">
+    </span>
+    <div id="search-box">
+      <input
+        type="text"
+        name="search-tb"
+        id="search-tb"
+        placeholder="Search..."
+        @keydown="checkSearchEnter"
+        v-model="filter"  
+      />
+      <button
+        class="icon-button"
+        id="search-button"
+        @click="getCakes"
+        tabindex="-1">
+      </button>
     </div>
-    <p id="login-message" v-if="!isLoggedIn">
-      Welcome! You may browse anonymously as much as you wish,<br />
-      but you must
-      <router-link :to="{ name: 'login' }">Login</router-link> to add
+  </div>
+  <div class="pink-container">
+    <div class="instockcakes">
+    
+        <h5>In Stock Cakes</h5>
+        <div class="message-bar"
+          v-bind:class="'message-' + $store.state.message.level"
+          v-bind:title="$store.state.message.text"
+          v-if="$store.state.message.text"
+          v-on:click="$store.commit('CLEAR_MESSAGE')">
+          <img src="../assets/InStockIcons/cancel_message_icon.png">
+          {{ $store.state.message.text }}
+        </div>
+      
+    </div>
+    <p id="login-message" v-if="!isLoggedIn">You may browse anonymously as much as you wish, 
+      but you must<router-link :to="{ name: 'login' }">Login</router-link> to add
       items to your shopping cart.
     </p>
     <InstockCards :cakes="cakes" v-if="cardView" />
     <InstockTable :cakes="cakes" v-else />
+  </div>
   <footer-vue />
 </template>
+
 
 <script>
 import inStock from "../services/InStockService.js";
@@ -140,83 +139,82 @@ export default {
 </script>
 
 <style scoped>
-#heading-line {
+.controls {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 10px 20px;
+    /* Align to the right and give some spacing from the navbar */
 }
 
-#spinner {
-  color: rgb(0, 0, 0);
-}
-
-.view-icon {
-  font-size: 1.2rem;
-  margin-right: 7px;
-  padding: 3px;
-  color: #c26060;
-  border-radius: 3px;
+.controls .view-icon {
+  margin-left: 10px;
   cursor: pointer;
+
 }
 
-.view-icon.active {
-  background-color: #FAEDCD;
-}
-
-.view-icon:not(.active) {
-  font-size: 1.2rem;
-  margin-right: 7px;
-}
-
-.view-icon:not(.active):hover {
-  color: blue;
-  background-color: rgba(255, 255, 255, 0.7);
-}
-
-/* Search box styling */
 #search-box {
   display: inline-block;
-  border: 1px solid darkgray;
-  border-radius: 10px;
+  margin-left: 10px;
 }
 
-#search-tb {
-  border: none;
-  padding: 5px;
-  min-width: 200px;
-  background-color: transparent;
+.pink-container {
+  background-color: #fce4ec; /* Pink background */
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px; /* Limit the container width */
+  margin: 20px auto; /* Center the container horizontally */
+  text-align: center; /* Center content inside the container */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow for emphasis */
 }
 
-#search-tb:focus-visible {
-  outline: none;
+.instockcakes img {
+  max-width: 100%; /* Ensure images don't overflow the container */
+  height: auto;
 }
 
-#search-button {
-  color: gray;
+.heading-line {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #FBECEB;
+  border-radius: 8px;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+div.cart img {
+  height: 30px;
+}
+
+div.update img {
+  height: 30px;
+}
+
+.action {
   cursor: pointer;
-  background-color: transparent;
-  border: none;
 }
 
-.view-icon img{
-  height: 20px;
-}
-
-div.message-bar img{
+div.message-bar img {
   height: 20px;
   padding-right: 15px;
-  
 }
 
-div.message-bar{
+div.message-bar {
   display: flex;
-  background-color: greenyellow;
-  position:fixed;
-  top: 0px;
+  background-color: transparent;
+  position: sticky;
+  bottom: 0px;
   align-items: flex-start;
   justify-content: center;
   padding: 5px;
+  border: 1px solid hotpink;
+  border-radius: 8px;
 }
 
+h5{
+    font-family: "Press Start 2P", system-ui;
+    font-size: 1.5rem;
+    color: #4B1202;
+}
 </style>
