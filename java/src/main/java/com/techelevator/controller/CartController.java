@@ -102,11 +102,11 @@ public class CartController {
 
     /**
      * @param cartItemId The ID of the CartItem to update.
-     * @param newStatus  The new status for the CartItem.
+     * @param cartItem The new status for the CartItem.
      * @return The updated CartItem.
      */
-   @PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(path = "/{cartItemId}/status", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{cartItemId}/status")
     public CartItem updateCartItemStatus(@PathVariable int cartItemId, @RequestBody CartItem cartItem, Principal principal) {
         return cartService.updateCartItemStatus(cartItemId, cartItem.getCartItemStatus(), principal);
     }

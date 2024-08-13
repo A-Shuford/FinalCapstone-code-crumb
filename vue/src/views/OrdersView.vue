@@ -179,18 +179,15 @@ export default {
       item.canSubmit = item.newStatus !== item.cartItemStatus;
     },
     async submitChange(item) {
-        CartService.updateCartItemStatus(item.cartItemId, item)
-          .then(() => {
-            this.$store.commit(
-            "SET_SUCCESS",
-            `Updated '${item}' status`
-          );
-          })
-          .catch((error) => {
-            console.error("Error updating cart item status:", error);
-          });
-      
+    try {
+      await CartService.updateCartItemStatus(item.cartItemId, { cartItemStatus: item.cartItemStatus });
+      this.$store.commit("SET_SUCCESS", `Order status for '${item.cake.cakeName}' updated successfully.`);
+      this.fetchCartItems();
+    } catch (error) {
+      this.$store.commit("SET_ERROR", `Failed to update order status: ${error.response?.data?.message || error.message}`);
+      console.error("Error updating cart item status:", error);
     }
+  },
   },
   created() {
     this.fetchCartItems();

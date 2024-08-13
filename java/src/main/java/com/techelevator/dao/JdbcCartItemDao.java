@@ -170,10 +170,8 @@ public class JdbcCartItemDao implements CartItemDao {
 
     @Override
     public CartItem updateCartItemDetails(CartItem cartItem, int userId) {
-        String sql = "UPDATE cart_item \n" +
-                "SET status_id = ?, \n" +
-                "pickup_date = ?, \n" +
-                "pickup_time = ?\n" +
+        String sql = "UPDATE cart_item\n" +
+                "SET status_id = ?, pickup_date = ?, pickup_time = ?\n" +
                 "WHERE cart_item_id = ? AND user_id = ?";
         int statusId = mapStatusNameToId(cartItem.getCartItemStatus());
         try {

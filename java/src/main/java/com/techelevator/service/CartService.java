@@ -125,9 +125,8 @@ public class CartService {
     // New Method: Update cart item status
     public CartItem updateCartItemStatus(int cartItemId, String newStatus, Principal principal) {
         CartItem cartItem = cartItemDao.getCartItemById(cartItemId);
-        int userId = getUserId(principal);
         cartItem.setCartItemStatus(newStatus);
-        return cartItemDao.updateCartItemDetails(cartItem, userId);
+        return cartItemDao.updateCartItemDetails(cartItem, cartItem.getUser().getId());
     }
 
     public void submitOrder(CartItem cartItem, Principal principal) {
