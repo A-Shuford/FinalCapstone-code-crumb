@@ -16,7 +16,7 @@
       {{ $store.state.message.text }}
     </div>
     <h2>Details</h2>
-    <p>Price: {{ cake.price }}</p>
+    <p>Price: {{ currency(cake.price) }}</p>
     <p>Cake Name: {{ cake.cakeName }}</p>
     <p>Style: {{ cake.cakeStyle }}</p>
     <p>Flavor: {{ cake.cakeFlavor }}</p>
@@ -33,20 +33,6 @@
     </div>
     <div class="cart">
       <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon" class="icon action" v-on:click="addToCart(cake)" title="Add cake to cart" />
-    </div>
-    <div class = "update" v-if="isAdmin" v-bind:to=" 'UpdatedAvailability'">
-      <td><label for="updateAvailable">Amount Available:</label></td>
-                    <td>
-                        <select v-model="cake.amountAvailable" id="cake.amountAvailable" required>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </td>
-                    <img src="/public/update_icon.jpg" alt="Update Icon" class="icon action" v-on:click="updateAvailability(cake)" title="Update Availability" />
     </div>
   </div>
   <footer-vue />
@@ -96,6 +82,12 @@
             console.error(message);
           });
       },
+      currency(value) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format(value);
+    },
   
       addToCart() {
         cartService
@@ -114,23 +106,6 @@
             this.$store.commit("SET_ERROR", message);
             console.error(message);
           });
-      },
-      updateAvailability(){
-        inStockService.updateCakeAmountAvailable(this.cake).then(() => {
-          this.$store.commit(
-            "SET_SUCCESS",
-            `Updated '${this.cake.cakeName}' availability`
-          );
-        })
-        .catch((error) => {
-            const response = error.response;
-            const message =
-              "Unable to update cake amount: " +
-              (response ? response.message : "Could not reach server");
-            this.$store.commit("SET_ERROR", message);
-            console.error(message);
-          });
-        
       },
 
     },
