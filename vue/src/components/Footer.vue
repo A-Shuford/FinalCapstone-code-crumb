@@ -2,7 +2,7 @@
   <footer>
     <p>&copy; 2024 Code and Crumb "Serving one byte at a time" All Rights Reserved.</p>
     <social-media-icons-vue />
-    <P>Our favorite mascot &#x1f60d Cookie Codey Saunders at your service</P>
+    <P>Our favorite mascot &#x1f60d Cookie Codey Saunders at your service.</P>
   </footer>
 </template>
 

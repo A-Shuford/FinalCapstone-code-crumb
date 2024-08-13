@@ -78,8 +78,19 @@ public class CakeController {
 
     @PreAuthorize("hasRole('ADMIN')")
 
-    @RequestMapping (path = "/admincakes/update-amount", method = RequestMethod.PUT)
+    @RequestMapping (path = "/cakes/update-amount", method = RequestMethod.PUT)
     public Cake updateCakeAmount(@RequestBody Cake cake) {
+        try{
+            return cakeDao.updateAvailableCakeAmountsByName(cake);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error -" +e.getMessage());
+        }
+    }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping (path = "/admincakes/update-amount", method = RequestMethod.PUT)
+    public Cake updateCakeAmountFromAdmin(@RequestBody Cake cake) {
         try{
             return cakeDao.updateAvailableCakeAmountsByName(cake);
         } catch (DaoException e) {
