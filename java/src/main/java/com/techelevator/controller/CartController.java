@@ -88,11 +88,16 @@ public class CartController {
 
 
     @RequestMapping(path="/submitorder", method = RequestMethod.PUT )
-    public CartItem submittedOrderByUser(@RequestBody CartItem cartItem,Principal principal){
+    public void submittedOrderByUser(@RequestBody CartItem cartItem,Principal principal){
         //recieving the date and time will go directly to the server
         //TODO: mangage the usage of updateCartItemDetails
-        cartService.addToCart(principal, cartItem);
-        return null;
+        try{
+            cartService.submitOrder(cartItem, principal);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+
     }
 
     /**

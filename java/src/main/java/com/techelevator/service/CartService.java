@@ -129,4 +129,10 @@ public class CartService {
         cartItem.setCartItemStatus(newStatus);
         return cartItemDao.updateCartItemDetails(cartItem, userId);
     }
+
+    public void submitOrder(CartItem cartItem, Principal principal) {
+        int userId = getUserId(principal);
+        cartItemDao.updateTimeAdnDate(cartItem, userId);
+
+    }
 }

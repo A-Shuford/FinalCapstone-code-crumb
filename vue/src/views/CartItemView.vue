@@ -87,6 +87,7 @@
           <td colspan="4" class="clearCartOrder">
             <button id="clear-cart" @click="clearCart">Clear Cart</button>
           </td>
+
         </tr>
       </tbody>
     </table>
@@ -112,19 +113,29 @@ export default {
   },
   data() {
     return {
-      cart: {
-        items: [],
-        itemSubtotal: 0,
-        tax: 0,
-        total: 0,
-        pickupDate: '',
-        pickupTime: ''
+
+      cart:{
+        item:[
+          {
+          pickupDate: "",
+          pickupTime: "",
+          }
+        ],
+
+      },
+      cart2: {
+        item: [
+          {
+          pickupDate: "",
+          pickupTime: "",
+          }
+        ],
       },
       storeHours: {
         open: 9, // Store opening hour (24-hour format)
         close: 18, // Store closing hour (24-hour format)
         closedDays: [1] // Store closed on Mondays (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-      }
+      },
     };
   },
   methods: {
@@ -132,8 +143,10 @@ export default {
       cartService.getCart()
         .then((response) => {
           this.cart = response.data;
+          this.cart2 = this.cart;
         })
         .catch((error) => {
+          this.isLoading = false;
           const response = error.response;
           const message =
             "Getting cart was unsuccessful: " +
@@ -160,6 +173,7 @@ export default {
         this.getCart();
       })
         .catch((error) => {
+          this.isLoading = false;
           const response = error.response;
           const message =
             "Clear cart was unsuccessful: " +
@@ -185,33 +199,47 @@ export default {
       // Check if the store is closed on this day
       return this.storeHours.closedDays.includes(dayOfWeek);
     },
-    submitCartOrder() {
+    checkTimeAndDate() {
       const pickupDateTime = new Date(`${this.cart.pickupDate} ${this.cart.pickupTime}`);
       const pickupHour = pickupDateTime.getHours();
 
       // Check if the selected pick-up date is on a closed day
       if (this.isStoreClosed(this.cart.pickupDate)) {
         alert('Sorry, the store is closed on the selected pick-up date. Please choose another day.');
-        return;
+        return false;
       }
 
       // Check if the selected pick-up time is within the store's opening hours
       if (pickupHour >= this.storeHours.open && pickupHour < this.storeHours.close) {
         // Store is open, proceed with the order submission
         alert('Your order has been submitted successfully!');
+        return true;
       } else {
         // Store is closed, display an alert
         alert('Sorry, the store is currently closed. Please select a different pick-up time.');
+        return false;
       }
-      // Check if the selected pick-up time is within the store's opening hours
-      if (pickupHour >= this.storeHours.open && pickupHour < this.storeHours.close) {
-        // Store is open, proceed with the order submission
-        alert('Your order has been submitted successfully!');
-      } else {
-        // Store is closed, display an alert
-        alert('Sorry, the store is currently closed. Please select a different pick-up time.');
+
+      
+    },
+
+    async submitCartOrder(){
+      if(this.checkTimeAndDate() == true){
+         cartService.submitOrderForRevision(this.cart).then((response) => {
+          this.cart = response.data;
+        }).catch((error) => {
+          this.isLoading = false;
+          const response = error.response;
+          const message =
+            "Getting cart was unsuccessful: " +
+            (response ? response.message : "Could not reach server");
+          this.$store.commit("SET_ERROR", message);
+          console.error(message);
+        });
+      }else{
+        alert("Please select a pick up date and time")
       }
-    }
+    },
   },
   created() {
     this.getCart();
@@ -222,23 +250,24 @@ export default {
 <style scoped>
 #cart-container {
   margin: 20px auto;
-  padding: 20px;
-  background-color: #FBECEB;
-  border-radius: 8px;
-  max-width: 600px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  /* Light shadow for emphasis */
+    padding: 20px;
+    background-color: #FBECEB;
+    border-radius: 8px;
+    max-width: 600px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Light shadow for emphasis */
 }
 
-#cart-container h5 {
+#cart-container h1 {
   text-align: center;
   margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #4B1202;
+  font-size: 2rem;
+  color: #333;
 }
 
 table#cart-table {
   width: 100%;
+  /* Make the table take the full width of the container */
   border-collapse: collapse;
 }
 
@@ -310,6 +339,7 @@ tr.begin-summary>td {
   height: 20px;
 }
 
+
 button {
   background-color: #8C3F09;
   color: white;
@@ -318,14 +348,20 @@ button {
   border-radius: 4px;
   cursor: pointer;
   display: block;
+  /* Make button a block-level element */
   margin: 20px auto;
+  /* Center button horizontally */
 }
+
 
 button:hover {
   background-color: #921A39;
 }
 
-h5 {
-  font-family: "Press Start 2P", system-ui
+h5{
+    font-family: "Press Start 2P", system-ui;
+    font-size: 1.5rem;
+    color: #4B1202;
+    text-align: center
 }
 </style>

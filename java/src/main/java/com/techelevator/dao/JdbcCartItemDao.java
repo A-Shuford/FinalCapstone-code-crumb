@@ -70,7 +70,7 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public List<CartItem> getCartItemsByUserId(int userId) {
         List<CartItem> cartItems = new ArrayList<>();
-        String sql = SQL_SELECT_CART_ITEM + " WHERE cart_item.user_id = ? ORDER BY cart_item.cart_item_id";
+        String sql = SQL_SELECT_CART_ITEM + " WHERE pickup_date IS NULL  AND pickup_time IS NULL AND cart_item.user_id = ? ORDER BY cart_item.cart_item_id";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -187,8 +187,28 @@ public class JdbcCartItemDao implements CartItemDao {
         }
         return getCartItemById(cartItem.getCartItemId());
     }
+    public CartItem updateTimeAdnDate(CartItem cartItem, int userId) {
+        String sql = "UPDATE cart_item \n" +
+                "SET pickup_date = ?, \n" +
+                "pickup_time = ?\n" +
+                "WHERE pickup_date IS NULL AND pickup_time IS NULL AND user_id = ?";
+        try {
+            int numberOfRows = jdbcTemplate.update(sql, cartItem.getPickupDate(),
+                                                    cartItem.getPickupTime(), userId);
+            if (numberOfRows == 0) {
+                throw new DaoException("Zero rows affected, expected at least one.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return getCartItemById(cartItem.getCartItemId());
+    }
 
-    @Override
+
+
+        @Override
     public List<CartItem> getAllOrdersForBaker() {
         List<CartItem> cartItems = new ArrayList<>();
         String sql = SQL_SELECT_CART_ITEM + " ORDER BY cart_item.pickup_date, cart_item.pickup_time";

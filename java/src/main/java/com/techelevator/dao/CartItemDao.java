@@ -21,4 +21,6 @@ public interface CartItemDao {
 
     CartItem updateCartItemDetails(CartItem cartItem, int userId);
     List<CartItem> getAllOrdersForBaker();
+
+    CartItem updateTimeAdnDate(CartItem cartItem, int user);
 }
