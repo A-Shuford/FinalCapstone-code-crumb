@@ -179,7 +179,7 @@ VALUES
 ('Pound Cake', 2, 3, 1, 1, 1, 'Standard', false, '', 2, (SELECT cake_price_id
 																		FROM cake_price
 																		WHERE cake_style_id =2 AND cake_size_id = 3),'/src/assets/Cake_Images/standard_pound_cake.png'),
-('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', true, '', 2, (SELECT cake_price_id
+('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', false, '', 2, (SELECT cake_price_id
 																		FROM cake_price
 																		WHERE cake_style_id =2 AND cake_size_id = 3), '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
 
