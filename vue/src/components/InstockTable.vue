@@ -10,8 +10,8 @@
     </thead>
     <tbody>
       <tr v-for="cake in cakes" :key="cake.cakeId">
-        <td class="action" @click="details(cake.cakeId)">
-          {{ cake.cakeId }}
+        <td class="action" @click="details(cake.amountAvailable)">
+          {{ cake.amountAvailable }}
         </td>
         <td class="action" @click="details(cake.cakeId)">
           {{ cake.cakeName }}
