@@ -55,7 +55,8 @@ CREATE TABLE cake_price (
     cake_price_id SERIAL PRIMARY KEY,
     cake_style_id int NOT NULL REFERENCES cake_style(cake_style_id),
     cake_size_id int NOT NULL REFERENCES cake_size(cake_size_id),
-	price decimal(8,2) NOT NULL
+	has_writing boolean NOT NULL,
+    price decimal(8,2) NOT NULL
 );
 
 CREATE TABLE cake (
@@ -85,9 +86,10 @@ CREATE TABLE cake (
 CREATE TABLE cart_item (
 	cart_item_id SERIAL,
 	user_id int,
-	status_id int,
+	status_id int DEFAULT 1,
 	pickup_date Date, 
 	pickup_time TIME, 
+	--pickupdate and picktime talk to team
 	CONSTRAINT pk_cart_item_id PRIMARY KEY(cart_item_id),
 	CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES users(user_id),
 	CONSTRAINT fk_status_id FOREIGN KEY (status_id) REFERENCES cart_item_status(cart_item_status_id)
@@ -98,10 +100,10 @@ CREATE TABLE cart_item_cake (
     cart_item_id int NOT NULL,
     cake_id int NOT NULL,
     quantity int NOT NULL DEFAULT 1,
+   -- price decimal(8,2) NOT NULL,  -- Price of the cake at the time of order
     CONSTRAINT fk_cart_item FOREIGN KEY(cart_item_id) REFERENCES cart_item(cart_item_id),
     CONSTRAINT fk_cake FOREIGN KEY(cake_id) REFERENCES cake(cake_id)
 );
-
 ----INSERTING FROSTING TYPES---------
 INSERT INTO cake_frosting(frosting_name) VALUES ('Vanilla');
 INSERT INTO cake_frosting(frosting_name) VALUES ('Chocolate Ganache');
@@ -111,7 +113,6 @@ INSERT INTO cake_frosting(frosting_name) VALUES ('Mint');
 INSERT INTO cake_frosting(frosting_name) VALUES ('Cream cheese');
 
 ------INSERTING FILLING TYPE----------
-INSERT INTO cake_filling(filling_name) VALUES ('None');
 INSERT INTO cake_filling(filling_name) VALUES ('Apple Jelly');
 INSERT INTO cake_filling(filling_name) VALUES ('Raspberry Jelly');
 INSERT INTO cake_filling(filling_name) VALUES ('Strawberry Jelly');
@@ -141,49 +142,40 @@ INSERT INTO cake_style(style_name) VALUES('Layered');
 INSERT INTO cake_style(style_name) VALUES('Sheet');
 INSERT INTO cake_style(style_name) VALUES('Cupcakes');
 
-
 -- Prices for Layered Cakes
-INSERT INTO cake_price (cake_style_id, cake_size_id, price) VALUES 
-(1, 1, 39.00),  -- Layered, Small 6'
-(1, 2, 46.00),  -- Layered, Medium 8'
-(1, 3, 67.00);  -- Layered, Large 12'
+INSERT INTO cake_price (cake_style_id, cake_size_id, has_writing, price) VALUES 
+(1, 1, false, 39.00),  -- Layered, Small 6'
+(1, 2, false, 46.00),  -- Layered, Medium 8'
+(1, 3, false, 67.00),  -- Layered, Large 12'
+(1, 1, true, 44.00),  -- Layered, Small 6'
+(1, 2, true, 51.00),  -- Layered, Medium 8'
+(1, 3, true, 72.00);  -- Layered, Large 12'
 
 -- Prices for Sheet Cakes
-INSERT INTO cake_price (cake_style_id, cake_size_id, price) VALUES 
-(2, 1, 39.00),  -- Sheet, Small 1/4 
-(2, 2, 57.00),  -- Sheet, Medium 1/2
-(2, 3, 107.00); -- Sheet, Large Whole Sheet
+INSERT INTO cake_price (cake_style_id, cake_size_id, has_writing, price) VALUES 
+(2, 1, false, 39.00),  -- Sheet, Small 1/4 
+(2, 2, false, 57.00),  -- Sheet, Medium 1/2
+(2, 3, false, 107.00), -- Sheet, Large Whole Sheet
+(2, 1, true, 44.00),  -- Sheet, Small 1/4 
+(2, 2, true, 62.00),  -- Sheet, Medium 1/2
+(2, 3, true, 112.00); -- Sheet, Large Whole Sheet
 
--- Prices for Cupcakes (No writing fee)
-INSERT INTO cake_price (cake_style_id, cake_size_id, price) VALUES 
-(3, 1, 18.00),  -- Cupcakes, Small (6 cupcakes)
-(3, 2, 36.00),  -- Cupcakes, Medium (12 cupcakes)
-(3, 3, 72.00); -- Cupcakes, Large (24 cupcakes)
+-- Prices for Cupcakes
+INSERT INTO cake_price (cake_style_id, cake_size_id, has_writing, price) VALUES 
+(3, 1, false, 18.00),  -- Cupcakes, Small (6 cupcakes)
+(3, 2, false, 36.00),  -- Cupcakes, Medium (12 cupcakes)
+(3, 3, false, 72.00); -- Cupcakes, Large (24 cupcakes)
 
--- INSERTING CAKES --
+--INSERTING CAKES--
 INSERT INTO cake(cake_Name, cake_style, cake_size, cake_flavor, cake_filling, cake_frosting, cake_type, has_writing, custom_text, amount_available, cake_price, image_name) 
 VALUES
-('Chocolate Ganache Cake', 1, 2, 3, 1, 2, 'Standard', false,'', 2, (SELECT cake_price_id
-																		FROM cake_price
-																		WHERE cake_style_id =1 AND cake_size_id = 2)
- ,'/src/assets/Cake_Images/standard_chocolate_ganache_cake.png'),
-('Vanilla Buttercream Cake', 1, 2, 2, 1, 1, 'Standard', false,'', 3, (SELECT cake_price_id
-																		FROM cake_price
-																		WHERE cake_style_id =1 AND cake_size_id = 2),'/src/assets/Cake_Images/standard_vanilla_cake.png'),
-('Funfetti cake', 1, 1, 6, 1, 1, 'Standard', false,'', 1, (SELECT cake_price_id
-																		FROM cake_price
-																		WHERE cake_style_id =1 AND cake_size_id = 1),'/src/assets/Cake_Images/standard_funfetti_cake.jpg'),
-('Red Velvet Cake', 3, 2, 3, 1, 1, 'Standard', false,'', 2, (SELECT cake_price_id
-																		FROM cake_price
-																		WHERE cake_style_id =3 AND cake_size_id = 2),'/src/assets/Cake_Images/standard_red_velvet_cake.png'),
-('Pound Cake', 2, 3, 1, 1, 1, 'Standard', false, '', 2, (SELECT cake_price_id
-																		FROM cake_price
-																		WHERE cake_style_id =2 AND cake_size_id = 3),'/src/assets/Cake_Images/standard_pound_cake.png'),
-('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', true, '', 2, (SELECT cake_price_id
-																		FROM cake_price
-																		WHERE cake_style_id =2 AND cake_size_id = 3), '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
+('Chocolate Ganache Cake', 1, 2, 3, NULL, 2, 'Standard', false,'', 2, 2,'/src/assets/Cake_Images/standard_chocolate_ganache_cake.png'),
+('Vanilla Buttercream Cake', 1, 2, 2, NULL, 1, 'Standard', false,'', 3, 2,'/src/assets/Cake_Images/standard_vanilla_cake.png'),
+('Funfetti cake', 1, 1, 6, NULL, 1, 'Standard', false,'', 1, 1,'/src/assets/Cake_Images/standard_funfetti_cake.jpg'),
+('Red Velvet Cake', 3, 2, 3, NULL, 1, 'Standard', false,'', 2, 8,'/src/assets/Cake_Images/standard_red_velvet_cake.png'),
+('Pound Cake', 2, 3, 1, NULL, 1, 'Standard', false, '', 2, 6,'/src/assets/Cake_Images/standard_pound_cake.png'),
+('Butterscotch Cake', 2, 3, 1, 7, 1, 'Standard', false, '', 2, 6, '/src/assets/Cake_Images/standard_butterscotch_cake.jpg');
 
--- INSERTING STATUSES --
 INSERT INTO cart_item_status(status_name)
 VALUES ('Pending'),
 ('Rejected by bakery'),
@@ -191,10 +183,10 @@ VALUES ('Pending'),
 ('Ready for pick-up'),
 ('Order Completed');
 
--- INSERTING USERS --
 INSERT INTO users (username, yourname, email, phone_number, password_hash, role)
 VALUES ('user', 'John Smith', 'user@example.com', '123-456-7890', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_USER'),
 ('admin', 'Admin Smith', 'admin@example.com', '098-765-4321', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN' );
+
 
 GRANT ALL
 ON ALL TABLES IN SCHEMA public
@@ -211,5 +203,6 @@ TO final_capstone_appuser;
 GRANT USAGE, SELECT
 ON ALL SEQUENCES IN SCHEMA public
 TO final_capstone_appuser;
+
 
 COMMIT TRANSACTION;

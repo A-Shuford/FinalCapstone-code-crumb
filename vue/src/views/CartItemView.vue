@@ -65,22 +65,22 @@
         <tr>
           <td colspan="4" class="centered">
             <div class="date-time-fields">
-              <label for="pickup_date">Pick Up Date:</label>
-              <input type="date" v-model="pickup_date" id="pickup_date" required>
+              <label for="cart2.pickupDate">Pick Up Date:</label>
+              <input type="date" v-model="cart2.pickupDate" id="cart2.pickupDate" required>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="4" class="centered">
             <div class="date-time-fields">
-              <label for="pickup_time">Pick Up Time:</label>
-              <input type="time" v-model="pickup_time" id="pickup_time" required>
+              <label for="cart2.pickupTime">Pick Up Time:</label>
+              <input type="time" v-model="cart2.pickupTime" id="cart2.pickupTime" required>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="4" class="submitCartOrder">
-            <button id="submitCartOrder" @click="submitCartOrder">Submit Cart</button>
+            <button id="submitCartOrder" @click="submitCartOrder">Submit your Orders</button>
           </td>
         </tr>
         <tr>
@@ -113,8 +113,17 @@ export default {
   },
   data() {
     return {
-      cart: {},
-    };
+
+      cart:{},
+      cart2: {
+        item: [
+          {
+          pickupDate: "",
+          pickupTime: "",
+          }
+        ],
+      },
+    }
   },
   methods: {
     getCart() {
@@ -165,6 +174,20 @@ export default {
         currency: `USD`,
         style: "currency",
       }).format(value);
+    },
+    async submitCartOrder(){
+      cartService.submitOrderForRevision(this.cart2).then((response) => {
+          this.cart2 = response.data;
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          const response = error.response;
+          const message =
+            "Getting cart was unsuccessful: " +
+            (response ? response.message : "Could not reach server");
+          this.$store.commit("SET_ERROR", message);
+          console.error(message);
+        });
     },
   },
   created() {

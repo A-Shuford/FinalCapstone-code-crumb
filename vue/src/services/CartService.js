@@ -51,6 +51,10 @@ export default {
     // New Method: Update the status of a cart item (ADMIN only)
     updateCartItemStatus(cartItemId, newStatus) {
       return axios.put(`/cartitem/items/${cartItemId}/status`, { status: newStatus });
+    },
+
+    submitOrderForRevision(item){
+      return axios.put('/cartitem/submitorder', item);
     }
 
 }

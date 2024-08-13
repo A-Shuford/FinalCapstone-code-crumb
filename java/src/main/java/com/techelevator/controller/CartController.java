@@ -86,6 +86,15 @@ public class CartController {
         return cartService.getAllOrders();
     }
 
+
+    @RequestMapping(path="/submitorder", method = RequestMethod.PUT )
+    public CartItem submittedOrderByUser(@RequestBody CartItem cartItem,Principal principal){
+        //recieving the date and time will go directly to the server
+        //TODO: mangage the usage of updateCartItemDetails
+        cartService.addToCart(principal, cartItem);
+        return null;
+    }
+
     /**
      * @param cartItemId The ID of the CartItem to update.
      * @param newStatus  The new status for the CartItem.
