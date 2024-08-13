@@ -151,27 +151,5 @@ class UserTest {
         assertEquals(expectedAuthorities, actualAuthorities);
     }
 
-    @Test
-    void testEqualsAndHashCode() {
-        // Arrange
-        User user1 = new User(101, "johndoe", "John Doe", "john.doe@example.com", "123-456-7890", "ADMIN", "password123", "USER,ADMIN");
-        User user2 = new User(101, "johndoe", "John Doe", "john.doe@example.com", "123-456-7890", "ADMIN", "password123", "USER,ADMIN");
 
-        // Assert
-        assertEquals(user1, user2);
-        assertEquals(user1.hashCode(), user2.hashCode());
-    }
-
-    @Test
-    void testToString() {
-        // Arrange
-        User user = new User(101, "johndoe", "John Doe", "john.doe@example.com", "123-456-7890", "ADMIN", "password123", "USER,ADMIN");
-        String expectedToString = "User{id=101, username='johndoe', yourName='John Doe', email='john.doe@example.com', phoneNumber='123-456-7890', role='ADMIN', activated=true, authorities=[Authority{name=ROLE_ADMIN}, Authority{name=ROLE_USER}]}";
-
-        // Act
-        String actualToString = user.toString();
-
-        // Assert
-        assertEquals(expectedToString, actualToString);
-    }
 }

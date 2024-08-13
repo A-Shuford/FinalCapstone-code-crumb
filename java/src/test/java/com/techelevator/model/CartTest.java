@@ -33,7 +33,7 @@ class CartTest {
         assertEquals(expectedTax, actualTax);
     }
 
-   
+
     @Test
     void testGetTotalWithNoItems() {
         // Arrange
