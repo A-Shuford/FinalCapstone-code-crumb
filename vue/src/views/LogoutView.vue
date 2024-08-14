@@ -4,7 +4,7 @@
   <mascot-modal-vue />
   
   <div class="logout-container">
-    <h1>Logout</h1>
+    <h5>Logout</h5>
     <p>You have been logged out.</p>
     <p>Thank you for visiting our site.</p>
     <p>
@@ -28,7 +28,6 @@ export default {
     NavBar,
     MascotModalVue,
     FooterVue
-
   },
   created() {
     this.$store.commit("LOGOUT");
@@ -43,5 +42,18 @@ export default {
   text-align: center;
   margin-top: 20px;
   
+}
+
+h4 {
+  font-family: "Press Start 2P", system-ui;
+  font-size: 1.5rem;
+  color: #4B1202;
+}
+
+h5 {
+  font-family: "Petit Formal Script", cursive;
+  font-size: 2rem;
+  color: #4B1202;
+  text-align: center;
 }
 </style>

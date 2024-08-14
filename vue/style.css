@@ -1,45 +1,74 @@
-
 /* Add your CSS here */
-html {
-    font-size: 16px; /* Set the base font size */
-    font-family: Arial, sans-serif; /* Set the default font family */
-    background-color: #FAEDCD;
+html,
+body {
+  font-size: 16px;
+  /* Set the base font size */
+  font-family: Arial, sans-serif;
+  /* Set the default font family */
+  background-color: #FAEDCD;
+}
+
+#capstone-app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+main {
+  flex: 1;
+  /* This makes the main content area expand to fill the available space */
+  padding: 10px;
+  background-color: #FAEDCD;
+}
+
+footer {
+  margin-top: auto;
+  /* This ensures the footer is pushed to the bottom if the content is less than the viewport height */
 }
 
 .flavors-regular {
-    font-family: "Flavors", cursive;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-
-  .press-start-2p-regular {
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  .petit-formal-script-regular {
-    font-family: "Petit Formal Script", cursive;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-body {
-    height: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    
+  font-family: "Flavors", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
 
-    @media screen and (max-width: 480px) {
-    /* CSS rules for screens with a maximum width of 480px (phones) */
+
+.press-start-2p-regular {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.petit-formal-script-regular {
+  font-family: "Petit Formal Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  height: 100%;
+  margin-left: 0;
+  margin-right: 0;
+
+}
+
+
+@media screen and (max-width: 768px) {
+
+  /* CSS rules for screens with a maximum width of 768px (tablets) */
+  body {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+  /* CSS rules for screens with a maximum width of 480px (phones) */
 }
 
 @media screen and (max-width: 320px) {
-    /* CSS rules for screens with a maximum width of 320px (smaller phones) */
+  /* CSS rules for screens with a maximum width of 320px (smaller phones) */
 }
 
 /* General form styling */
-
-  
