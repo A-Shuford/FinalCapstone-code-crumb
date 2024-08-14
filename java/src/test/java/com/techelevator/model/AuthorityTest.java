@@ -112,5 +112,3 @@ class AuthorityTest {
         assertEquals(expectedString, actualString);
     }
 }
-
-
