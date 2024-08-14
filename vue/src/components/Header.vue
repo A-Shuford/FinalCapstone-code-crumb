@@ -265,46 +265,58 @@ td {
   margin-top: 10px;
 }
 
-/* Media Queries for responsiveness */
 @media (max-width: 768px) {
   table {
-    display: block;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
   }
 
-  tr {
-    display: block;
-    margin-bottom: 20px;
-  }
-
-  td {
-    display: block;
+  #logo-column, #title-column, #account-column {
     width: 100%;
     text-align: center;
-    padding: 10px 0;
+    display:block;
   }
 
-  #cart-login-status {
+  #cakelogo {
+    width: 150px;
+    margin-bottom: 10px;
     align-items: center;
-    height: auto;
+  }
+
+  .page-title {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .info-block-1, .info-block-2, .info-block-3 {
+    text-align: center;
+    border: none;
+    padding: 5px 0;
+    
+  }
+
+  #account-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   #social-media {
-    margin-top: 10px;
+    display: none;
+  }
+
+  .heart {
+    display: none;
+  }
+
+  #loginlogoutregister {
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 }
 
-@media (max-width: 480px) {
-  #cakelogo {
-    width: 200px;
-  }
-
-  #login-status-heart {
-    width: 25px;
-  }
-
-  #cart img {
-    width: 30px;
-  }
-}
 </style>
