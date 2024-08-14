@@ -7,7 +7,7 @@
       <img src="/src/assets/navIcons/inStock.png"> In-Stock
     </router-link>
     <router-link v-if="isAdmin" v-bind:to="{ name: 'orders' }">
-      <img src="/src/assets/navIcons/orders.webp"> Orders
+      <img src="/src/assets/navIcons/orders.png"> Orders
     </router-link>
     <router-link v-if="isAdmin" v-bind:to="{ name: 'admincakes' }">
       <img src="/src/assets/navIcons/custom.png"> Cake Inventory
