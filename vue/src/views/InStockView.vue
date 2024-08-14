@@ -15,7 +15,7 @@
       title="View table">
       <img src="../assets/InStockIcons/table.png">
     </span>
-    <div id="search-box">
+    <!--<div id="search-box">
       <input
         type="text"
         name="search-tb"
@@ -30,7 +30,7 @@
         @click="getCakes"
         tabindex="-1">
       </button>
-    </div>
+    </div>-->
   </div>
   <div class="pink-container">
     <div class="instockcakes">

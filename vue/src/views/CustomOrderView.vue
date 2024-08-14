@@ -70,6 +70,7 @@
                     <td><label for="cake.cakeFilling">Cake Filling:</label></td>
                     <td>
                         <select v-model="cake.cakeFilling" id="cake.cakeFilling">
+                            <option value="None">None</option>
                             <option value="Apple Jelly">Apple Jelly</option>
                             <option value="Raspberry Jelly">Raspberry Jelly</option>
                             <option value="Vanilla Custard">Vanilla Custard</option>
