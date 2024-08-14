@@ -1,8 +1,10 @@
 package com.techelevator.controller;
 
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Cake;
 import com.techelevator.model.Cart;
 import com.techelevator.model.CartItem;
+import com.techelevator.service.CakeService;
 import com.techelevator.service.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,9 +23,11 @@ import java.util.List;
 public class CartController {
 
     private CartService cartService;
+    private CakeService cakeService;
 
-    public CartController(CartService cartService){
+    public CartController(CartService cartService, CakeService cakeService){
         this.cartService = cartService;
+        this.cakeService = cakeService;
     }
 
 
@@ -33,9 +37,17 @@ public class CartController {
     }
 
     @RequestMapping(path = "/items", method = RequestMethod.POST)
-    public CartItem addProduct(@Valid @RequestBody CartItem item, Principal principal){
+    public void addProduct(@Valid @RequestBody CartItem item, Principal principal){
         try{
-            return cartService.addToCart(principal, item);
+            Cake cake = new Cake();
+            cake = item.getCake();
+            if(item.getCake().getCakeType().equals("Custom")){
+                cakeService.addingCustomCake(cake, principal);
+                System.out.println("done");
+            }else {
+                System.out.println("none");
+                cartService.addToCart(principal, item); //if it cakeType is custom, add to the cake table.
+            }
         }catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }

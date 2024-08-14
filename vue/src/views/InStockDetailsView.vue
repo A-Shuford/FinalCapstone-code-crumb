@@ -56,10 +56,8 @@
         <tr>
           <td colspan="2">
             <div class="custom-text">
-              <input type="checkbox" v-model="cake.hasWriting" /> Optional Writing (no extra charge)
-              <div v-if="cake.hasWriting">
+              <p> Optional Writing (no extra charge)</p>
                 <input type="text" v-model="cake.customText" placeholder="Enter custom text" />
-              </div>
             </div>
           </td>
         </tr>
@@ -86,7 +84,8 @@ export default {
   },
   data() {
     return {
-      cake: {},
+      cake: {
+      },
     };
   },
   computed: {
@@ -121,6 +120,14 @@ export default {
     },
 
     addToCart() {
+      if(this.cake.customText) {
+        this.cake.hasWriting = true;
+        this.cake.cakeType = 'Custom';
+      }
+      if(!this.cake.customText){
+        this.cake.hasWriting = false;
+        this.cake.cakeType = 'Standard';
+      }
       cartService
         .addCake(this.cake)
         .then(() => {
