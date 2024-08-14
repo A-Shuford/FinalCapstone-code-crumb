@@ -209,12 +209,11 @@ public class JdbcCartItemDao implements CartItemDao {
     @Override
     public CartItem updateCartItemDetails(CartItem cartItem, int userId) {
         String sql = "UPDATE cart_item\n" +
-                "SET status_id = ?, pickup_date = ?, pickup_time = ?\n" +
+                "SET status_id = ? \n" +
                 "WHERE cart_item_id = ? AND user_id = ?";
         int statusId = mapStatusNameToId(cartItem.getCartItemStatus());
         try {
-            jdbcTemplate.update(sql, statusId, cartItem.getPickupDate(),
-                    cartItem.getPickupTime(),
+            jdbcTemplate.update(sql, statusId,
                     cartItem.getCartItemId(), userId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);

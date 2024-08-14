@@ -101,7 +101,7 @@ public class CartController {
 
     @RequestMapping(path="/submitorder", method = RequestMethod.PUT )
     public void submittedOrderByUser(@RequestBody List<CartItem> cartItem,Principal principal){
-        //recieving the date and time will go directly to the server
+        //receiving the date and time will go directly to the server
         //TODO: mangage the usage of updateCartItemDetails
         try{
             for(CartItem items : cartItem) {

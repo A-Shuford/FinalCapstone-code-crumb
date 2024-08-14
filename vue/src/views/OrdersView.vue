@@ -104,7 +104,7 @@
           <!-- Status Update -->
           <div class="status-update">
             <h3>Update Order Status</h3>
-            <select v-model="item.cartItemStatus" :disabled="item.cartItemStatus === 'Order Completed' || item.cartItemStatus === 'Rejected by bakery'" required>
+            <select v-model="item.cartItemStatus" required>
               <option value="Pending">Pending</option>
               <option value="Rejected by bakery">Rejected by bakery</option>
               <option value="Cancelled by customer">Cancelled by customer</option>
@@ -112,7 +112,7 @@
               <option value="Order Completed">Order Completed</option>
             </select>
             <!-- Hide submit button for completed or rejected orders -->
-            <button v-if="item.cartItemStatus !== 'Order Completed' && item.cartItemStatus !== 'Rejected by bakery'" type="button" @click="submitChange(item)">Submit</button>
+            <button type="button" @click="submitChange(item)">Submit</button>
           </div>
         </div>
 
