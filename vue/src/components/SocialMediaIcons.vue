@@ -20,8 +20,8 @@
 
 <style scoped>
 .social-media-icons img {
-  width: 30px; /* Adjust size as needed */
-  height: 30px;
+  width: 20px; /* Adjust size as needed */
+  height: 20px;
   margin: 0 10px;
 }
 </style>

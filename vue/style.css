@@ -27,14 +27,12 @@ html {
   
 body {
     height: 100%;
-  } 
-
-
-@media screen and (max-width: 768px) {
-    /* CSS rules for screens with a maximum width of 768px (including tablets and phones) */
+    margin-left: 0;
+    margin-right: 0;
+    
 }
 
-@media screen and (max-width: 480px) {
+    @media screen and (max-width: 480px) {
     /* CSS rules for screens with a maximum width of 480px (phones) */
 }
 

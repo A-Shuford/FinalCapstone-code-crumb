@@ -1,20 +1,15 @@
 <template>
   <div id="capstone-app">
-    <header>
-      <header-vue />
-    </header>
-    <nav>
-      <nav-bar-vue />
-    </nav>
-
-    <main>
+    <header-vue />
+    <nav-bar-vue />
+    <mascot-modal-vue />
       <div class="home">
-        <h5>Welcome to Code and Crumb</h5>
+        <h3>Welcome to Code and Crumb </h3>
+      </div>  
         <h2 id="login-message" v-if="$store.state.token == ''">
           <router-link v-bind:to="{ name: 'login' }">Please login</router-link> to place an order.
         </h2>
       </div>
-
       <div class="cake-gallery">
         <div class="slider-container">
           <div class="slider-wrapper">
@@ -26,23 +21,20 @@
             <img src="/src/assets/Cake_Images/lemoncake.jpg" alt="Lemon Cake" />
             <img src="/src/assets/Cake_Images/vanillacupcakes.jpg" alt="Vanilla Cupcakes" />
           </div>
-        </div>
+       </div>
       </div>
-      <div>
-        <mascot-modal-vue />
+      <div class="home">
+       <h3>"Serving one byte at a time"</h3>
       </div>
-    </main>
-
-    <footer>
-      <footer-vue />
-    </footer>
-  </div>
+     
+    
+    <footer-vue />
 </template>
 
 <script>
 import HeaderVue from '../components/Header.vue';
 import NavBarVue from '../components/Navbar.vue';
-import MascotModalVue from '../components/MascotModal.vue'; 
+import MascotModalVue from '../components/MascotModal.vue';
 import FooterVue from '../components/Footer.vue';
 
 export default {
@@ -57,7 +49,7 @@ export default {
   mounted() {
     const wrapper = this.$el.querySelector('.slider-wrapper');
     const images = Array.from(wrapper.children);
-    
+
     // Clone images to make the scrolling continuous
     images.forEach(image => {
       const clone = image.cloneNode(true);
@@ -68,43 +60,13 @@ export default {
 </script>
 
 <style scoped>
-#capstone-app {
-  display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  grid-template-areas:
-    "header"
-    "nav"
-    "main"
-    "footer";
-  height: 100vh;
-}
-
-header {
-  grid-area: header;
-}
-
-nav {
-  grid-area: nav;
-}
-
-main {
-  grid-area: main;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #FAEDCD;
-}
-
-footer {
-  grid-area: footer;
-}
 
 .home {
-  position: relative;
-  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
-  text-align: center;
 }
 
 .cake-gallery {
@@ -113,19 +75,20 @@ footer {
   z-index: 1;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  padding-bottom: 50px;
 }
 
 .slider-container {
   width: 100%;
   max-width: 800px;
   overflow: hidden;
-  position: relative;
-}
+  width: 100%;
+  
+} 
 
 .slider-wrapper {
   display: flex;
-  animation: scroll 45s linear infinite;
+  animation: scroll 55s linear infinite;
 }
 
 .slider-wrapper img {
@@ -138,14 +101,16 @@ footer {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-100%);
   }
 }
 
-h5{
-    font-family: "Press Start 2P", system-ui;
-    font-size: 1.5rem;
-    color: #4B1202;
+h5 {
+  font-family: "Petit Formal Script", cursive;
+  ;
+  font-size: 1.5rem;
+  color: #4B1202;
 }
 </style>

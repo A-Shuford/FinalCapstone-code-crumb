@@ -19,18 +19,13 @@
             <img src="/src/assets/Cake_Images/pixelheart.png" alt="Floating Heart" class="heart">
             <!-- Add more hearts as needed -->
           </div>
-          <h3>"Serving one byte at a time"</h3>
-
-          <div class="page-title">
+         <div class="page-title">
             <div class="info-block-1">
               <h4>Address</h4>
               <h4>1234 Baker Street</h4>
               <h4>Confection City, PA 11111</h4>
-
-
             </div>
             <div class="info-block-2">
-
               <h4>Open</h4>
               <h4>9am-9pm</h4>
               <h4>Tuesday - Sunday</h4>
@@ -110,7 +105,7 @@ export default {
   top: 50%;
   left: 0;
   width: 100%;
-  height: 100px;
+  height: 50px;
   /* Adjust the height to cover the middle of the header */
   transform: translateY(-50%);
   /* Center the hearts vertically */
@@ -124,7 +119,7 @@ export default {
   position: absolute;
   width: 30px;
   opacity: 0.8;
-  animation: float 15s infinite ease-in-out;
+  animation: float 30s infinite ease-in-out;
   /* Extend duration */
 }
 
@@ -139,7 +134,7 @@ export default {
   }
 
   100% {
-    transform: translateY(-200%) translateX(-50%);
+    transform: translateY(50%) translateX(-50%);
     /* Move hearts further up */
     opacity: 0;
   }
@@ -172,7 +167,7 @@ export default {
 /* Additional Hearts with different timings for more variation */
 .heart:nth-child(6) {
   left: 10%;
-  animation-duration: 14s;
+  animation-duration: 10s;
   animation-delay: 1.5s;
 }
 
@@ -185,11 +180,11 @@ export default {
 table {
   width: 100%;
   border-collapse: collapse;
+
 }
 
 td {
   vertical-align: top;
-
 }
 
 #logo-column {
@@ -197,33 +192,37 @@ td {
 }
 
 #cakelogo {
-  width: 300px;
+  width: 200px;
 }
 
 #title-column {
-  text-align: center;
-  padding: 10px;
+  text-align:  center;
+  vertical-align: top;  
 }
 
 .page-title {
   display: flex;
-  justify-content: space-between;
-  padding-bottom: 20px;
+  justify-content: space-evenly;
+  padding: 0px;
+
 }
 
 .info-block-1 {
-  padding: 0 1px;
-  text-align: center;
+  text-align: right;
+  padding-left: 0px;
 }
 
 .info-block-2 {
-  padding: 0 1px;
   text-align: center;
+  border-left: 1px solid #921A39;
+  border-right: 1px solid #921A39;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 .info-block-3 {
-  padding: 0 1px;
-  text-align: center;
+  text-align: left;
+  padding-right: 0px;
 }
 
 #account-column {
