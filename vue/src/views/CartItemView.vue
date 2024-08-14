@@ -114,23 +114,15 @@ export default {
   data() {
     return {
 
-      cart:{
-        item:[
-          {
-          pickupDate: "",
-          pickupTime: "",
-          }
-        ],
 
-      },
-      cart2: {
-        item: [
-          {
-          pickupDate: "",
-          pickupTime: "",
-          }
-        ],
-      },
+      cart: {
+        items: [],
+        itemSubtotal: 0,
+        tax: 0,
+        total: 0,
+        pickupDate: "",
+        pickupTime: "",
+      },  
       storeHours: {
         open: 9, // Store opening hour (24-hour format)
         close: 18, // Store closing hour (24-hour format)
@@ -223,11 +215,21 @@ export default {
       
     },
 
-    async submitCartOrder(){
-      if(this.checkTimeAndDate() == true){
-         cartService.submitOrderForRevision(this.cart).then((response) => {
-          this.cart = response.data;
-        }).catch((error) => {
+    async submitCartOrder() {
+    if (this.checkTimeAndDate()) {
+    // Prepare the cart data to include only items
+    const itemsToSubmit = this.cart.items.map(item => ({
+      cartItemId: item.cartItemId, // Include cartItemId
+      pickupDate: this.cart.pickupDate,
+      pickupTime: this.cart.pickupTime,
+      quantity: item.quantity, // Include other necessary fields
+      cake: item.cake // Assuming `cake` is a nested object; include it if necessary
+    }));
+
+    cartService.submitOrderForRevision(itemsToSubmit).then((response) => {
+      this.cart = response.data; // Update cart with the response data
+      alert('Your order has been submitted successfully!');
+    }).catch((error) => {
           this.isLoading = false;
           const response = error.response;
           const message =
