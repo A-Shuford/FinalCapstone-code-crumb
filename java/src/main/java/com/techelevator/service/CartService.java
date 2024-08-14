@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -77,20 +78,34 @@ public class CartService {
         return userDao.getUserByUsername(principal.getName());
     }
 
-    public CartItem addToCart(Principal principal, CartItem item){
+    public CartItem addToCart(Principal principal, CartItem item) {
 
         int userId = getUserId(principal);
 
-        CartItem existingItem = cartItemDao.getCartItemByCakeIdAndUserId(item.getCake().getCakeId(), userId);
+        CartItem existingCart = cartItemDao.getCartItemById(item.getCartItemId());
+        CartItem existingCakeInCart = cartItemDao.getCartItemByCakeIdAndUserId(item.getCake().getCakeId(), userId);
+        LocalDate pickUp = item.getPickupDate();
+        List<CartItem> currentUserCart = cartItemDao.getCartItemsByUserId(userId);
+        boolean foundIt = false;
 
-        if(existingItem == null){
-
+        if (existingCart == null) {
             return cartItemDao.createCartItem(item, userId);
-        }else{
-            existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
-            return cartItemDao.updateCartItemQuantity(existingItem);
+        }
+        for (CartItem cartItem : currentUserCart) {
+            if (cartItem.getCake().getCakeId() == item.getCake().getCakeId()) {
+                foundIt = true;
+            }
+        }
+        if (foundIt) {
+            existingCakeInCart.setQuantity(existingCakeInCart.getQuantity() + item.getQuantity());
+            return cartItemDao.updateCartItemQuantity(existingCakeInCart);
+        } else {
+            cartItemDao.addingCakeToCart(item,userId);
+            return null;
         }
     }
+
+
 
     public void removeFromCart(Principal principal, int cartItemId){
         cartItemDao.deleteCartItemById(cartItemId);

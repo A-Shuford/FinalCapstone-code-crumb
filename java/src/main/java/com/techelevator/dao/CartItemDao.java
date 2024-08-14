@@ -13,6 +13,7 @@ public interface CartItemDao {
     CartItem cancelCartItemByUserId(CartItem cartItem, int userId);
     CartItem rejectCartItemByCakeId(CartItem cartItem, int cakeId);
     CartItem cancelCartItemByCakeId(CartItem cartItem, int cakeId);
+    CartItem addingCakeToCart(CartItem cartItem, int userId);
 
     // New Methods
     CartItem deleteCartItemsByUserId(int userId);

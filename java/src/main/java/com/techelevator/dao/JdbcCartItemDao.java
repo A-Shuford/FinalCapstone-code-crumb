@@ -107,6 +107,23 @@ public class JdbcCartItemDao implements CartItemDao {
     }
 
     @Override
+    public CartItem addingCakeToCart(CartItem cartItem, int userId) {
+        CartItem newCartItem = null;
+        String sql = "INSERT INTO cart_item_cake (user_id, cake_id, cart_item_id) \n" +
+                "VALUES (?, ?, ?) RETURNING cart_item_cake_id;";
+
+        try {
+            int newCartItemCakeId = jdbcTemplate.queryForObject(sql, int.class, userId,
+                    cartItem.getCake().getCakeId(), cartItem.getCartItemId());
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return newCartItem;
+    }
+
+    @Override
     public CartItem rejectCartItemByCakeId(CartItem cartItem, int cakeId) {
         return updateCartItemStatusByCakeId(cartItem, cakeId, cartItem.getCartItemStatus());
     }
@@ -125,6 +142,7 @@ public class JdbcCartItemDao implements CartItemDao {
     public CartItem cancelCartItemByUserId(CartItem cartItem, int userId) {
         return updateCartItemStatusByUserId(cartItem, userId, cartItem.getCartItemStatus());
     }
+
 
     @Override
     public CartItem deleteCartItemsByUserId(int userId) {
