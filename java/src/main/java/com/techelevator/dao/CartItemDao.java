@@ -15,6 +15,8 @@ public interface CartItemDao {
     CartItem cancelCartItemByCakeId(CartItem cartItem, int cakeId);
     CartItem addingCakeToCart(CartItem cartItem, int userId);
 
+    CartItem getCartItemIdByUserId(int userId);
+
     // New Methods
     CartItem deleteCartItemsByUserId(int userId);
     CartItem deleteCartItemById(int cartItemId);

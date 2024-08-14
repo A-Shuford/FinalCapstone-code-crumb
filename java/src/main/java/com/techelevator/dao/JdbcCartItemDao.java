@@ -106,15 +106,35 @@ public class JdbcCartItemDao implements CartItemDao {
         return newCartItem;
     }
 
+    public CartItem getCartItemIdByUserId(int userId) {
+        CartItem item = null;
+        String sql = SQL_SELECT_CART_ITEM +
+                " WHERE cart_item.user_id = ? AND cart_item.pickup_date IS NULL AND cart_item.pickup_time IS NULL;";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            if (results.next()) {
+                 item = mapRowToCartItem(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return item;
+    }
     @Override
     public CartItem addingCakeToCart(CartItem cartItem, int userId) {
         CartItem newCartItem = null;
-        String sql = "INSERT INTO cart_item_cake (user_id, cake_id, cart_item_id) \n" +
-                "VALUES (?, ?, ?) RETURNING cart_item_cake_id;";
+        String sql = "INSERT INTO cart_item_cake ( cake_id, cart_item_id) \n" +
+                "VALUES ( ?, ?) RETURNING cart_item_cake_id;";
 
         try {
-            int newCartItemCakeId = jdbcTemplate.queryForObject(sql, int.class, userId,
+            int newCartItemCakeId = jdbcTemplate.queryForObject(sql, int.class,
                     cartItem.getCake().getCakeId(), cartItem.getCartItemId());
+            if(newCartItemCakeId == 0){
+                throw new DaoException("Zero rows affected, expected at least one.");
+            }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {

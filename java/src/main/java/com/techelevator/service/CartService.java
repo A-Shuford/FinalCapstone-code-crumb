@@ -81,7 +81,10 @@ public class CartService {
     public CartItem addToCart(Principal principal, CartItem item) {
 
         int userId = getUserId(principal);
-
+        CartItem cartId = cartItemDao.getCartItemIdByUserId(userId);
+        if(cartId != null) {
+            item.setCartItemId(cartId.getCartItemId());
+        }
         CartItem existingCart = cartItemDao.getCartItemById(item.getCartItemId());
         CartItem existingCakeInCart = cartItemDao.getCartItemByCakeIdAndUserId(item.getCake().getCakeId(), userId);
         LocalDate pickUp = item.getPickupDate();
