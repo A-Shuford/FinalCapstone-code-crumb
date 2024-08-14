@@ -9,22 +9,25 @@
 
     <main>
       <div class="home">
-        <h5>Welcome to Code and Crumb</h5>
-        <h2 id="login-message" v-if="$store.state.token == ''">
+        <h4>Welcome to Code and Crumb</h4>
+        <h5>"Serving one byte at a time"</h5>
+        <h3 id="login-message" v-if="$store.state.token == ''">
           <router-link v-bind:to="{ name: 'login' }">Please login</router-link> to place an order.
-        </h2>
+        </h3>
       </div>
 
       <div class="cake-gallery">
         <div class="slider-container">
           <div class="slider-wrapper">
-            <img src="/src/assets/Cake_Images/apple_jelly_cake_image_1.jpg" alt="Apple Jelly Cake" />
-            <img src="/src/assets/Cake_Images/Chocolate_cake_ganache_2.jpg" alt="Chocolate Cake Ganache" />
+            <img src="/src/assets/Cake_Images/apple_jelly_cake_image_2.jpg" alt="Apple Jelly Cake" />
+            <img src="/src/assets/Cake_Images/strawberry_cupcakes.jpg" alt="Strawberry Cupcakes" />
+            <img src="/src/assets/Cake_Images/Chocolate_cake_ganache_3.jpg" alt="Chocolate Cake Ganache" />
             <img src="/src/assets/Cake_Images/Butterscotch_Cake.jpg" alt="Butterscotch Cake" />
             <img src="/src/assets/Cake_Images/cupcakes.jpg" alt="Cupcakes" />
-            <img src="/src/assets/Cake_Images/funfetti.jpg" alt="Funfetti Cake" />
+            <img src="src\assets\Cake_Images\standard_funfetti_cake.jpg" alt="Funfetti Cake" />
             <img src="/src/assets/Cake_Images/lemoncake.jpg" alt="Lemon Cake" />
-            <img src="/src/assets/Cake_Images/vanillacupcakes.jpg" alt="Vanilla Cupcakes" />
+            <img src="src\assets\Cake_Images\coffeeicingcake.jpg" alt="Coffee Icing Cake" />
+            <img src="src\assets\Cake_Images\standard_red_velvet_cake.png" alt="Vanilla Cupcakes" />
           </div>
         </div>
       </div>
@@ -42,7 +45,7 @@
 <script>
 import HeaderVue from '../components/Header.vue';
 import NavBarVue from '../components/Navbar.vue';
-import MascotModalVue from '../components/MascotModal.vue'; 
+import MascotModalVue from '../components/MascotModal.vue';
 import FooterVue from '../components/Footer.vue';
 
 export default {
@@ -63,6 +66,9 @@ export default {
       const clone = image.cloneNode(true);
       wrapper.appendChild(clone);
     });
+    
+    // Adjust the width of the slider-wrapper to account for the cloned images
+    wrapper.style.width = `${images.length * 300 * 2}px`;
   }
 };
 </script>
@@ -79,31 +85,19 @@ export default {
   height: 100vh;
 }
 
-header {
-  grid-area: header;
-}
-
-nav {
-  grid-area: nav;
-}
-
 main {
   grid-area: main;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
   background-color: #FAEDCD;
-}
-
-footer {
-  grid-area: footer;
+  flex-grow: 1;
 }
 
 .home {
   position: relative;
   z-index: 2;
-  padding: 10px;
   text-align: center;
 }
 
@@ -113,19 +107,19 @@ footer {
   z-index: 1;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .slider-container {
   width: 100%;
-  max-width: 800px;
-  overflow: hidden;
+  max-width: 1800px;
+  overflow: hidden; /* Make sure the slider container hides the overflow */
   position: relative;
 }
 
 .slider-wrapper {
   display: flex;
-  animation: scroll 45s linear infinite;
+  animation: scroll 60s linear infinite;
 }
 
 .slider-wrapper img {
@@ -139,13 +133,19 @@ footer {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
-h5{
-    font-family: "Press Start 2P", system-ui;
-    font-size: 1.5rem;
-    color: #4B1202;
+h4 {
+  font-family: "Press Start 2P", system-ui;
+  font-size: 1.5rem;
+  color: #4B1202;
+}
+
+h5 {
+  font-family: "Petit Formal Script", cursive;
+  font-size: 1.5rem;
+  color: #4B1202;
 }
 </style>

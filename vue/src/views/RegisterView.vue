@@ -114,6 +114,7 @@ export default {
 </script>
 
 <style scoped>
+
 .form-container {
     margin: 20px auto;
     padding: 20px;
@@ -157,9 +158,18 @@ button:hover {
     background-color: #921A39;
 }
 
-h5{
-    font-family: "Press Start 2P", system-ui;
-    font-size: 1.5rem;
-    color: #4B1202;
+h4 {
+  font-family: "Press Start 2P", system-ui;
+  font-size: 1.5rem;
+  color: #4B1202;
 }
+
+h5 {
+  font-family: "Petit Formal Script", cursive;
+  font-size: 2rem;
+  color: #4B1202;
+  text-align: center;
+}
+
+
 </style>
