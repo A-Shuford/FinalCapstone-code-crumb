@@ -92,11 +92,9 @@ public class CartController {
         //recieving the date and time will go directly to the server
         //TODO: mangage the usage of updateCartItemDetails
         try{
-            System.out.println("checkemail");
-            //for(CartItem items : cartItem){
-                //cartService.submitOrder(items, principal);
-            //}
-            //cartService.submitOrder(cartItem, principal);
+            for(CartItem items : cartItem) {
+                cartService.submitOrder(items, principal);
+            }
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());

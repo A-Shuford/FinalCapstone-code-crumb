@@ -189,10 +189,10 @@ public class JdbcCartItemDao implements CartItemDao {
         String sql = "UPDATE cart_item \n" +
                 "SET pickup_date = ?, \n" +
                 "pickup_time = ?\n" +
-                "WHERE pickup_date IS NULL AND pickup_time IS NULL AND user_id = ?";
+                "WHERE pickup_date IS NULL AND pickup_time IS NULL AND user_id = ? AND cart_item_id = ?";
         try {
             int numberOfRows = jdbcTemplate.update(sql, cartItem.getPickupDate(),
-                                                    cartItem.getPickupTime(), userId);
+                                                    cartItem.getPickupTime(), userId, cartItem.getCartItemId());
             if (numberOfRows == 0) {
                 throw new DaoException("Zero rows affected, expected at least one.");
             }
