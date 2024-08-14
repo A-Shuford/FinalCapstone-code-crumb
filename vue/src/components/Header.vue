@@ -5,19 +5,46 @@
         <!-- Logo Column -->
         <td id="logo-column">
           <img id="cakelogo" src="/src/assets/CC Logo.png" alt="Code & Crumb Logo">
+
         </td>
 
         <!-- Page Title Column -->
         <td id="title-column">
-          <div class="page-title">
-            <h3>"Serving one byte at a time"</h3>
-            <h2>For questions or order</h2>
-            <h3>Call 911</h3>
-            <p>1234 Baker Street</p>
-            <p>Confection City, NLR 11111</p>
-            <h3>Established 2024</h3>
+          <div id="floating-hearts">
+            <img src="/src/assets/Cake_Images/pixelheart.png" alt="Floating Heart" class="heart">
+            <img src="/src/assets/Cake_Images/pixelheart.png" alt="Floating Heart" class="heart">
+            <img src="/src/assets/Cake_Images/pixelheart.png" alt="Floating Heart" class="heart">
+            <img src="/src/assets/Cake_Images/pixelheart.png" alt="Floating Heart" class="heart">
+            <img src="/src/assets/Cake_Images/pixelheart.png" alt="Floating Heart" class="heart">
+            <img src="/src/assets/Cake_Images/pixelheart.png" alt="Floating Heart" class="heart">
+            <!-- Add more hearts as needed -->
           </div>
+          <h3>"Serving one byte at a time"</h3>
+
+          <div class="page-title">
+            <div class="info-block-1">
+              <h4>Address</h4>
+              <h4>1234 Baker Street</h4>
+              <h4>Confection City, PA 11111</h4>
+
+
+            </div>
+            <div class="info-block-2">
+
+              <h4>Open</h4>
+              <h4>9am-9pm</h4>
+              <h4>Tuesday - Sunday</h4>
+            </div>
+            <div class="info-block-3">
+              <h4>Questions</h4>
+              <h4>or to Order</h4>
+              <h4>877-606-3203</h4>
+            </div>
+          </div>
+
+
         </td>
+
 
         <!-- Account Column -->
         <td id="account-column">
@@ -27,12 +54,6 @@
               <router-link v-bind:to="{ name: 'cart-item' }">
                 <img src="/src/assets/cart.png" alt="Cart Icon">
               </router-link>
-              <!-- <div
-        id="message-bar"
-        v-bind:class="'message-' + $store.state.message.level"
-        v-bind:title="$store.state.message.text"
-        {{ $store.state.message.text }}
-      </div> -->
             </div>
             <!-- Login/Register/Logout -->
             <div id="loginlogoutregister">
@@ -53,7 +74,9 @@
         </td>
       </tr>
     </table>
+
   </div>
+
 </template>
 
 <script>
@@ -78,33 +101,128 @@ export default {
 <style scoped>
 #header {
   background-color: #FAEDCD;
-  padding: 10px;
+  position: relative;
+  color: #921A39;
+}
+
+#floating-hearts {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  /* Adjust the height to cover the middle of the header */
+  transform: translateY(-50%);
+  /* Center the hearts vertically */
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+  /* Ensure the hearts are above other content */
+}
+
+.heart {
+  position: absolute;
+  width: 30px;
+  opacity: 0.8;
+  animation: float 15s infinite ease-in-out;
+  /* Extend duration */
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(-50%);
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-200%) translateX(-50%);
+    /* Move hearts further up */
+    opacity: 0;
+  }
+}
+
+.heart:nth-child(2) {
+  left: 20%;
+  animation-duration: 15s;
+  animation-delay: 1s;
+}
+
+.heart:nth-child(3) {
+  left: 40%;
+  animation-duration: 15s;
+  animation-delay: 2s;
+}
+
+.heart:nth-child(4) {
+  left: 60%;
+  animation-duration: 10s;
+  animation-delay: 3s;
+}
+
+.heart:nth-child(5) {
+  left: 80%;
+  animation-duration: 15s;
+  animation-delay: 4s;
+}
+
+/* Additional Hearts with different timings for more variation */
+.heart:nth-child(6) {
+  left: 10%;
+  animation-duration: 14s;
+  animation-delay: 1.5s;
+}
+
+.heart:nth-child(7) {
+  left: 70%;
+  animation-duration: 10s;
+  animation-delay: 3.5s;
 }
 
 table {
   width: 100%;
-  table-layout: auto;
   border-collapse: collapse;
-  /* Remove gaps between cells */
 }
 
 td {
-  vertical-align: center;
+  vertical-align: top;
+
 }
 
 #logo-column {
-  width: 40%;
-  /* Adjust as necessary */
   text-align: center;
 }
 
 #cakelogo {
-  width: 400px;
-  /* Adjust as necessary */
-  height: auto;
+  width: 300px;
 }
 
 #title-column {
+  text-align: center;
+  padding: 10px;
+}
+
+.page-title {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.info-block-1 {
+  padding: 0 1px;
+  text-align: center;
+}
+
+.info-block-2 {
+  padding: 0 1px;
+  text-align: center;
+}
+
+.info-block-3 {
+  padding: 0 1px;
   text-align: center;
 }
 
@@ -117,45 +235,35 @@ td {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
   padding: 0 10px;
-  /* Adjust horizontal padding if needed */
 }
 
 #cart {
   margin-bottom: 10px;
-  /* Space between cart and login/register */
 }
 
 #cart img {
-  width: 30px;
-  /* Adjust size as necessary */
-  margin-bottom: 30px;
-  /* Space between cart and login/register */
+  width: 40px;
 }
 
 #loginlogoutregister {
-  margin-bottom: 30px;
-  /* Space between login/register and heart */
+  margin-bottom: 10px;
 }
 
 #login-status {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
-  /* Space between heart and social media */
+  margin-bottom: 10px;
 }
 
 #login-status-heart {
   width: 30px;
-  /* Adjust size as necessary */
 }
 
 #social-media {
   text-align: center;
-  margin-top: 30px;
-  /* Space between heart and social media */
+  margin-top: 10px;
 }
 
 /* Media Queries for responsiveness */
@@ -177,12 +285,6 @@ td {
     padding: 10px 0;
   }
 
-  #logo-column,
-  #title-column,
-  #account-column {
-    width: 100%;
-  }
-
   #cart-login-status {
     align-items: center;
     height: auto;
@@ -195,11 +297,11 @@ td {
 
 @media (max-width: 480px) {
   #cakelogo {
-    width: 300px;
+    width: 200px;
   }
 
   #login-status-heart {
-    width: 30px;
+    width: 25px;
   }
 
   #cart img {

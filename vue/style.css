@@ -3,7 +3,6 @@
 html {
     font-size: 16px; /* Set the base font size */
     font-family: Arial, sans-serif; /* Set the default font family */
-    line-height: 1.5; /* Set the default line height */
     background-color: #FAEDCD;
 }
 
@@ -27,8 +26,6 @@ html {
   }
   
 body {
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
     height: 100%;
   } 
 
