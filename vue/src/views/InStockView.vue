@@ -46,10 +46,10 @@
         </div>
       
     </div>
-    <p id="login-message" v-if="!isLoggedIn">You may browse anonymously as much as you wish, 
+    <p id="login-message" v-if="!isLoggedIn">You may browse anonymously as much as you wish
       but you must <router-link :to="{ name: 'login' }">Login</router-link> to add
       items to your shopping cart.
-    </p>
+      </p>
     <InstockCards :cakes="cakes" v-if="cardView" />
     <InstockTable :cakes="cakes" v-else />
   </div>
@@ -201,15 +201,15 @@ div.message-bar img {
 }
 
 div.message-bar {
-  display: flex;
-  background-color: transparent;
-  position: sticky;
-  bottom: 0px;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 5px;
-  border: 1px solid hotpink;
+  
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(228, 40, 185, 0.8);
+  color: #fff;
+  padding: 10px 20px;
   border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  font-size: 1em;
 }
 
 h5{

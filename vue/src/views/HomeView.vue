@@ -112,7 +112,7 @@ main {
 
 .slider-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   overflow: hidden; /* Make sure the slider container hides the overflow */
   position: relative;
 }

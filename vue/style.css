@@ -6,6 +6,9 @@ body {
   font-family: Arial, sans-serif;
   /* Set the default font family */
   background-color: #FAEDCD;
+  height: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 #capstone-app {
@@ -45,9 +48,5 @@ footer {
   font-style: normal;
 }
 
-body {
-  height: 100%;
-  margin-left: 0;
-  margin-right: 0;
-}
+
 

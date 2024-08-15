@@ -80,7 +80,7 @@ export default {
   border-radius: 8px;
   margin: 20px auto;
   max-width: 800px;
-  color: #fff;
+  color: fff;
   text-align: center;
 }
 
@@ -186,6 +186,5 @@ export default {
 .template {
   font: italic;
 }
-
 
 </style>
