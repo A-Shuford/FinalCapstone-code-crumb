@@ -104,7 +104,7 @@ public class CartController {
         //receiving the date and time will go directly to the server
         //TODO: mangage the usage of updateCartItemDetails
         try{
-            CartItem item = cartItem.get(1);
+            CartItem item = cartItem.get(0);
             cartService.submitOrder(item, principal);
         }
         catch (DaoException e) {
