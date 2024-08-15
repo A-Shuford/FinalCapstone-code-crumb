@@ -47,7 +47,7 @@
       
     </div>
     <p id="login-message" v-if="!isLoggedIn">You may browse anonymously as much as you wish, 
-      but you must<router-link :to="{ name: 'login' }">Login</router-link> to add
+      but you must <router-link :to="{ name: 'login' }">Login</router-link> to add
       items to your shopping cart.
     </p>
     <InstockCards :cakes="cakes" v-if="cardView" />
@@ -213,8 +213,8 @@ div.message-bar {
 }
 
 h5{
-    font-family: "Press Start 2P", system-ui;
-    font-size: 1.5rem;
+    font-family: "Petit Formal Script", cursive;
+    font-size: 2rem;
     color: #4B1202;
 }
 </style>

@@ -95,6 +95,7 @@
             <p><strong>Frosting:</strong> {{ item.cake.cakeFrosting }}</p>
             <p><strong>Has Writing:</strong> {{ item.cake.hasWriting ? 'Yes' : 'No' }}</p>
             <p><strong>Custom Text:</strong> {{ item.cake.customText }}</p>
+            <p><strong>Quantity:</strong> {{ item.quantity }}</p>
             <p><strong>Price:</strong> {{ formatCurrency(item.cake.price) }}</p>
             <p><strong>Pick-up Date:</strong> {{ item.pickupDate }}</p>
             <p><strong>Pick-up Time:</strong> {{ item.pickupTime }}</p>

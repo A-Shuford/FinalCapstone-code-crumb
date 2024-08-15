@@ -3,65 +3,68 @@
   <nav-bar-vue />
   <mascot-modal-vue />
   <div class="pink-container">
-   <div id="message-bar" :class="'message-' + $store.state.message.level" :title="$store.state.message.text">
+    <div id="message-bar" :class="'message-' + $store.state.message.level" :title="$store.state.message.text">
       {{ $store.state.message.text }}
     </div>
     <div class="cake-details-container">
       <h6>{{ cake.cakeName }}</h6>
-      <tr>
-        <td colspan="2" class="cakeImage">
+      <div class="cake-content">
+        <div class="cakeImage">
           <img :src="cake.imageName" alt="Product photo" />
-        </td>
-        <div class="cart">
-          <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon" class="icon action"
-            v-on:click="addToCart(cake)" title="Add cake to cart" />
         </div>
-      </tr>
-
-      <h4>Details</h4>
-
-      <table class="cake-details-table">
-        <tr>
-          <td>Price:</td>
-          <td>{{ currency(cake.price) }}</td>
-        </tr>
-        <tr>
-          <td>Cake Name:</td>
-          <td>{{ cake.cakeName }}</td>
-        </tr>
-        <tr>
-          <td>Style:</td>
-          <td>{{ cake.cakeStyle }}</td>
-        </tr>
-        <tr>
-          <td>Flavor:</td>
-          <td>{{ cake.cakeFlavor }}</td>
-        </tr>
-        <tr>
-          <td>Frosting:</td>
-          <td>{{ cake.cakeFrosting }}</td>
-        </tr>
-        <tr>
-          <td>Filling:</td>
-          <td>{{ cake.cakeFilling }}</td>
-        </tr>
-        <tr>
-          <td>Size:</td>
-          <td>{{ cake.cakeSize }}</td>
-        </tr>
-        <tr>
-          <td>Available:</td>
-          <td>{{ cake.amountAvailable }}</td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <div class="custom-text">
-              <p> Optional Writing (no extra charge)</p>
-                <input type="text" v-model="cake.customText" placeholder="Enter custom text" />
-            </div>
-          </td>
-        </tr>
-      </table>
+        <div class="cake-description">
+          <h4>Details</h4>
+          <table class="cake-details-table">
+            <tr>
+              <td>Price:</td>
+              <td>{{ currency(cake.price) }}</td>
+            </tr>
+            <tr>
+              <td>Cake Name:</td>
+              <td>{{ cake.cakeName }}</td>
+            </tr>
+            <tr>
+              <td>Style:</td>
+              <td>{{ cake.cakeStyle }}</td>
+            </tr>
+            <tr>
+              <td>Flavor:</td>
+              <td>{{ cake.cakeFlavor }}</td>
+            </tr>
+            <tr>
+              <td>Frosting:</td>
+              <td>{{ cake.cakeFrosting }}</td>
+            </tr>
+            <tr>
+              <td>Filling:</td>
+              <td>{{ cake.cakeFilling }}</td>
+            </tr>
+            <tr>
+              <td>Size:</td>
+              <td>{{ cake.cakeSize }}</td>
+            </tr>
+            <tr>
+              <td>Available:</td>
+              <td>{{ cake.amountAvailable }}</td>
+            </tr>
+          </table>
+          <div class="custom-text">
+            <label>
+              <input type="checkbox" v-model="cake.hasWriting" /> Optional Writing (no extra charge)
+            </label>
+            <textarea
+              v-if="cake.hasWriting"
+              v-model="cake.customText"
+              placeholder="Enter custom text"
+              class="custom-text-input"
+            ></textarea>
+          </div>
+          <div class="cart">
+            <img src="../assets/InStockIcons/addToCart.png" alt="Cart Icon" class="icon action"
+              v-on:click="addToCart(cake)" title="Add cake to cart" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <footer-vue />
@@ -84,8 +87,7 @@ export default {
   },
   data() {
     return {
-      cake: {
-      },
+      cake: {},
     };
   },
   computed: {
@@ -120,11 +122,9 @@ export default {
     },
 
     addToCart() {
-      if(this.cake.customText) {
-        this.cake.hasWriting = true;
+      if (this.cake.hasWriting && this.cake.customText) {
         this.cake.cakeType = 'Custom';
-      }
-      if(!this.cake.customText){
+      } else {
         this.cake.hasWriting = false;
         this.cake.cakeType = 'Standard';
       }
@@ -145,7 +145,6 @@ export default {
           console.error(message);
         });
     },
-
   },
   created() {
     this.getCake(this.$route.params.id);
@@ -156,71 +155,80 @@ export default {
 <style scoped>
 .pink-container {
   background-color: #FBECEB;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 20px;
+  border-radius: 10px;
   max-width: 800px;
   margin: 20px auto;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-div.cart img {
-  height: 50px;
-  padding: 75px;
-}
-
-div.update img {
-  height: 30px;
-}
-
-.action {
-  cursor: pointer;
-}
-
-div.message-bar img {
-  height: 20px;
-  padding-right: 15px;
-}
-
-div.message-bar {
+.cake-content {
   display: flex;
-  background-color: transparent;
-  position: sticky;
-  bottom: 0px;
+  flex-direction: row;
   align-items: flex-start;
-  justify-content: center;
-  padding: 10px;
+  justify-content: space-between;
 }
 
-.cake-details-container {
-  margin: 0 auto; /* Removed extra top and bottom margin */
-  max-width: 700px;
+.cakeImage {
+  flex: 1;
+  text-align: center;
+  margin-top: 60px;
+}
+
+.cakeImage img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px #8C3F09;
+}
+
+.cake-description {
+  flex: 1;
+  padding-left: 20px;
   text-align: left;
-  padding-top: 5px; /* Reduced top padding */
-  padding-bottom: 5px; /* Reduced bottom padding */
 }
 
 .cake-details-table {
   width: 100%;
   border-collapse: collapse;
   background-color: transparent;
-  margin: 10px auto; /* Adjusted margin to keep table centered */
+  margin-top: 10px;
 }
 
 .cake-details-table td {
   border: 1px solid #8C3F09;
-  padding: 5px;
-  text-align: center;
-}
-.cakeImage {
-  width: 100%;
-  box-shadow: 0 2px 10px #8C3F09;
+  padding: 10px;
+  text-align: left;
 }
 
 h6 {
   font-family: "Petit Formal Script", cursive;
   font-size: 2rem;
   color: #4B1202;
-  text-align: left;
+  text-align: center;
+}
+
+.custom-text {
+  margin-top: 15px;
+}
+
+.custom-text-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #8C3F09;
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.cart {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.cart img {
+  height: 50px;
+  cursor: pointer;
 }
 </style>
