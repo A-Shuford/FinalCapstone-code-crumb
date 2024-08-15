@@ -83,12 +83,12 @@
             <button id="submitCartOrder" @click="submitCartOrder">Submit your Orders</button>
           </td>
         </tr>
-        <tr>
+      <!--  <tr>
           <td colspan="4" class="clearCartOrder">
             <button id="clear-cart" @click="clearCart">Clear Cart</button>
           </td>
 
-        </tr>
+        </tr>-->
       </tbody>
     </table>
   </div>

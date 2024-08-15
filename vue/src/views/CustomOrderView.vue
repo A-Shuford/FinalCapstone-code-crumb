@@ -93,7 +93,6 @@
                 <tr>
                     <td colspan="2">
                         <button type="submit">Add to Cart</button> 
-                        <button type="submit">Add To Cart</button> 
                     </td>
                 </tr>
             </table>
