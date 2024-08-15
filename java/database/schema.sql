@@ -190,8 +190,31 @@ VALUES ('Pending'),
 ('Order Completed');
 
 INSERT INTO users (username, yourname, email, phone_number, password_hash, role)
-VALUES ('user', 'John Smith', 'user@example.com', '123-456-7890', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_USER'),
-('admin', 'Admin Smith', 'admin@example.com', '098-765-4321', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN' );
+VALUES ('user', 'John Smith', 'user@example.com', '123-456-7890', '$2a$10$ELKz8wAoxS043cwFYoiSHuouC4pEQTBlDMv0ykwcN1HkTTxJtfS76', 'ROLE_USER'),
+('admin', 'Admin Smith', 'admin@example.com', '098-765-4321', '$2a$10$ELKz8wAoxS043cwFYoiSHuouC4pEQTBlDMv0ykwcN1HkTTxJtfS76','ROLE_ADMIN' ),
+('mmurphy', 'Megan Murphy', 'mmurphy@gmail.com', '484-598-3545', '$2a$10$ELKz8wAoxS043cwFYoiSHuouC4pEQTBlDMv0ykwcN1HkTTxJtfS76', 'ROLE_USER'),
+('anshu', 'Anshu Sapkota', 'anshu.sapkota@gmail.com', '484-598-3545', '$2a$10$ELKz8wAoxS043cwFYoiSHuouC4pEQTBlDMv0ykwcN1HkTTxJtfS76', 'ROLE_USER');
+
+
+---INSERTING ORDERS----
+-- Step 1: Insert the cart item
+INSERT INTO cart_item (user_id, status_id, pickup_date, pickup_time)
+VALUES (
+    (SELECT user_id FROM users WHERE username = 'mmurphy'), 
+    (SELECT cart_item_status_id FROM cart_item_status WHERE status_name = 'Order Completed'), 
+    '2024-07-30', 
+    '11:45:00'
+);
+
+-- Step 2: Insert the associated custom cake into cart_item_cake
+-- Assuming the quantity ordered is 1
+INSERT INTO cart_item_cake (cart_item_id, cake_id, quantity)
+VALUES (
+    (SELECT currval(pg_get_serial_sequence('cart_item', 'cart_item_id'))), 
+    (SELECT cake_id FROM cake WHERE cake_name = 'Chocolate Ganache Cake'),
+    1
+);
+
 
 GRANT ALL
 ON ALL TABLES IN SCHEMA public
