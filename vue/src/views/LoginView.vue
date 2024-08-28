@@ -46,7 +46,7 @@
 <script>
 import authService from "../services/AuthService";
 import HeaderVue from "../components/Header.vue";
-import NavBar from "../components/NavBar.vue";
+import NavBar from "../components/Navbar.vue";
 import MascotModalVue from "../components/MascotModal.vue";
 import FooterVue from "../components/Footer.vue";
 
